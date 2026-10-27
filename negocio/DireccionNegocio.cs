@@ -9,7 +9,7 @@ namespace negocio
 {
     public class DireccionNegocio
     {
-        AcessoDatos datos = new AcessoDatos();
+        AccesoDatos datos = new AccesoDatos();
          public List<Direccion> listarDireccion()
          {
             List<Direccion> lista = new List<Direccion>();

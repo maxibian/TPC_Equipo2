@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace negocio
 {
-    public class AcessoDatos
+    public class AccesoDatos
     {
         private SqlConnection conexion;
         private SqlCommand comando;
@@ -17,7 +17,7 @@ namespace negocio
             get { return lector; }
         }
 
-        public AcessoDatos(){
+        public AccesoDatos(){
             conexion = new SqlConnection("server=.\\SQLEXPRESS; database=Ecommerce_DB; integrated security=true");
             comando = new SqlCommand();
         }
