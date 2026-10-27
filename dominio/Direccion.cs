@@ -11,7 +11,7 @@ namespace dominio
 
         public int IdDireccion { get; set; }
 
-        //public int IdCliente { get; set; }
+        public int IdCliente { get; set; }
         public string Calle { get; set; }
         public int Numero { get; set; }
         public string Localidad { get; set; }
