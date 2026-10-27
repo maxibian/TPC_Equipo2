@@ -15,7 +15,7 @@ namespace negocio
             List<Producto> lista = new List<Producto>();
             try
             {
-                datos.setearConsulta("SELECT IdProducto, Nombre, Descripcion, Precio, IdCategoria, Estado, Stock, IdImagen FROM PRODUCTO");
+                datos.setearConsulta("SELECT P.IdProducto, P.Nombre, P.Descripcion, P.Precio, C.Nombre, P.Estado, P.Stock, I.ImagenUrl FROM PRODUCTO P INNER JOIN CATEGORIA C ON P.IdCategoria = C.IdCategoria INNER JOIN IMAGEN I ON P.IdImagen = I.IdImagen");
                 datos.ejecutarLectura();
                 while(datos.Lector.Read())
                 {
