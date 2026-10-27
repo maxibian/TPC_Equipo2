@@ -9,7 +9,9 @@ namespace dominio
     public class Direccion
     {
 
-        public int Id { get; set; }
+        public int IdDireccion { get; set; }
+
+        //public int IdCliente { get; set; }
         public string Calle { get; set; }
         public int Numero { get; set; }
         public string Localidad { get; set; }
