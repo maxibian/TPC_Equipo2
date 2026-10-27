@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcessoDatos.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="DireccionNegocio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
