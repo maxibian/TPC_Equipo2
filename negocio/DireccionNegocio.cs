@@ -11,9 +11,10 @@ namespace negocio
     {
         AcessoDatos datos = new AcessoDatos();
          public List<Direccion> listarDireccion()
-        {
+         {
             List<Direccion> lista = new List<Direccion>();
-
+            try
+            {
             datos.setearConsulta("SELECT IdDireccion, Calle, Numero, Localidad, CodigoPostal, Observacion FROM DIRECCION");
             datos.ejecutarLectura();
 
@@ -21,8 +22,6 @@ namespace negocio
             {
                 Direccion aux = new Direccion(); 
                 
-                try
-                {
 
                 aux.IdDireccion = (int)datos.Lector["IdDireccion"];
                 aux.Calle = (string)datos.Lector["Calle"];
@@ -31,21 +30,22 @@ namespace negocio
                 aux.CodigoPostal = (string)datos.Lector["CodigoPostal"];
                 if (!(datos.Lector["Observacion"] is DBNull))
                     aux.Observacion = (string)datos.Lector["Observacion"];
-                }
-                catch (Exception ex)
-                {
 
-                    throw ex;
-                }
-                finally
-                {
-                    datos.cerrarConexion();
-                }
 
                 lista.Add(aux);
             }
          
             return lista;
-        }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+         }
     }
 }
