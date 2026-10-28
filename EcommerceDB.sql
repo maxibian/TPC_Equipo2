@@ -75,3 +75,29 @@ CREATE TABLE DIRECCION (
     FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente)
 );
 GO
+
+CREATE TABLE CARRITO (
+    IdCarrito INT IDENTITY(1,1) PRIMARY KEY,
+    IdCliente INT NOT NULL,
+
+    FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente)
+);
+GO
+
+CREATE TABLE ITEMSCARRITO
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    IdCarrito INT NOT NULL,
+    IdProducto INT NOT NULL,
+    Cantidad INT NOT NULL,
+
+    FOREIGN KEY (IdCarrito) REFERENCES CARRITO(IdCarrito),
+    FOREIGN KEY (IdProducto) REFERENCES PRODUCTO(IdProducto),
+
+    CONSTRAINT CK_ItemsCarrito_Cantidad
+        CHECK (Cantidad > 0),
+
+    CONSTRAINT UQ_ItemsCarrito_CarritoProducto
+        UNIQUE (IdCarrito, IdProducto)
+);
+GO
