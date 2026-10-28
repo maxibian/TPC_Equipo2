@@ -11,13 +11,13 @@ namespace TPC_Equipo2
 {
     public partial class Prueba : System.Web.UI.Page
     {
-        public List<Producto> listaProducto {  get; set; }
+        //public List<Producto> listaProducto {  get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            ProductoNegocio negocio = new ProductoNegocio();
-            listaProducto = negocio.listarProductos();
-            repRepeater.DataSource = listaProducto;
-            repRepeater.DataBind();
+        //    ProductoNegocio negocio = new ProductoNegocio();
+        //    listaProducto = negocio.listarProductos();
+        //    repRepeater.DataSource = listaProducto;
+        //    repRepeater.DataBind();
         }
     }
 }

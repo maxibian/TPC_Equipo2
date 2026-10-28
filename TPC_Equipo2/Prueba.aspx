@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <asp:Repeater ID="repRepeater" runat="server">
+<%--    <asp:Repeater ID="repRepeater" runat="server">
         <ItemTemplate>
             <section class="card" style="max-width: 320px">
                 <img src="<%#Eval("ImagenUrl") %>" class="card-img-top" alt="...">
@@ -12,7 +12,7 @@
                 </div>
             </section>
         </ItemTemplate>
-    </asp:Repeater>
+    </asp:Repeater>--%>
 
 </asp:Content>
 
