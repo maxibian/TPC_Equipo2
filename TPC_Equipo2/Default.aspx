@@ -15,7 +15,7 @@
                         <img src="<%# Eval("Imagen.ImagenUrl") %>"
                              class="card-img-top"
                              alt="Imagen del producto"
-                             style="height: 220px; object-fit: contain;" />
+                             style="height: 220px; object-fit: contain; background-color: #f0f0f0;" />
 
                         <div class="card-body">
 
