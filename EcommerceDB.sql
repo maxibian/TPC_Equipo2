@@ -78,7 +78,7 @@ GO
 
 CREATE TABLE CARRITO (
     IdCarrito INT IDENTITY(1,1) PRIMARY KEY,
-    IdCliente INT NOT NULL,
+    IdCliente INT NOT NULL UNIQUE,
 
     FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente)
 );
@@ -86,18 +86,56 @@ GO
 
 CREATE TABLE ITEMSCARRITO
 (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    IdCarrito INT NOT NULL,
-    IdProducto INT NOT NULL,
+    IdItemsCarrito INT IDENTITY(1,1) PRIMARY KEY,
+    IdCarrito INT NOT NULL UNIQUE,
+    IdProducto INT NOT NULL UNIQUE,
     Cantidad INT NOT NULL,
 
     FOREIGN KEY (IdCarrito) REFERENCES CARRITO(IdCarrito),
     FOREIGN KEY (IdProducto) REFERENCES PRODUCTO(IdProducto),
 
     CONSTRAINT CK_ItemsCarrito_Cantidad
-        CHECK (Cantidad > 0),
-
-    CONSTRAINT UQ_ItemsCarrito_CarritoProducto
-        UNIQUE (IdCarrito, IdProducto)
+        CHECK (Cantidad > 0)
 );
 GO
+
+CREATE TABLE ESTADOPEDIDO (
+        IdEstadoPedido INT IDENTITY(1,1) PRIMARY KEY,
+        Nombre VARCHAR(50) NOT NULL UNIQUE,
+        Estado BIT NOT NULL DEFAULT 1
+    );
+GO
+
+CREATE TABLE FORMAPAGO (
+        IdFormaPago INT IDENTITY(1,1) PRIMARY KEY,
+        Nombre VARCHAR(50) NOT NULL UNIQUE,
+        Estado BIT NOT NULL DEFAULT (1),
+    );
+GO
+
+CREATE TABLE FORMAENTREGA (
+        IdFormaEntrega INT IDENTITY(1,1) PRIMARY KEY,
+        Nombre VARCHAR(50) NOT NULL UNIQUE,
+        Estado BIT NOT NULL DEFAULT (1),
+    );
+GO
+
+CREATE TABLE PEDIDO (
+        IdPedido INT IDENTITY(1,1) PRIMARY KEY,
+        IdCliente INT NOT NULL,
+        Fecha DATETIME2(0) NOT NULL CONSTRAINT DF_PEDIDO_Fecha DEFAULT (SYSDATETIME()),
+        Total DECIMAL(10,2) NOT NULL,
+        IdFormaPago INT NOT NULL,
+        IdFormaEntrega INT NOT NULL,
+        IdDireccion INT NULL,
+        IdEstadoPedido INT NOT NULL,
+
+        CONSTRAINT CK_PEDIDO_Total CHECK (Total >= 0),
+        FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente),
+        FOREIGN KEY (IdFormaPago) REFERENCES FORMAPAGO(IdFormaPago),
+        FOREIGN KEY (IdFormaEntrega) REFERENCES FORMAENTREGA(IdFormaEntrega),
+        FOREIGN KEY (IdDireccion) REFERENCES DIRECCION(IdDireccion),
+        FOREIGN KEY (IdEstadoPedido) REFERENCES ESTADOPEDIDO(IdEstadoPedido)
+    );
+GO
+
