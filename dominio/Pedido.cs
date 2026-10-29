@@ -10,13 +10,13 @@ namespace dominio
     {
         public int IdPedido { get; set; }
         public Cliente Cliente { get; set; }
-        //detallesPedido
+        public List<DetallePedido> DetallesPedido { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
-        //formaPago
-        //formaEntrega
+        public FormaPago FormaPago { get; set; }
+        public FormaEntrega FormaEntrega { get; set; }
         public Direccion Direccion { get; set; }
-        //estadoPedido
+        public EstadoPedido EstadoPedido { get; set; }
 
     }
 }
