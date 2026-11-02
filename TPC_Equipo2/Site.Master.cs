@@ -22,6 +22,19 @@ namespace TPC_Equipo2
             ddlCategoria.DataValueField = "idCategoria";
             ddlCategoria.DataTextField = "Nombre";
             ddlCategoria.DataBind();
+
+            ddlCategoria.Items.Insert(0, new ListItem("Seleccione una categoría...", ""));
+            }
+        }
+
+        protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int id = 0;
+
+            id = int.Parse(ddlCategoria.SelectedValue);
+            if(id != 0)
+            {
+                Response.Redirect("Categoria.aspx?id=" + id);
             }
         }
     }
