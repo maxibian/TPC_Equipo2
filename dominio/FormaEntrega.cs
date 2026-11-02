@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace dominio
 {
-    internal class FormaEntrega
+    public class FormaEntrega
     {
         public int IdFormaEntrega { get; set; }
         public string Nombre { get; set; }

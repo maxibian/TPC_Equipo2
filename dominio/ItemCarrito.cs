@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace dominio
 {
-    internal class ItemCarrito
+    public class ItemCarrito
     {
         public int IdItemCarrito { get; set; }
         public Producto Producto { get; set; }

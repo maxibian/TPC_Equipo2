@@ -49,6 +49,7 @@
     <Compile Include="EstadoPedido.cs" />
     <Compile Include="FormaEntrega.cs" />
     <Compile Include="FormaPago.cs" />
+    <Compile Include="HistorialPedido.cs" />
     <Compile Include="Imagen.cs" />
     <Compile Include="ItemCarrito.cs" />
     <Compile Include="Pedido.cs" />
