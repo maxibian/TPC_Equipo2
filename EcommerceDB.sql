@@ -1,3 +1,144 @@
+CREATE DATABASE Ecommerce_DB
+COLLATE Latin1_General_CI_AI;
+GO
+
+USE Ecommerce_DB;
+GO
+
+CREATE TABLE ROL (
+	IdRol INT PRIMARY KEY IDENTITY (1,1),
+	Nombre VARCHAR(50) NOT NULL UNIQUE,
+	Estado BIT NOT NULL DEFAULT 1
+);
+GO
+
+CREATE TABLE CATEGORIA (
+	IdCategoria INT PRIMARY KEY IDENTITY (1,1),
+	Nombre VARCHAR(50) NOT NULL UNIQUE,
+	Estado BIT NOT NULL DEFAULT 1
+);
+GO
+
+CREATE TABLE IMAGEN (
+	IdImagen INT PRIMARY KEY IDENTITY (1,1),
+	ImagenUrl VARCHAR(255) NOT NULL
+);
+GO
+
+CREATE TABLE USUARIO (
+	IdUsuario INT PRIMARY KEY IDENTITY (1,1),
+	NombreUsuario VARCHAR(50) NOT NULL UNIQUE,
+	Contrasena VARCHAR(50) NOT NULL,
+	IdRol INT NOT NULL,
+	Estado BIT NOT NULL DEFAULT 1,
+
+	FOREIGN KEY(IdRol) REFERENCES ROL(IdRol)
+);
+GO
+
+CREATE TABLE CLIENTE (
+    IdCliente INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(30) NOT NULL,
+    Apellido VARCHAR(30) NOT NULL,
+    Email VARCHAR(50) NOT NULL,
+    Telefono VARCHAR(50) NOT NULL,
+	IdUsuario INT NOT NULL,
+
+	FOREIGN KEY(IdUsuario) REFERENCES USUARIO(IdUsuario)
+);
+GO
+
+CREATE TABLE PRODUCTO (
+    IdProducto INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(50) NOT NULL UNIQUE,
+    Descripcion VARCHAR(150) NULL,
+    Precio DECIMAL(10,2) NOT NULL,
+    IdCategoria INT NOT NULL,
+    Estado BIT NOT NULL DEFAULT 1,
+    Stock INT NOT NULL DEFAULT 0,
+    IdImagen INT NULL,
+
+	FOREIGN KEY (IdCategoria) REFERENCES CATEGORIA(IdCategoria),
+	FOREIGN KEY (IdImagen) REFERENCES IMAGEN(IdImagen)
+);
+GO
+
+CREATE TABLE DIRECCION (
+    IdDireccion INT PRIMARY KEY IDENTITY(1,1),
+    IdCliente INT NOT NULL,
+    Calle VARCHAR(30) NOT NULL,
+    Numero INT NOT NULL,
+    Localidad VARCHAR(30) NOT NULL,
+    CodigoPostal VARCHAR(30) NOT NULL,
+    Observacion VARCHAR(200) NULL,
+
+    FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente)
+);
+GO
+
+CREATE TABLE CARRITO (
+    IdCarrito INT IDENTITY(1,1) PRIMARY KEY,
+    IdCliente INT NOT NULL UNIQUE,
+
+    FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente)
+);
+GO
+
+CREATE TABLE ITEMSCARRITO
+(
+    IdItemsCarrito INT IDENTITY(1,1) PRIMARY KEY,
+    IdCarrito INT NOT NULL UNIQUE,
+    IdProducto INT NOT NULL UNIQUE,
+    Cantidad INT NOT NULL,
+
+    FOREIGN KEY (IdCarrito) REFERENCES CARRITO(IdCarrito),
+    FOREIGN KEY (IdProducto) REFERENCES PRODUCTO(IdProducto),
+
+    CONSTRAINT CK_ItemsCarrito_Cantidad
+        CHECK (Cantidad > 0)
+);
+GO
+
+CREATE TABLE ESTADOPEDIDO (
+        IdEstadoPedido INT IDENTITY(1,1) PRIMARY KEY,
+        Nombre VARCHAR(50) NOT NULL UNIQUE,
+        Estado BIT NOT NULL DEFAULT 1
+    );
+GO
+
+CREATE TABLE FORMAPAGO (
+        IdFormaPago INT IDENTITY(1,1) PRIMARY KEY,
+        Nombre VARCHAR(50) NOT NULL UNIQUE,
+        Estado BIT NOT NULL DEFAULT (1),
+    );
+GO
+
+CREATE TABLE FORMAENTREGA (
+        IdFormaEntrega INT IDENTITY(1,1) PRIMARY KEY,
+        Nombre VARCHAR(50) NOT NULL UNIQUE,
+        Estado BIT NOT NULL DEFAULT (1),
+    );
+GO
+
+CREATE TABLE PEDIDO (
+        IdPedido INT IDENTITY(1,1) PRIMARY KEY,
+        IdCliente INT NOT NULL,
+        Fecha DATETIME2(0) NOT NULL CONSTRAINT DF_PEDIDO_Fecha DEFAULT (SYSDATETIME()),
+        Total DECIMAL(10,2) NOT NULL,
+        IdFormaPago INT NOT NULL,
+        IdFormaEntrega INT NOT NULL,
+        IdDireccion INT NULL,
+        IdEstadoPedido INT NOT NULL,
+
+        CONSTRAINT CK_PEDIDO_Total CHECK (Total >= 0),
+        FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente),
+        FOREIGN KEY (IdFormaPago) REFERENCES FORMAPAGO(IdFormaPago),
+        FOREIGN KEY (IdFormaEntrega) REFERENCES FORMAENTREGA(IdFormaEntrega),
+        FOREIGN KEY (IdDireccion) REFERENCES DIRECCION(IdDireccion),
+        FOREIGN KEY (IdEstadoPedido) REFERENCES ESTADOPEDIDO(IdEstadoPedido)
+    );
+GO
+
 CREATE TABLE HISTORIALPEDIDO (
 IdHistorial int identity (1,1) primary key not null,
 IdPedido int foreign key references Pedido (IdPedido) not null,
