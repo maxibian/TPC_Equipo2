@@ -36,6 +36,8 @@ CREATE TABLE USUARIO (
 );
 GO
 
+
+
 CREATE TABLE CLIENTE (
     IdCliente INT PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(30) NOT NULL,
@@ -71,6 +73,7 @@ CREATE TABLE DIRECCION (
     Localidad VARCHAR(30) NOT NULL,
     CodigoPostal VARCHAR(30) NOT NULL,
     Observacion VARCHAR(200) NULL,
+    Estado BIT NOT NULL DEFAULT 1,
 
     FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente)
 );
@@ -87,8 +90,8 @@ GO
 CREATE TABLE ITEMSCARRITO
 (
     IdItemsCarrito INT IDENTITY(1,1) PRIMARY KEY,
-    IdCarrito INT NOT NULL UNIQUE,
-    IdProducto INT NOT NULL UNIQUE,
+    IdCarrito INT NOT NULL,
+    IdProducto INT NOT NULL,
     Cantidad INT NOT NULL,
 
     FOREIGN KEY (IdCarrito) REFERENCES CARRITO(IdCarrito),
@@ -99,48 +102,52 @@ CREATE TABLE ITEMSCARRITO
 );
 GO
 
-CREATE TABLE ESTADOPEDIDO (
-        IdEstadoPedido INT IDENTITY(1,1) PRIMARY KEY,
-        Nombre VARCHAR(50) NOT NULL UNIQUE,
-        Estado BIT NOT NULL DEFAULT 1
-    );
-GO
-
 CREATE TABLE FORMAPAGO (
         IdFormaPago INT IDENTITY(1,1) PRIMARY KEY,
         Nombre VARCHAR(50) NOT NULL UNIQUE,
-        Estado BIT NOT NULL DEFAULT (1),
+        Estado BIT NOT NULL DEFAULT (1)
     );
 GO
 
 CREATE TABLE FORMAENTREGA (
         IdFormaEntrega INT IDENTITY(1,1) PRIMARY KEY,
         Nombre VARCHAR(50) NOT NULL UNIQUE,
-        Estado BIT NOT NULL DEFAULT (1),
+        Estado BIT NOT NULL DEFAULT (1)
     );
 GO
 
-CREATE TABLE PEDIDO (
-        IdPedido INT IDENTITY(1,1) PRIMARY KEY,
+CREATE TABLE VENTA (
+        IdVenta INT IDENTITY(1,1) PRIMARY KEY,
         IdCliente INT NOT NULL,
         Fecha DATETIME2(0) NOT NULL CONSTRAINT DF_PEDIDO_Fecha DEFAULT (SYSDATETIME()),
-        Total DECIMAL(10,2) NOT NULL,
+        VentaTotal DECIMAL(10,2) NOT NULL,
         IdFormaPago INT NOT NULL,
         IdFormaEntrega INT NOT NULL,
         IdDireccion INT NULL,
-        IdEstadoPedido INT NOT NULL,
+        
 
-        CONSTRAINT CK_PEDIDO_Total CHECK (Total >= 0),
+        CONSTRAINT CK_PEDIDO_Total CHECK (VentaTotal >= 0),
         FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente),
         FOREIGN KEY (IdFormaPago) REFERENCES FORMAPAGO(IdFormaPago),
         FOREIGN KEY (IdFormaEntrega) REFERENCES FORMAENTREGA(IdFormaEntrega),
-        FOREIGN KEY (IdDireccion) REFERENCES DIRECCION(IdDireccion),
-        FOREIGN KEY (IdEstadoPedido) REFERENCES ESTADOPEDIDO(IdEstadoPedido)
+        FOREIGN KEY (IdDireccion) REFERENCES DIRECCION(IdDireccion)
     );
 GO
 
-CREATE TABLE HISTORIALPEDIDO (
-IdHistorial int identity (1,1) primary key not null,
-IdPedido int foreign key references Pedido (IdPedido) not null,
-IdCliente int foreign key references CLIENTE(IdCliente) not null,
-)
+CREATE TABLE DETALLEVENTA (
+        IdDetallePedido INT IDENTITY(1,1) PRIMARY KEY,
+        IdVenta INT NOT NULL,
+        IdProducto INT NOT NULL,
+        Cantidad INT NOT NULL,
+        PrecioUnitario DECIMAL(10,2) NOT NULL,
+
+        FOREIGN KEY (IdVenta) REFERENCES VENTA(IdVenta),
+        FOREIGN KEY (IdProducto) REFERENCES PRODUCTO(IdProducto),
+
+        CONSTRAINT CK_DetalleVenta_Cantidad
+        CHECK (Cantidad > 0),
+
+        CONSTRAINT CK_DetallePedido_Precio
+        CHECK (PrecioUnitario >= 0)
+);
+GO
