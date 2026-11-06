@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace dominio
 {
-    public class Pedido
+    public class Venta
     {
         public int IdPedido { get; set; }
         public Cliente Cliente { get; set; }
-        public List<DetallePedido> DetallesPedido { get; set; }
+        public List<DetalleVenta> DetallesVenta { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
         public FormaPago FormaPago { get; set; }
