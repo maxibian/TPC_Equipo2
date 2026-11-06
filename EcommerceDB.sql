@@ -111,9 +111,9 @@ CREATE TABLE CARRITO (
 );
 GO
 
-CREATE TABLE ITEMSCARRITO
+CREATE TABLE ITEMCARRITO
 (
-    IdItemsCarrito INT IDENTITY(1,1) PRIMARY KEY,
+    IdItemCarrito INT IDENTITY(1,1) PRIMARY KEY,
     IdCarrito INT NOT NULL,
     IdProducto INT NOT NULL,
     Cantidad INT NOT NULL,
@@ -121,8 +121,8 @@ CREATE TABLE ITEMSCARRITO
     FOREIGN KEY (IdCarrito) REFERENCES CARRITO(IdCarrito),
     FOREIGN KEY (IdProducto) REFERENCES PRODUCTO(IdProducto),
 
-    CONSTRAINT CK_ItemsCarrito_Cantidad CHECK (Cantidad > 0),
-    CONSTRAINT UQ_ItemsCarrito_Producto UNIQUE (IdCarrito, IdProducto)
+    CONSTRAINT CK_ItemCarrito_Cantidad CHECK (Cantidad > 0),
+    CONSTRAINT UQ_ItemCarrito_Producto UNIQUE (IdCarrito, IdProducto)
 );
 GO
 
