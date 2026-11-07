@@ -148,7 +148,7 @@ CREATE TABLE VENTA (
         IdFormaPago INT NOT NULL,
         IdFormaEntrega INT NOT NULL,
         IdDireccion INT NOT NULL,
-        IdCarrito INT NOT NULL UNIQUE,
+        IdCarrito INT NOT NULL UNIQUE, --No estoy seguro de si hace falta IdCarrito
         
         CONSTRAINT CK_PEDIDO_Total CHECK (VentaTotal >= 0),
         
@@ -169,7 +169,7 @@ CREATE TABLE VENTA (
 GO
 
 CREATE TABLE DETALLEVENTA (
-        IdDetallePedido INT IDENTITY(1,1) PRIMARY KEY,
+        IdDetalleVenta  INT IDENTITY(1,1) PRIMARY KEY,
         IdVenta INT NOT NULL,
         IdProducto INT NOT NULL,
         Cantidad INT NOT NULL,
@@ -185,5 +185,4 @@ CREATE TABLE DETALLEVENTA (
         CHECK (PrecioUnitario >= 0)
 );
 GO
-
 
