@@ -42,19 +42,6 @@ CREATE TABLE TIPOTARJETA (
 );
 GO
 
-CREATE TABLE TARJETA (
-    IdTarjeta INT PRIMARY KEY IDENTITY(1,1),
-    NumeroTarjeta VARCHAR(19) NOT NULL UNIQUE,
-    FechaVencimiento DATE NOT NULL,
-    NombreYApellidoTitular VARCHAR(100) NOT NULL,
-    --CodigoSeguridad INT NOT NULL, no guardar (dato sensible)
-    IdTipoTarjeta INT NOT NULL,
-    Estado BIT NOT NULL DEFAULT 1,
-
-    FOREIGN KEY (IdTipoTarjeta) REFERENCES TIPOTARJETA(IdTipoTarjeta)
-);
-GO
-
 CREATE TABLE CLIENTE (
     IdCliente INT PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(30) NOT NULL,
@@ -62,24 +49,41 @@ CREATE TABLE CLIENTE (
     Email VARCHAR(100) NOT NULL UNIQUE,
     Telefono VARCHAR(50) NOT NULL,
 	IdUsuario INT NOT NULL UNIQUE,
-    IdTarjeta INT NULL,
 
-	FOREIGN KEY(IdUsuario) REFERENCES USUARIO(IdUsuario),
-    FOREIGN KEY (IdTarjeta) REFERENCES TARJETA(IdTarjeta)
+	FOREIGN KEY(IdUsuario) REFERENCES USUARIO(IdUsuario)
+);
+GO
+
+CREATE TABLE TARJETA (
+    IdTarjeta INT PRIMARY KEY IDENTITY(1,1),
+	IdCliente INT NOT NULL,
+    NumeroTarjeta VARCHAR(19) NOT NULL UNIQUE,
+    FechaVencimiento DATE NOT NULL,
+    NombreYApellidoTitular VARCHAR(100) NOT NULL,
+    --CodigoSeguridad INT NOT NULL, no guardar (dato sensible)
+    IdTipoTarjeta INT NOT NULL,
+    Estado BIT NOT NULL DEFAULT 1,
+
+    CONSTRAINT FK_Tarjeta_Tipo FOREIGN KEY (IdTipoTarjeta) REFERENCES TIPOTARJETA(IdTipoTarjeta),
+	CONSTRAINT FK_Tarjeta_Cliente FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente),
+	CONSTRAINT UQ_Tarjeta_Cliente UNIQUE (IdTarjeta, IdCliente)
 );
 GO
 
 CREATE TABLE DIRECCION (
     IdDireccion INT PRIMARY KEY IDENTITY(1,1),
     IdCliente INT NOT NULL,
-    Calle VARCHAR(30) NOT NULL,
+    Calle VARCHAR(100) NOT NULL,
     Numero INT NOT NULL,
-    Localidad VARCHAR(30) NOT NULL,
+    Localidad VARCHAR(50) NOT NULL,
+	Provincia VARCHAR(50) NOT NULL,
     CodigoPostal VARCHAR(10) NOT NULL,
     Observacion VARCHAR(200) NULL,
     Estado BIT NOT NULL DEFAULT 1,
 
-    FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente)
+    FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente),
+
+	CONSTRAINT UQ_Direccion_Cliente UNIQUE (IdDireccion, IdCliente)
 );
 GO
 
@@ -105,8 +109,6 @@ CREATE TABLE CARRITO (
     IdCarrito INT IDENTITY(1,1) PRIMARY KEY,
     IdCliente INT NOT NULL UNIQUE,
 
-    CONSTRAINT UQ_Carrito_Cliente UNIQUE (IdCarrito, IdCliente),
-
     FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente)
 );
 GO
@@ -130,14 +132,14 @@ CREATE TABLE FORMAPAGO (
         IdFormaPago INT IDENTITY(1,1) PRIMARY KEY,
         Nombre VARCHAR(50) NOT NULL UNIQUE,
         Estado BIT NOT NULL DEFAULT 1
-    );
+);
 GO
 
 CREATE TABLE FORMAENTREGA (
         IdFormaEntrega INT IDENTITY(1,1) PRIMARY KEY,
         Nombre VARCHAR(50) NOT NULL UNIQUE,
         Estado BIT NOT NULL DEFAULT 1
-    );
+);
 GO
 
 CREATE TABLE VENTA (
@@ -148,24 +150,21 @@ CREATE TABLE VENTA (
         IdFormaPago INT NOT NULL,
         IdFormaEntrega INT NOT NULL,
         IdDireccion INT NULL, --Puede ser null si se selecciona "Retiro en local" como forma de entrega
-        IdCarrito INT NOT NULL UNIQUE, --No estoy seguro de si hace falta IdCarrito
+        IdTarjeta INT NULL,
         
-        CONSTRAINT CK_PEDIDO_Total CHECK (VentaTotal >= 0),
+        CONSTRAINT CK_VENTA_Total CHECK (VentaTotal >= 0),
         
-
+		FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente),
         FOREIGN KEY (IdFormaPago) REFERENCES FORMAPAGO(IdFormaPago),
         FOREIGN KEY (IdFormaEntrega) REFERENCES FORMAENTREGA(IdFormaEntrega),
-        FOREIGN KEY (IdDireccion) REFERENCES DIRECCION(IdDireccion),
-        FOREIGN KEY (IdCarrito) REFERENCES CARRITO(IdCarrito),
+        
 
-        CONSTRAINT FK_VENTA_CLIENTE
-        FOREIGN KEY (IdCliente)
-        REFERENCES CLIENTE(IdCliente),
+		CONSTRAINT FK_Venta_Direccion_Cliente FOREIGN KEY (IdDireccion, IdCliente)
+        REFERENCES DIRECCION(IdDireccion, IdCliente),
 
-        CONSTRAINT FK_VENTA_CARRITO_CLIENTE
-        FOREIGN KEY (IdCarrito, IdCliente)
-        REFERENCES CARRITO(IdCarrito, IdCliente)
-    );
+		CONSTRAINT FK_Venta_Tarjeta_Cliente FOREIGN KEY (IdTarjeta, IdCliente)
+		REFERENCES TARJETA(IdTarjeta, IdCliente)
+);
 GO
 
 CREATE TABLE DETALLEVENTA (
@@ -181,8 +180,10 @@ CREATE TABLE DETALLEVENTA (
         CONSTRAINT CK_DetalleVenta_Cantidad
         CHECK (Cantidad > 0),
 
-        CONSTRAINT CK_DetallePedido_Precio
-        CHECK (PrecioUnitario >= 0)
+        CONSTRAINT CK_DetalleVenta_Precio
+        CHECK (PrecioUnitario >= 0),
+
+		CONSTRAINT UQ_DetalleVenta_Producto UNIQUE (IdVenta, IdProducto)
 );
 GO
 
