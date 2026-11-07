@@ -57,6 +57,7 @@ GO
 
 CREATE TABLE DIRECCION (
     IdDireccion INT PRIMARY KEY IDENTITY(1,1),
+    IdCliente int not null foreign key references CLIENTE(IdCliente),
     Calle VARCHAR(30) NOT NULL,
     Numero INT NOT NULL,
     Localidad VARCHAR(30) NOT NULL,
@@ -74,7 +75,6 @@ CREATE TABLE CLIENTE (
     Email VARCHAR(100) NOT NULL UNIQUE,
     Telefono VARCHAR(50) NOT NULL,
 	IdUsuario INT NOT NULL UNIQUE,
-    IdDireccion INT NOT NULL,
     IdTarjeta INT NULL,
 
 	FOREIGN KEY(IdUsuario) REFERENCES USUARIO(IdUsuario),
