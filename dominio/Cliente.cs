@@ -13,7 +13,6 @@ namespace dominio
         public string Apellido { get; set; }
         public string Email { get; set; }
         public string Telefono { get; set; }
-        public int IdUsuario { get; set; }
-        public int IdTarjeta { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }

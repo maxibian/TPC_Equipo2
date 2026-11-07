@@ -42,6 +42,13 @@ CREATE TABLE TIPOTARJETA (
 );
 GO
 
+CREATE TABLE MARCATARJETA (
+	IdMarcaTarjeta INT PRIMARY KEY IDENTITY(1,1),
+	NombreMarcaTarjeta VARCHAR(30) NOT NULL UNIQUE,
+	Estado BIT NOT NULL DEFAULT 1
+);
+GO
+
 CREATE TABLE CLIENTE (
     IdCliente INT PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(30) NOT NULL,
@@ -62,8 +69,10 @@ CREATE TABLE TARJETA (
     NombreYApellidoTitular VARCHAR(100) NOT NULL,
     --CodigoSeguridad INT NOT NULL, no guardar (dato sensible)
     IdTipoTarjeta INT NOT NULL,
+	IdMarcaTarjeta INT NOT NULL,
     Estado BIT NOT NULL DEFAULT 1,
 
+	CONSTRAINT FK_Tarjeta_Marca FOREIGN KEY (IdMarcaTarjeta) REFERENCES MARCATARJETA(IdMarcaTarjeta),
     CONSTRAINT FK_Tarjeta_Tipo FOREIGN KEY (IdTipoTarjeta) REFERENCES TIPOTARJETA(IdTipoTarjeta),
 	CONSTRAINT FK_Tarjeta_Cliente FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente),
 	CONSTRAINT UQ_Tarjeta_Cliente UNIQUE (IdTarjeta, IdCliente)

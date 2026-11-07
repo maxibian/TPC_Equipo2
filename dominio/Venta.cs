@@ -10,12 +10,12 @@ namespace dominio
     {
         public int IdVenta { get; set; }
         public Cliente Cliente { get; set; }
-        public List<DetalleVenta> DetallesVenta { get; set; }
         public DateTime Fecha { get; set; }
         public decimal VentaTotal { get; set; }
         public FormaPago FormaPago { get; set; }
         public FormaEntrega FormaEntrega { get; set; }
         public Direccion Direccion { get; set; }
+        public Tarjeta Tarjeta { get; set; }
 
     }
 }

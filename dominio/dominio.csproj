@@ -51,6 +51,7 @@
     <Compile Include="HistorialPedido.cs" />
     <Compile Include="Imagen.cs" />
     <Compile Include="ItemCarrito.cs" />
+    <Compile Include="MarcaTarjeta.cs" />
     <Compile Include="Rol.cs" />
     <Compile Include="Tarjeta.cs" />
     <Compile Include="TipoTarjeta.cs" />

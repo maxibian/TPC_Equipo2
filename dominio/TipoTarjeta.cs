@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace dominio
 {
-    internal class TipoTarjeta
+    public class TipoTarjeta
     {
         public int IdTipoTarjeta { get; set; }
         public string NombreTipoTarjeta { get; set; }

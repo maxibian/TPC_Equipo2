@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace dominio
 {
-    internal class Tarjeta
+    public class Tarjeta
     {
         public int IdTarjeta { get; set; }
-        public int NumeroTarjeta { get; set; }
+        public int IdCliente { get; set; }
+        public string NumeroTarjeta { get; set; }
         public DateTime FechaVencimiento { get; set; }
-        public int CodigoSeguridad { get; set; }
+        //public int CodigoSeguridad { get; set; }
+        public string NombreYApellidoTitular { get; set; }
         public TipoTarjeta TipoTarjeta { get; set; }
+        public MarcaTarjeta MarcaTarjeta { get; set; }
         public bool Estado { get; set; }
     }
 }

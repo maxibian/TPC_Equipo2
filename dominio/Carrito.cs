@@ -10,10 +10,7 @@ namespace dominio
     {
 
         public int IdCarrito { get; set; }
-        public DateTime Fecha { get; set; }
-        public Cliente Cliente { get; set; }
-        public List<ItemCarrito> Items { get; set; }
-
-
+        public int IdCliente { get; set; }
+        
     }
 }
