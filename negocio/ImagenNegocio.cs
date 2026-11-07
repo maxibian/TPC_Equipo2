@@ -16,13 +16,14 @@ namespace negocio
             List<Imagen> lista = new List<Imagen>();
             try
             {
-                datos.setearConsulta("SELECT IdImagen, ImagenUrl FROM IMAGEN");
+                datos.setearConsulta("SELECT IdImagen, ImagenUrl, Estado FROM IMAGEN");
                 datos.ejecutarLectura();
                 while(datos.Lector.Read())
                 {
                     Imagen aux = new Imagen();
                     aux.IdImagen = (int)datos.Lector["IdImagen"];
                     aux.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+                    aux.Estado = (bool)datos.Lector["Estado"];
                     lista.Add(aux);
                 }
                 return lista;

@@ -15,7 +15,7 @@ namespace negocio
             List<Direccion> lista = new List<Direccion>();
             try
             {
-                datos.setearConsulta("SELECT IdDireccion, IdCliente, Calle, Numero, Localidad, CodigoPostal, Observacion FROM DIRECCION");
+                datos.setearConsulta("SELECT IdDireccion, IdCliente, Calle, Numero, Localidad, Provincia, CodigoPostal, Observacion, Estado FROM DIRECCION");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -27,9 +27,11 @@ namespace negocio
                     aux.Calle = (string)datos.Lector["Calle"];
                     aux.Numero = (int)datos.Lector["Numero"];
                     aux.Localidad = (string)datos.Lector["Localidad"];
+                    aux.Provincia = (string)datos.Lector["Provincia"];
                     aux.CodigoPostal = (string)datos.Lector["CodigoPostal"];
                     if (!(datos.Lector["Observacion"] is DBNull))
                         aux.Observacion = (string)datos.Lector["Observacion"];
+                    aux.Estado = (bool)datos.Lector["Estado"];
 
 
                     lista.Add(aux);
@@ -51,11 +53,12 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("INSERT INTO DIRECCION(IdCliente, Calle, Numero, Localidad, CodigoPostal, Observacion)values(@IdDireccion, @Calle, @Numero, @Localidad, @CodigoPostal, @Observacion)");
+                datos.setearConsulta("INSERT INTO DIRECCION(IdCliente, Calle, Numero, Localidad, Provincia, CodigoPostal, Observacion)values(@IdCliente, @Calle, @Numero, @Localidad, @Provincia, @CodigoPostal, @Observacion)");
                 datos.setearParametro("@IdCliente", direccion.IdCliente);
                 datos.setearParametro("@Calle", direccion.Calle);
                 datos.setearParametro("@Numero", direccion.Numero);
                 datos.setearParametro("@Localidad", direccion.Localidad);
+                datos.setearParametro("@Provincia", direccion.Provincia);
                 datos.setearParametro("@CodigoPostal", direccion.CodigoPostal);
                 datos.setearParametro("@Observacion", direccion.Observacion);
                 datos.ejecutarAccion();
@@ -71,11 +74,12 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("UPDATE DIRECCION SET IdCliente = @IdCliente, Calle = @Calle, Numero = @Numero, Localidad = @Localidad, CodigoPostal = @CodigoPostal, Observacion = @Observacion WHERE IdDireccion = @IdDireccion");
+                datos.setearConsulta("UPDATE DIRECCION SET IdCliente = @IdCliente, Calle = @Calle, Numero = @Numero, Localidad = @Localidad, Provincia = @Provincia, CodigoPostal = @CodigoPostal, Observacion = @Observacion WHERE IdDireccion = @IdDireccion");
                 datos.setearParametro("@IdCliente", direccion.IdCliente);
                 datos.setearParametro("@Calle", direccion.Calle);
                 datos.setearParametro("@Numero", direccion.Numero);
                 datos.setearParametro("@Localidad", direccion.Localidad);
+                datos.setearParametro("@Provincia", direccion.Provincia);
                 datos.setearParametro("@CodigoPostal", direccion.CodigoPostal);
                 datos.setearParametro("@Observacion", direccion.Observacion);
                 datos.setearParametro("@IdDireccion", direccion.IdDireccion);
@@ -96,7 +100,7 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("DELETE FROM DIRECCION WHERE IdDireccion = @IdDireccion");
+                datos.setearConsulta("DELETE FROM DIRECCION WHERE IdDireccion = @IdDireccion"); 
                 datos.setearParametro("@IdDireccion", id);
                 datos.ejecutarAccion();
 
