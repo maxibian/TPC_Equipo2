@@ -46,7 +46,7 @@ namespace negocio
             }
         }
 
-        public void agregar(VentaNegocio venta)
+        public void agregar(Venta venta)
         {
 
         }

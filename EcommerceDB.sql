@@ -77,7 +77,7 @@ CREATE TABLE DIRECCION (
     Localidad VARCHAR(30) NOT NULL,
     CodigoPostal VARCHAR(10) NOT NULL,
     Observacion VARCHAR(200) NULL,
-    Estado BIT NOT NULL DEFAULT 1
+    Estado BIT NOT NULL DEFAULT 1,
 
     FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente)
 );
@@ -147,7 +147,7 @@ CREATE TABLE VENTA (
         VentaTotal DECIMAL(10,2) NOT NULL,
         IdFormaPago INT NOT NULL,
         IdFormaEntrega INT NOT NULL,
-        IdDireccion INT NOT NULL,
+        IdDireccion INT NULL, --Puede ser null si se selecciona "Retiro en local" como forma de entrega
         IdCarrito INT NOT NULL UNIQUE, --No estoy seguro de si hace falta IdCarrito
         
         CONSTRAINT CK_PEDIDO_Total CHECK (VentaTotal >= 0),
