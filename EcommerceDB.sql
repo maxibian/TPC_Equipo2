@@ -55,19 +55,6 @@ CREATE TABLE TARJETA (
 );
 GO
 
-CREATE TABLE DIRECCION (
-    IdDireccion INT PRIMARY KEY IDENTITY(1,1),
-    IdCliente int not null foreign key references CLIENTE(IdCliente),
-    Calle VARCHAR(30) NOT NULL,
-    Numero INT NOT NULL,
-    Localidad VARCHAR(30) NOT NULL,
-    CodigoPostal VARCHAR(10) NOT NULL,
-    Observacion VARCHAR(200) NULL,
-    Estado BIT NOT NULL DEFAULT 1
-
-);
-GO
-
 CREATE TABLE CLIENTE (
     IdCliente INT PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(30) NOT NULL,
@@ -78,8 +65,21 @@ CREATE TABLE CLIENTE (
     IdTarjeta INT NULL,
 
 	FOREIGN KEY(IdUsuario) REFERENCES USUARIO(IdUsuario),
-    FOREIGN KEY (IdDireccion) REFERENCES DIRECCION(IdDireccion),
     FOREIGN KEY (IdTarjeta) REFERENCES TARJETA(IdTarjeta)
+);
+GO
+
+CREATE TABLE DIRECCION (
+    IdDireccion INT PRIMARY KEY IDENTITY(1,1),
+    IdCliente INT NOT NULL,
+    Calle VARCHAR(30) NOT NULL,
+    Numero INT NOT NULL,
+    Localidad VARCHAR(30) NOT NULL,
+    CodigoPostal VARCHAR(10) NOT NULL,
+    Observacion VARCHAR(200) NULL,
+    Estado BIT NOT NULL DEFAULT 1
+
+    FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente)
 );
 GO
 
