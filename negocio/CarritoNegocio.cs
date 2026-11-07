@@ -12,7 +12,9 @@ namespace negocio
         AccesoDatos datos = new AccesoDatos();
         public Carrito obtenerCarrito(int IdCliente)
         {
-            
+            Carrito a = new Carrito();
+            return a;
+            //para que compile
         }
         public void agregarProducto(int IdCarrito, int IdProducto)
         {

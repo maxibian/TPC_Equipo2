@@ -9,7 +9,7 @@ namespace dominio
     public class HistorialPedido
     {
         public int IdHistorialPedido { get; set; }
-        public Pedido IdPedido { get; set; }
+        public Venta IdPedido { get; set; }
         public Cliente IdCliente { get; set; }
     }
 }
