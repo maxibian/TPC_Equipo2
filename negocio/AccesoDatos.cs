@@ -23,6 +23,7 @@ namespace negocio
         }
         public void setearConsulta(string consulta) 
         {
+            comando.Parameters.Clear();
             comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
         }
@@ -49,7 +50,7 @@ namespace negocio
         }
         public void setearParametro(string nombre, object valor)
         {
-            comando.Parameters.AddWithValue(nombre, valor);
+            comando.Parameters.AddWithValue(nombre, valor ?? DBNull.Value);
         }
 
         public void ejecutarAccion()
@@ -67,24 +68,37 @@ namespace negocio
                 throw ex;
             }
         }
-        public object ejecutarScalar()
-        {
+        //public object ejecutarScalar()
+        //{
 
+        //    try
+        //    {
+        //        comando.Connection = conexion;
+        //        conexion.Open();
+        //        return comando.ExecuteScalar();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        conexion.Close();
+        //    }
+        //}
+
+        public int ejecutarEscalar()
+        {
             try
             {
                 comando.Connection = conexion;
                 conexion.Open();
-                return comando.ExecuteScalar();
+                return Convert.ToInt32(comando.ExecuteScalar());
             }
             catch (Exception)
             {
                 throw;
             }
-            finally
-            {
-                conexion.Close();
-            }
         }
-
     }
 }
