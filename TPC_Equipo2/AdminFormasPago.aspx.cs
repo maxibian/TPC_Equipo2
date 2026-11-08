@@ -42,11 +42,17 @@ namespace TPC_Equipo2
 
             FormaPagoNegocio negocio = new FormaPagoNegocio();
 
-            negocio.agregar(nuevaFormaPago);
+            bool agregado = negocio.agregar(nuevaFormaPago);
 
-            txtNombreFormaPago.Text = "";
-
-            cargarFormasPago();
+            if (agregado)
+            {
+                lblMensaje.Text = "Forma de pago agregada correctamente";
+                txtNombreFormaPago.Text = "";
+                cargarFormasPago();
+            }
+            else{
+                lblMensaje.Text = "Ya existe una forma de pago con ese nombre";
+            }
 
         }
 
