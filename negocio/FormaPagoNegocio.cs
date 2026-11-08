@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace negocio
 {
     public class FormaPagoNegocio
-    {
-        AccesoDatos datos = new AccesoDatos();
-
+    {       
         public List<FormaPago> listarFormasPago()
         {
+            AccesoDatos datos = new AccesoDatos();
+
             List<FormaPago> lista = new List<FormaPago>();
             try
             {
@@ -41,15 +41,23 @@ namespace negocio
             }
         }
 
-        public void agregar(FormaPago nueva)
+        public bool agregar(FormaPago nueva)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta("INSERT INTO FORMAPAGO (Nombre) values (@nombre)");
-                datos.setearParametro("@nombre", nueva.Nombre);
-                datos.ejecutarAccion();
+                if (!existeNombre(nueva.Nombre))
+                {
+                    datos.setearConsulta("INSERT INTO FORMAPAGO (Nombre) values (@nombre)");
+                    datos.setearParametro("@nombre", nueva.Nombre);
+                    datos.ejecutarAccion();
+
+                    return true;
+                }
+
+                return false;
+                
             }
             catch (Exception ex)
             {
@@ -59,6 +67,22 @@ namespace negocio
             {
                 datos.cerrarConexion();
             }
+        }
+
+        public bool existeNombre(string nombre)
+        {
+            List<FormaPago> lista = listarFormasPago();
+
+            foreach (FormaPago forma in lista)
+            {
+                if(forma.Nombre.ToUpper() == nombre.ToUpper())
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
         }
     }
 }
