@@ -47,6 +47,23 @@ namespace negocio
 
             try
             {
+                if(nueva == null)
+                {
+                    throw new ArgumentNullException(nameof(nueva));
+                }
+
+                if (string.IsNullOrWhiteSpace(nueva.Nombre))
+                {
+                    throw new ArgumentException("El nombre es obligatorio.");
+                }
+
+                nueva.Nombre = nueva.Nombre.Trim();
+
+                if (nueva.Nombre.Length > 50)
+                {
+                    throw new ArgumentException("El nombre no puede superar los 50 caracteres.");
+                }
+
                 if (!existeNombre(nueva.Nombre))
                 {
                     datos.setearConsulta("INSERT INTO FORMAPAGO (Nombre) values (@nombre)");
