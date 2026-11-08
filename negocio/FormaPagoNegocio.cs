@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace negocio
 {
-    internal class FormaPagoNegocio
+    public class FormaPagoNegocio
     {
         AccesoDatos datos = new AccesoDatos();
 
