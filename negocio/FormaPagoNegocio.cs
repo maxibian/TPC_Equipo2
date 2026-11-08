@@ -40,5 +40,25 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void agregar(FormaPago nueva)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("INSERT INTO FORMAPAGO (Nombre) values (@nombre)");
+                datos.setearParametro("@nombre", nueva.Nombre);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
