@@ -101,5 +101,22 @@ namespace negocio
 
             return false;
         }
+
+        public void cambiarEstado(int idFormaPago, bool estado)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE FORMAPAGO SET Estado = @estado WHERE IdFormaPago = @id");
+                datos.setearParametro("@estado", estado);
+                datos.setearParametro("@id", idFormaPago);
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
