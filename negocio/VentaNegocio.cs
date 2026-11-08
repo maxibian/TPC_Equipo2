@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace negocio
 {
-    internal class VentaNegocio
+    public class VentaNegocio
     {
         AccesoDatos datos = new AccesoDatos();
 
