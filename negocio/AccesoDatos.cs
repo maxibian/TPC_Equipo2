@@ -69,16 +69,20 @@ namespace negocio
         }
         public object ejecutarScalar()
         {
-            comando.Connection = conexion;
 
             try
             {
+                comando.Connection = conexion;
                 conexion.Open();
                 return comando.ExecuteScalar();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
+            }
+            finally
+            {
+                conexion.Close();
             }
         }
 

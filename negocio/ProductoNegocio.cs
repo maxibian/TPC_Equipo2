@@ -15,7 +15,7 @@ namespace negocio
             List<Producto> lista = new List<Producto>();
             try
             {
-                datos.setearConsulta("SELECT P.IdProducto, P.Nombre, P.Descripcion, P.Precio, P.Estado AS EstadoProducto, P.Stock,  C.IdCategoria, C.Nombre as NombreCategoria, C.Estado AS EstadoCategoria, I.IdImagen as IdImagen, I.ImagenUrl as Imagen, I.Estado FROM PRODUCTO P INNER JOIN CATEGORIA C ON P.IdCategoria = C.IdCategoria INNER JOIN IMAGEN I ON P.IdImagen = I.IdImagen");
+                datos.setearConsulta("SELECT P.IdProducto, P.Nombre, P.Descripcion, P.Precio, P.Estado AS EstadoProducto, P.Stock,  C.IdCategoria, C.Nombre as NombreCategoria, C.Estado AS EstadoCategoria, I.IdImagen as IdImagen, I.ImagenUrl as Imagen, I.Estado FROM PRODUCTO P INNER JOIN CATEGORIA C ON P.IdCategoria = C.IdCategoria INNER JOIN IMAGEN I ON P.IdProducto = I.IdProducto WHERE I.Estado = 1");
                 datos.ejecutarLectura();
                 while(datos.Lector.Read())
                 {
@@ -38,6 +38,7 @@ namespace negocio
                         aux.Imagen = new Imagen();
                         aux.Imagen.IdImagen = (int)datos.Lector["IdImagen"];
                         aux.Imagen.ImagenUrl = (string)datos.Lector["Imagen"];
+                        aux.Imagen.Estado = (bool)datos.Lector["Estado"];
                         aux.Imagen.Estado = (bool)datos.Lector["Estado"];
                     }
                     lista.Add(aux);

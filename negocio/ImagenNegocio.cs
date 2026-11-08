@@ -34,9 +34,22 @@ namespace negocio
             }
             finally { datos.cerrarConexion(); }
         }
-        public void agregar(Imagen imagen)
+        public void agregarImagen(Imagen imagen)
         {
-
+            try
+            {
+                datos.setearConsulta("INSERT INTO IMAGEN (ImagenUrl) VALUES (@ImagenUrl)");
+                datos.setearParametro("@ImagenUrl", imagen.ImagenUrl);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
         public void modificar(Imagen imagen)
         {

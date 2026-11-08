@@ -45,11 +45,18 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-
+        public Venta obtenerVenta(int idVenta)
+        {
+            Venta venta = new Venta();
+            //
+            return venta;
+        }
         public void agregar(Venta venta)
         {
 
         }
+
+
 
     }
 }
