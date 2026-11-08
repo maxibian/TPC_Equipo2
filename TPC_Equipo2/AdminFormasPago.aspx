@@ -4,4 +4,5 @@
     <asp:GridView ID="gvFormasPago" runat="server"></asp:GridView>
     <asp:TextBox ID="txtNombreFormaPago" runat="server"></asp:TextBox>
     <asp:Button ID="btnAgregarFormaPago" runat="server" Text="Agregar" OnClick="btnAgregarFormaPago_Click"/>
+    <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
 </asp:Content>

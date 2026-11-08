@@ -15,9 +15,7 @@ namespace TPC_Equipo2
         {
             if (!IsPostBack)
             {
-                FormaPagoNegocio formaPago = new FormaPagoNegocio();
-                gvFormasPago.DataSource = formaPago.listarFormasPago();
-                gvFormasPago.DataBind();
+                cargarFormasPago();
             }
             
         }
@@ -28,12 +26,36 @@ namespace TPC_Equipo2
 
             if (nombre == "")
             {
-                //Mostrar mensaje de error
+                lblMensaje.Text = "Debe ingresar un nombre para la forma de pago.";
                 return;
             }
-            
 
-            
+            if (nombre.Length > 50)
+            {
+                lblMensaje.Text = "El nombre no puede superar los 50 caracteres.";
+                return;
+            }
+
+            FormaPago nuevaFormaPago = new FormaPago();
+
+            nuevaFormaPago.Nombre = nombre;
+
+            FormaPagoNegocio negocio = new FormaPagoNegocio();
+
+            negocio.agregar(nuevaFormaPago);
+
+            txtNombreFormaPago.Text = "";
+
+            cargarFormasPago();
+
+        }
+
+        private void cargarFormasPago()
+        {
+            FormaPagoNegocio negocio = new FormaPagoNegocio();
+
+            gvFormasPago.DataSource = negocio.listarFormasPago();
+            gvFormasPago.DataBind();
         }
     }
 }
