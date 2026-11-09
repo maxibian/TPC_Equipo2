@@ -10,4 +10,6 @@
 
     <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
 
+    <asp:Button ID="btnGuardar" runat="server" Text="Guardar" OnClick="btnGuardar_Click"/>
+
 </asp:Content>
