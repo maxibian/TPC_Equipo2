@@ -118,5 +118,32 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public FormaPago buscarPorId(int idFormaPago)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            FormaPago aux = null;
+
+            try
+            {
+                datos.setearConsulta("SELECT IdFormaPago, Nombre, Estado FROM FORMAPAGO WHERE IdFormaPago = @id");
+                datos.setearParametro("@id", idFormaPago);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    aux = new FormaPago();
+                    aux.IdFormaPago = (int)datos.Lector["IdFormaPago"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Estado = (bool)datos.Lector["Estado"];
+                }
+
+                return aux;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

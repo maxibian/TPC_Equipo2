@@ -72,5 +72,11 @@ namespace TPC_Equipo2
             gvFormasPago.DataSource = negocio.listarFormasPago();
             gvFormasPago.DataBind();
         }
+
+        protected void gvFormasPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string id = gvFormasPago.SelectedDataKey.Value.ToString();
+            Response.Redirect("FormularioFormaPago.aspx?id=" + id);
+        }
     }
 }
