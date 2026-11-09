@@ -9,5 +9,8 @@
             <asp:CommandField HeaderText="Acción" ShowSelectButton="true" SelectText="Seleccionar" />
         </Columns>
     </asp:GridView>
+    <asp:TextBox ID="txtNombreFormaEntrega" runat="server"></asp:TextBox>
+    <asp:Button ID="btnAgregarFormaEntrega" runat="server" Text="Agregar" OnClick="btnAgregarFormaEntrega_Click" />
+    <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
 
 </asp:Content>

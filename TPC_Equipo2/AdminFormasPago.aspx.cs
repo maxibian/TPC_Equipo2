@@ -58,7 +58,7 @@ namespace TPC_Equipo2
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 lblMensaje.Text = "Ocurrió un error al agregar la forma de pago.";
             }       
