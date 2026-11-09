@@ -123,6 +123,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="FormularioFormaEntrega.aspx" />
     <Content Include="FormularioFormaPago.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Inicio.aspx" />
@@ -231,6 +232,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormularioFormaEntrega.aspx.cs">
+      <DependentUpon>FormularioFormaEntrega.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioFormaEntrega.aspx.designer.cs">
+      <DependentUpon>FormularioFormaEntrega.aspx</DependentUpon>
     </Compile>
     <Compile Include="FormularioFormaPago.aspx.cs">
       <DependentUpon>FormularioFormaPago.aspx</DependentUpon>

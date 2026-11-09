@@ -19,11 +19,6 @@ namespace TPC_Equipo2
             }
         }
 
-        protected void gvFormasEntrega_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void cargarFormasPago()
         {
             FormaEntregaNegocio negocio = new FormaEntregaNegocio();
@@ -74,6 +69,12 @@ namespace TPC_Equipo2
             {
                 lblMensaje.Text = "Ocurrió un error al agregar la forma de entrega.";
             }
+        }
+
+        protected void gvFormasEntrega_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string id = gvFormasEntrega.SelectedDataKey.Value.ToString();
+            Response.Redirect("FormularioFormaEntrega.aspx?id=" + id);
         }
     }
 }
