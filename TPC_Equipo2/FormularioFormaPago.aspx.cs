@@ -31,12 +31,23 @@ namespace TPC_Equipo2
                 if (forma == null)
                 {
                     lblMensaje.Text = "No se encontró la forma de pago.";
+                    btnGuardar.Enabled = false;
+                    btnCambiarEstado.Enabled = false;
                     return;
                 }
 
                 txtNombreFormaPago.Text = forma.Nombre;
                 chkEstado.Checked = forma.Estado;
-                
+
+                if (forma.Estado)
+                {
+                    btnCambiarEstado.Text = "Desactivar";
+                }
+                else
+                {
+                    btnCambiarEstado.Text = "Activar";
+                }
+
             }
 
         }
@@ -96,10 +107,40 @@ namespace TPC_Equipo2
                 return;
             }
 
-            FormaPagoNegocio negocio = new FormaPagoNegocio();
-            FormaPago forma = negocio.buscarPorId(numero);
+            try
+            {
+                FormaPagoNegocio negocio = new FormaPagoNegocio();
+                FormaPago forma = negocio.buscarPorId(numero);
 
-            negocio.cambiarEstado(forma.IdFormaPago,!forma.Estado);
+                if (forma == null)
+                {
+                    lblMensaje.Text = "No se encontró la forma de pago.";
+                    return;
+                }
+
+                bool nuevoEstado = !forma.Estado;
+
+                negocio.cambiarEstado(forma.IdFormaPago, nuevoEstado);
+
+                chkEstado.Checked = nuevoEstado;
+
+                if (nuevoEstado)
+                {
+                    lblMensaje.Text = "Forma de pago activada correctamente.";
+                    btnCambiarEstado.Text = "Desactivar";
+
+                }
+                else
+                {
+                    lblMensaje.Text = "Forma de pago desactivada correctamente.";
+                    btnCambiarEstado.Text = "Activar";
+
+                }
+            }
+            catch (Exception)
+            {
+                lblMensaje.Text = "Ocurrió un error al cambiar el estado.";
+            }
 
         }
     }
