@@ -83,5 +83,24 @@ namespace TPC_Equipo2
             }
     
         }
+
+        protected void btnCambiarEstado_Click(object sender, EventArgs e)
+        {
+            string id = Request.QueryString["id"];
+
+            bool valido = int.TryParse(id, out int numero);
+
+            if (!valido || numero <= 0)
+            {
+                lblMensaje.Text = "ID inválido";
+                return;
+            }
+
+            FormaPagoNegocio negocio = new FormaPagoNegocio();
+            FormaPago forma = negocio.buscarPorId(numero);
+
+            negocio.cambiarEstado(forma.IdFormaPago,!forma.Estado);
+
+        }
     }
 }

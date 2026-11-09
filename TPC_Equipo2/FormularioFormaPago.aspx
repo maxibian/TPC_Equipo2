@@ -6,10 +6,12 @@
 
     <asp:TextBox ID="txtNombreFormaPago" runat="server"></asp:TextBox>
 
-    <asp:CheckBox ID="chkEstado" runat="server" Text="Activo" />
+    <asp:CheckBox ID="chkEstado" Enabled="false" runat="server" Text="Activo" />
 
     <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
 
     <asp:Button ID="btnGuardar" runat="server" Text="Guardar" OnClick="btnGuardar_Click"/>
+
+    <asp:Button ID="btnCambiarEstado" runat="server" Text="Cambiar estado" OnClick="btnCambiarEstado_Click"/>
 
 </asp:Content>
