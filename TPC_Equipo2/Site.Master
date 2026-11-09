@@ -51,6 +51,7 @@
 <%--                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contact</a></li>--%>
                         <%--<li class="nav-item"><a class="nav-link" runat="server" href="~/Prueba">Prueba</a></li>--%>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/AdminFormasPago">Administrar Formas de pago</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/AdminFormasEntrega">Administrar Formas de entrega</a></li>
                     </ul>
                 </div>
             </div>

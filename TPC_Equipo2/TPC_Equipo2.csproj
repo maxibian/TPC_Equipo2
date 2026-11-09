@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="AdminFormasEntrega.aspx" />
     <Content Include="AdminFormasPago.aspx" />
     <Content Include="Categoria.aspx" />
     <Content Include="Contact.aspx" />
@@ -187,6 +188,13 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminFormasEntrega.aspx.cs">
+      <DependentUpon>AdminFormasEntrega.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminFormasEntrega.aspx.designer.cs">
+      <DependentUpon>AdminFormasEntrega.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminFormasPago.aspx.cs">
       <DependentUpon>AdminFormasPago.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

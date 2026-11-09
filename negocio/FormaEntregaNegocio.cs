@@ -40,5 +40,66 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public bool agregar(FormaEntrega nueva)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                if (nueva == null)
+                {
+                    throw new ArgumentNullException(nameof(nueva));
+                }
+
+                if (string.IsNullOrWhiteSpace(nueva.Nombre))
+                {
+                    throw new ArgumentException("El nombre es obligatorio.");
+                }
+
+                nueva.Nombre = nueva.Nombre.Trim();
+
+                if (nueva.Nombre.Length > 50)
+                {
+                    throw new ArgumentException("El nombre no puede superar los 50 caracteres.");
+                }
+
+                if (!existeNombre(nueva.Nombre))
+                {
+                    datos.setearConsulta("INSERT INTO FORMAENTREGA (Nombre) values (@nombre)");
+                    datos.setearParametro("@nombre", nueva.Nombre);
+                    datos.ejecutarAccion();
+
+                    return true;
+                }
+
+                return false;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public bool existeNombre(string nombre)
+        {
+            List<FormaEntrega> lista = listarFormasEntrega();
+
+            foreach (FormaEntrega forma in lista)
+            {
+                if (forma.Nombre.ToUpper() == nombre.ToUpper())
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
     }
 }
