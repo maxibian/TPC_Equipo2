@@ -1,4 +1,5 @@
 ﻿using dominio;
+using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,6 +103,22 @@ namespace negocio
             return false;
         }
 
+        public bool existeNombreEnOtroRegistro(string nombre, int idFormaPago)
+        {
+            List<FormaPago> lista = listarFormasPago();
+
+            foreach (FormaPago forma in lista)
+            {
+                if (forma.Nombre.ToUpper() == nombre.ToUpper() && forma.IdFormaPago != idFormaPago)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+
         public void cambiarEstado(int idFormaPago, bool estado)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -139,6 +156,47 @@ namespace negocio
                 }
 
                 return aux;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public bool modificar(FormaPago forma)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                if (forma == null)
+                {
+                    throw new ArgumentNullException(nameof(forma));
+                }
+
+                if (string.IsNullOrWhiteSpace(forma.Nombre))
+                {
+                    throw new ArgumentException("El nombre es obligatorio.");
+                }
+
+                forma.Nombre = forma.Nombre.Trim();
+
+                if (forma.Nombre.Length > 50)
+                {
+                    throw new ArgumentException("El nombre no puede superar los 50 caracteres.");
+                }
+
+                if (!existeNombreEnOtroRegistro(forma.Nombre, forma.IdFormaPago))
+                {
+                    datos.setearConsulta("UPDATE FORMAPAGO SET Nombre = @nombre WHERE IdFormaPago = @id");
+                    datos.setearParametro("@nombre", forma.Nombre);
+                    datos.setearParametro("@id", forma.IdFormaPago);
+                    datos.ejecutarAccion();
+
+                    return true;
+                }
+
+                return false;
             }
             finally
             {
