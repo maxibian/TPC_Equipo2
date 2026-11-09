@@ -22,6 +22,9 @@ namespace TPC_Equipo2
                 if (!valido || numero <= 0)
                 {
                     lblMensaje.Text = "ID inválido";
+                    btnGuardar.Enabled = false;
+                    btnCambiarEstado.Enabled = false;
+                    txtNombreFormaPago.Enabled = false;
                     return;
                 }
 

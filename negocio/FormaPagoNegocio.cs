@@ -30,10 +30,10 @@ namespace negocio
                 }
                 return lista;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw ex;
+                throw;
             }
             finally
             {
@@ -77,7 +77,7 @@ namespace negocio
                 return false;
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
