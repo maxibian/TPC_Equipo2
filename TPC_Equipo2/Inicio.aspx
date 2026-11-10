@@ -18,6 +18,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><%: producto.Nombre%></h5>
                     <p class="card-text"><%: producto.Descripcion %></p>
+                    <p class="card-text"><%: producto.Precio %></p>
                 </div>
             </div>
             </div>

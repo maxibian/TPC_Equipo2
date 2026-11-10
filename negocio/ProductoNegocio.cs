@@ -125,5 +125,45 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public List<Producto> listarCategoria(int id)
+        {
+            List<Producto> lista = new List<Producto>();
+            
+            try
+            {
+                datos.setearConsulta("SELECT P.IdProducto, P.Nombre, P.Descripcion, P.Precio, P.Stock, P.Estado as EstadoProducto, I.ImagenUrl FROM PRODUCTO P INNER JOIN CATEGORIA C ON P.IdCategoria = C.IdCategoria INNER JOIN IMAGEN I ON P.IdProducto = I.IdProducto WHERE P.IdCategoria = @id;");
+                datos.setearParametro("@id", id);
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Producto aux = new Producto();
+                    aux.IdProducto = (int)datos.Lector["IdProducto"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    if (datos.Lector["Descripcion"] != DBNull.Value)
+                        aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.Precio = (decimal)datos.Lector["Precio"];
+                    aux.Estado = (bool)datos.Lector["EstadoProducto"];
+                    aux.Stock = (int)datos.Lector["Stock"];
+                    
+                    aux.Imagen = new Imagen();
+                    aux.Imagen.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+
+                    lista.Add(aux);
+
+                }
+
+                return lista;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            finally { datos.cerrarConexion(); }
+        }
     }
 }
+
