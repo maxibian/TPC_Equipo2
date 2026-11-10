@@ -15,13 +15,13 @@ namespace TPC_Equipo2
     {
 
         /// <summary>
-        /// Control gvFormasPago.
+        /// Control lblNombreFormaPago.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvFormasPago;
+        protected global::System.Web.UI.WebControls.Label lblNombreFormaPago;
 
         /// <summary>
         /// Control txtNombreFormaPago.
@@ -49,5 +49,14 @@ namespace TPC_Equipo2
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMensaje;
+
+        /// <summary>
+        /// Control gvFormasPago.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvFormasPago;
     }
 }
