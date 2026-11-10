@@ -132,6 +132,7 @@ namespace TPC_Equipo2
                 bool nuevoEstado = !forma.Estado;
 
                 negocio.cambiarEstado(forma.IdFormaEntrega, nuevoEstado);
+                lblMensaje.CssClass = "d-block mt-2 text-success";
 
                 chkEstado.Checked = nuevoEstado;
 

@@ -24,9 +24,9 @@
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Formas de pago registradas</h5>
+            <h5 class="card-title">Formas de entrega registradas</h5>
             <div class="table-responsive">
-                <asp:GridView ID="gvFormasEntrega" runat="server" DataKeyNames="IdFormaEntrega" AutoGenerateColumns="false" CssClass="table" OnSelectedIndexChanged="gvFormasEntrega_SelectedIndexChanged">
+                <asp:GridView ID="gvFormasEntrega" runat="server" DataKeyNames="IdFormaEntrega" AutoGenerateColumns="false" CssClass="table table-striped table-hover align-middle" OnSelectedIndexChanged="gvFormasEntrega_SelectedIndexChanged">
                     <Columns>
                         <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
                         <asp:CheckBoxField HeaderText="Activo" DataField="Estado" />
