@@ -57,7 +57,7 @@ namespace TPC_Equipo2
                 }
                 else
                 {
-                    lblMensaje.CssClass = "d-block mt-2 text-warning";
+                    lblMensaje.CssClass = "d-block mt-2 text-danger";
                     lblMensaje.Text = "Ya existe una forma de pago con ese nombre";
                 }
 

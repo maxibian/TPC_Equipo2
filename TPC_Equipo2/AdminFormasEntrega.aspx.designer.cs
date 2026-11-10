@@ -15,13 +15,13 @@ namespace TPC_Equipo2
     {
 
         /// <summary>
-        /// Control gvFormasEntrega.
+        /// Control lblNombreFormaEntrega.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvFormasEntrega;
+        protected global::System.Web.UI.WebControls.Label lblNombreFormaEntrega;
 
         /// <summary>
         /// Control txtNombreFormaEntrega.
@@ -49,5 +49,14 @@ namespace TPC_Equipo2
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMensaje;
+
+        /// <summary>
+        /// Control gvFormasEntrega.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvFormasEntrega;
     }
 }
