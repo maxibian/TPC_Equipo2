@@ -11,7 +11,7 @@ namespace TPC_Equipo2
 {
 
 
-    public partial class AdminFormaEntrega
+    public partial class AdminFormasEntrega
     {
 
         /// <summary>

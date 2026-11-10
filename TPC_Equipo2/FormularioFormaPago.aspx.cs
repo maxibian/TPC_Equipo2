@@ -36,6 +36,7 @@ namespace TPC_Equipo2
                     lblMensaje.Text = "No se encontró la forma de pago.";
                     btnGuardar.Enabled = false;
                     btnCambiarEstado.Enabled = false;
+                    txtNombreFormaPago.Enabled = false;
                     return;
                 }
 
