@@ -10,24 +10,55 @@ namespace negocio
     public class CarritoNegocio
     {
         AccesoDatos datos = new AccesoDatos();
+        public void agregar(int idCliente)
+        {
+            try
+            {
+                datos.setearConsulta("INSERT INTO CARRITO (IdCliente) VALUES (@IdCliente)");
+                datos.setearParametro("@IdCliente", idCliente);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
         public Carrito obtenerCarrito(int IdCliente)
         {
-            Carrito a = new Carrito();
-            return a;
-            //para que compile
+            Carrito carrito = new Carrito();
+            try
+            {
+                datos.setearConsulta("SELECT IdCarrito, IdCliente FROM CARRITO WHERE IdCliente = @IdCliente");
+                datos.setearParametro("@IdCliente", IdCliente);
+                datos.ejecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    carrito.IdCarrito = (int)datos.Lector["IdCarrito"];
+                    carrito.IdCliente = (int)datos.Lector["IdCliente"];
+                }
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            return carrito;
         }
-        public void agregarProducto(int IdCarrito, int IdProducto)
+        public void eliminar(int idCarrito)
         {
-
+            try
+            {
+                datos.setearConsulta("DELETE FROM CARRITO WHERE IdCarrito = @IdCarrito");
+                datos.setearParametro("@IdCarrito", idCarrito);
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
-        public void quitarProducto(int IdCarrito, int IdProducto)
-        {
-
-        }
-        public void modificarCantidad(int IdCarrito,int IdProducto, int Cantidad)
-        {
-
-        }
-
     }
 }
