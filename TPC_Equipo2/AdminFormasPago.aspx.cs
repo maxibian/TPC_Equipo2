@@ -26,12 +26,14 @@ namespace TPC_Equipo2
 
             if (nombre == "")
             {
+                lblMensaje.CssClass = "d-block mt-2 text-danger";
                 lblMensaje.Text = "Debe ingresar un nombre para la forma de pago.";
                 return;
             }
 
             if (nombre.Length > 50)
             {
+                lblMensaje.CssClass = "d-block mt-2 text-danger";
                 lblMensaje.Text = "El nombre no puede superar los 50 caracteres.";
                 return;
             }
@@ -48,18 +50,21 @@ namespace TPC_Equipo2
 
                 if (agregado)
                 {
-                    lblMensaje.Text = "Forma de pago agregada correctamente";
+                    lblMensaje.CssClass = "d-block mt-2 text-success";
+                    lblMensaje.Text = "Forma de pago agregada correctamente";                   
                     txtNombreFormaPago.Text = "";
                     cargarFormasPago();
                 }
                 else
                 {
+                    lblMensaje.CssClass = "d-block mt-2 text-warning";
                     lblMensaje.Text = "Ya existe una forma de pago con ese nombre";
                 }
 
             }
             catch (Exception)
             {
+                lblMensaje.CssClass = "d-block mt-2 text-danger";
                 lblMensaje.Text = "Ocurrió un error al agregar la forma de pago.";
             }       
 
