@@ -21,6 +21,7 @@ namespace TPC_Equipo2
 
                 if (!valido || numero <= 0)
                 {
+                    lblMensaje.CssClass = "d-block mt-2 text-danger";
                     lblMensaje.Text = "ID inválido";
                     btnGuardar.Enabled = false;
                     btnCambiarEstado.Enabled = false;
@@ -33,6 +34,7 @@ namespace TPC_Equipo2
 
                 if (forma == null)
                 {
+                    lblMensaje.CssClass = "d-block mt-2 text-danger";
                     lblMensaje.Text = "No se encontró la forma de entrega.";
                     btnGuardar.Enabled = false;
                     btnCambiarEstado.Enabled = false;
@@ -63,6 +65,7 @@ namespace TPC_Equipo2
 
             if (!valido || numero <= 0)
             {
+                lblMensaje.CssClass = "d-block mt-2 text-danger";
                 lblMensaje.Text = "ID inválido";
                 return;
             }
@@ -80,19 +83,23 @@ namespace TPC_Equipo2
 
                 if (modificado)
                 {
+                    lblMensaje.CssClass = "d-block mt-2 text-success";
                     lblMensaje.Text = "Modificado correctamente.";
                 }
                 else
                 {
+                    lblMensaje.CssClass = "d-block mt-2 text-danger";
                     lblMensaje.Text = "Ya existe otra forma de entrega con ese nombre.";
                 }
             }
             catch (ArgumentException ex)
             {
+                lblMensaje.CssClass = "d-block mt-2 text-danger";
                 lblMensaje.Text = ex.Message;
             }
             catch (Exception)
             {
+                lblMensaje.CssClass = "d-block mt-2 text-danger";
                 lblMensaje.Text = "Ocurrió un error al modificar la forma de entrega.";
             }
         }
@@ -105,6 +112,7 @@ namespace TPC_Equipo2
 
             if (!valido || numero <= 0)
             {
+                lblMensaje.CssClass = "d-block mt-2 text-danger";
                 lblMensaje.Text = "ID inválido";
                 return;
             }
@@ -116,6 +124,7 @@ namespace TPC_Equipo2
 
                 if (forma == null)
                 {
+                    lblMensaje.CssClass = "d-block mt-2 text-danger";
                     lblMensaje.Text = "No se encontró la forma de entrega.";
                     return;
                 }
@@ -141,6 +150,7 @@ namespace TPC_Equipo2
             }
             catch (Exception)
             {
+                lblMensaje.CssClass = "d-block mt-2 text-danger";
                 lblMensaje.Text = "Ocurrió un error al cambiar el estado.";
             }
         }
