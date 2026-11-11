@@ -125,6 +125,7 @@
     <Content Include="FormularioFormaPago.aspx" />
     <Content Include="FormularioProducto.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="HerramientasAdmin.aspx" />
     <Content Include="Inicio.aspx" />
     <Content Include="MiCuenta.aspx" />
     <Content Include="ProductoDetalle.aspx" />
@@ -264,6 +265,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HerramientasAdmin.aspx.cs">
+      <DependentUpon>HerramientasAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HerramientasAdmin.aspx.designer.cs">
+      <DependentUpon>HerramientasAdmin.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inicio.aspx.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
