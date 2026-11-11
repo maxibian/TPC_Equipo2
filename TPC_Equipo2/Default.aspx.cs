@@ -27,7 +27,7 @@ namespace TPC_Equipo2
 
             int idProducto = Convert.ToInt32(btn.CommandArgument);
 
-            Response.Redirect("Producto.aspx?id=" + idProducto);
+            Response.Redirect("ProductoDetalle.aspx?id=" + idProducto);
         }
     }
 
