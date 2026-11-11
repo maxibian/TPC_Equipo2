@@ -34,6 +34,27 @@ namespace TPC_Equipo2
 
             Response.Redirect("ProductoDetalle.aspx?id=" + idProducto);
         }
+
+        protected void btnCarrito_Click(object sender, EventArgs e)
+        {
+            LinkButton producto = (LinkButton)sender;
+            int id = int.Parse(producto.CommandArgument);
+            List<int> carritoIds;
+
+            if (Session["CarritoIds"] != null)
+            {
+                carritoIds = (List<int>)Session["CarritoIds"];
+            }
+            else
+            {
+                carritoIds = new List<int>();
+            }
+
+            carritoIds.Add(id);
+
+            Session["CarritoIds"] = carritoIds;
+
+        }
     }
 
 }

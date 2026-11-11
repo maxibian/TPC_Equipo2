@@ -1,4 +1,4 @@
-﻿<%@ page title="Home Page" language="C#" masterpagefile="~/Site.Master" autoeventwireup="true" codebehind="Default.aspx.cs" inherits="TPC_Equipo2._Default" %>
+﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TPC_Equipo2._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -6,7 +6,7 @@
         <div class="row">
 
             <asp:Repeater ID="repRepeater" runat="server">
-                <itemtemplate>
+                <ItemTemplate>
 
                     <div class="col-12 col-md-4 mb-3">
 
@@ -34,6 +34,14 @@
                                         <%# Eval("Descripcion") %>
                                     </p>
 
+                                    <p class="card-text">
+                                        <%# Eval("Precio") %>
+                                    </p>
+                                 <asp:LinkButton ID="btnCarrito" runat="server"
+                                CssClass="btn btn-primary" OnClick="btnCarrito_Click"
+                                CommandArgument='<%# Eval("IdProducto")%>'
+                                >Agregar al carrito</asp:LinkButton>
+
                                 </div>
 
                             </div>
@@ -42,7 +50,7 @@
 
                     </div>
 
-                </itemtemplate>
+                </ItemTemplate>
             </asp:Repeater>
 
         </div>
