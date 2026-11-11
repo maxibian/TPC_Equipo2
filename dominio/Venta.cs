@@ -15,7 +15,7 @@ namespace dominio
         public FormaPago FormaPago { get; set; }
         public FormaEntrega FormaEntrega { get; set; }
         public Direccion Direccion { get; set; }
-        public Tarjeta Tarjeta { get; set; }
+        //public Tarjeta Tarjeta { get; set; }
         public List<DetalleVenta> Detalles { get; set; }
         public EstadoVenta EstadoVenta { get; set; }
         public string Observaciones { get; set; }
