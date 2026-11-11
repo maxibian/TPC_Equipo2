@@ -9,24 +9,24 @@ GO
 INSERT INTO PRODUCTO(Nombre, Descripcion, Precio, IdCategoria, Estado, Stock)
 VALUES('Notebook Lenovo IdeaPad Slim 3',
 'Descubrí una nueva dimensión de eficiencia diaria
-y portabilidad absoluta con la Lenovo IdeaPad Slim 3.', 50.00000, 1, 1, 20),
+y portabilidad absoluta con la Lenovo IdeaPad Slim 3.', 50000.00, 1, 1, 20),
 ('Notebook Asus Vivobook Go 15 Ryzen 5','La Asus Vivobook Go 15 combina un diseño liviano
-con un desempeño ágil para el ritmo diario.', 45.00000, 1, 1, 25),
+con un desempeño ágil para el ritmo diario.', 45000.00, 1, 1, 25),
 ('Notebook HP 15 con Procesador Intel Core 3', 'Tu compañera para todo
-Laptop HP 15, tu compañera para todo lo que haces', 48.00000, 1, 1, 15),
-('Notebook Acer Aspire Lite Al14-32p-38h9', 'NOTEBOOK ACER ASPIRE LITE 14 CI3 N355', 37.00000, 1, 1, 10),
-('Legion 5 Ultra 9 Rtx 5060 32gb 1tb 240hz 16 Negro', 'Laptop Gamer Lenovo Legion 5 16IAX10', 62.00000, 1, 1, 12),
+Laptop HP 15, tu compañera para todo lo que haces', 48000.00, 1, 1, 15),
+('Notebook Acer Aspire Lite Al14-32p-38h9', 'NOTEBOOK ACER ASPIRE LITE 14 CI3 N355', 37000.00, 1, 1, 10),
+('Legion 5 Ultra 9 Rtx 5060 32gb 1tb 240hz 16 Negro', 'Laptop Gamer Lenovo Legion 5 16IAX10', 62000.00, 1, 1, 12),
 ('Impresora HP Smart Tank 210 Sistema Continuo', 'Impresora HP Smart Tank 210 (3D4L3A)
-Ideal para uso en el hogar y oficina', 30.00000, 2, 1, 15),
+Ideal para uso en el hogar y oficina', 30000.00, 2, 1, 15),
 ('Impressora térmica Epson TM-T20IV TM-T20IV-SP', 'La Impresora Epson TM-T20IV-SP esta diseñada
 para entornos que requieren velocidad,confiabilidad y un rendimiento 
-constante', 22.00000, 2, 1, 18),
+constante', 22000.00, 2, 1, 18),
 ('Impresora Hp Deskjet Ink Advantage 2975', '100% funcional. - Puede tener consumibles (toner / tinta) parcialmente utilizados o ya instalados.
-- Empaque y accesorios originales incluidos', 12.00000, 2, 1, 5),
+- Empaque y accesorios originales incluidos', 12000.00, 2, 1, 5),
 ('Epson 3350 Impresora Multifuncion EcoTank L3350', 'La Epson es una impresora multifunción con sistema de tanque de tinta continuo,
-ideal para el hogar y la oficina.', 28.00000, 2, 1, 5),
+ideal para el hogar y la oficina.', 28000.00, 2, 1, 5),
 ('Multifuncional Brother Dcpt430w', 'La multifunción Brother DCP-T430W es la elección ideal para quienes buscan
-eficiencia y versatilidad en un solo dispositivo.', 32.00000, 2, 1, 8 );
+eficiencia y versatilidad en un solo dispositivo.', 32000.00, 2, 1, 8 );
 GO
 
 INSERT INTO IMAGEN (IdProducto, ImagenUrl, Estado)

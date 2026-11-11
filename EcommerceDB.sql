@@ -129,6 +129,7 @@ CREATE TABLE ITEMCARRITO
     IdCarrito INT NOT NULL,
     IdProducto INT NOT NULL,
     Cantidad INT NOT NULL,
+	PrecioUnitario DECIMAL (18,2) NOT NULL DEFAULT 0,
 
     FOREIGN KEY (IdCarrito) REFERENCES CARRITO(IdCarrito),
     FOREIGN KEY (IdProducto) REFERENCES PRODUCTO(IdProducto),
@@ -167,7 +168,6 @@ CREATE TABLE VENTA (
         IdFormaEntrega INT NOT NULL,
         IdDireccion INT NULL, --Puede ser null si se selecciona "Retiro en local" como forma de entrega
         IdTarjeta INT NULL,
-
         IdEstadoVenta INT NOT NULL,
         Observaciones VARCHAR(500) NULL,
         
@@ -207,10 +207,6 @@ CREATE TABLE DETALLEVENTA (
 		CONSTRAINT UQ_DetalleVenta_Producto UNIQUE (IdVenta, IdProducto)
 );
 GO
-
-
-ALTER TABLE ITEMCARRITO
-ADD PrecioUnitario DECIMAL (18,2) NOT NULL DEFAULT 0;
 
 
 

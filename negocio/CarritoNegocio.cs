@@ -29,12 +29,13 @@ namespace negocio
         }
         public Carrito obtenerCarrito(int IdCliente)
         {
-            Carrito carrito = new Carrito();
+            Carrito carrito = null;
             try
             {
                 datos.setearConsulta("SELECT IdCarrito, IdCliente FROM CARRITO WHERE IdCliente = @IdCliente");
                 datos.setearParametro("@IdCliente", IdCliente);
                 datos.ejecutarLectura();
+                
                 if (datos.Lector.Read())
                 {
                     carrito.IdCarrito = (int)datos.Lector["IdCarrito"];

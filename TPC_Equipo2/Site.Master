@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="TPC_Equipo2.SiteMaster" %>
+﻿<%@ master language="C#" autoeventwireup="true" codebehind="Site.master.cs" inherits="TPC_Equipo2.SiteMaster" %>
 
 <!DOCTYPE html>
 
@@ -17,7 +17,7 @@
 <body>
     <form runat="server">
         <asp:ScriptManager runat="server">
-            <Scripts>
+            <scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
                 <asp:ScriptReference Name="MsAjaxBundle" />
@@ -32,7 +32,7 @@
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
                 <%--Site Scripts--%>
-            </Scripts>
+            </scripts>
         </asp:ScriptManager>
 
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
@@ -45,17 +45,22 @@
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/">Home</a></li>
-                        <li class="nav-item"><asp:DropDownList runat="server" ID="ddlCategoria" CssClass="form-select navbar-categorias" AutoPostBack="true" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged"></asp:DropDownList></li>
-                        <%--<li class="nav-item"><a class="nav-link" runat="server" href="~/Inicio">Inicio</a></li>--%>
-                       <%-- <li class="nav-item"><a class="nav-link" runat="server" href="~/About">About</a></li>--%>
-<%--                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contact</a></li>--%>
-                        <%--<li class="nav-item"><a class="nav-link" runat="server" href="~/Prueba">Prueba</a></li>--%>
+                        <li class="nav-item">
+                            <asp:DropDownList runat="server" ID="ddlCategoria" CssClass="form-select navbar-categorias" AutoPostBack="true" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged"></asp:DropDownList>
+                        </li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/AdminFormasPago">Administrar Formas de pago</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/AdminFormasEntrega">Administrar Formas de entrega</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/FormularioProducto">Administrar Productos</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Carrito">Carrito</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/MiCuenta">Mi Cuenta</a></li>
+
 
                     </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" runat="server" href="~/Carrito">Carrito</a>
+                        </li>
+                    </ul>
+
                 </div>
             </div>
         </nav>
