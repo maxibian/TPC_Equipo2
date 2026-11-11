@@ -23,6 +23,18 @@ namespace TPC_Equipo2
             UsuarioNegocio unegocio = new UsuarioNegocio();
             List<Usuario> lista = new List<Usuario>();
             Usuario usuario = new Usuario();
+            if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
+                string.IsNullOrWhiteSpace(txtApellido.Text) ||
+                string.IsNullOrWhiteSpace(txtEmail.Text) ||
+                string.IsNullOrWhiteSpace(txtTelefono.Text) ||
+                string.IsNullOrWhiteSpace(txtEmailUsuario.Text) ||
+                string.IsNullOrWhiteSpace(txtPassword.Text) ||
+                string.IsNullOrWhiteSpace(txtPasswordConfirmacion.Text))
+            {
+                lblRespuesta.Text = "Todos los campos son obligatorios.";
+                return;
+            }
+
             if (txtEmail.Text == txtEmailUsuario.Text)
             {
                 string email = txtEmailUsuario.Text;

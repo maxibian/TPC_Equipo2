@@ -49,9 +49,10 @@
 
         <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
         <asp:HyperLink ID="lnkCancelar" runat="server" Text="Cancelar" NavigateUrl="~/Default.aspx" CssClass="btn btn-outline-secondary" />
-
-        <asp:Label ID="lblRespuesta" runat="server" Text="" CssClass="form-label" />
-
+         
+        <asp:Panel ID="Panel1" runat="server" CssClass="mb-3">
+        <asp:Label ID="lblRespuesta" runat="server" Text="" CssClass="form-label" Style="color: red"/>
+        </asp:Panel>
 
     </asp:Panel>
 
