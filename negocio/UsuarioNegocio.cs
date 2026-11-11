@@ -12,7 +12,7 @@ namespace negocio
     {
         AccesoDatos datos = new AccesoDatos();
 
-        public List<Usuario> listarUsuarios(string nombre)
+        public List<Usuario> listarUsuarios(string nombre="")
         {
             List<Usuario> lista = new List<Usuario>();
             try

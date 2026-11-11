@@ -29,11 +29,14 @@ namespace TPC_Equipo2
 
                 lista = unegocio.listarUsuarios(email);
 
+                if (lista.Count == 0)
+                {
+
                     //crear usuario 
                     usuario.NombreUsuario = txtEmailUsuario.Text;
                     usuario.Contrasena = txtPasswordConfirmacion.Text;
 
-                // Recuperar el ID generado por SQL Server
+                    // Recuperar el ID generado por SQL Server
                     int id = unegocio.agregarUsuario(usuario);
 
                     // Crear cliente
@@ -47,7 +50,12 @@ namespace TPC_Equipo2
                     negocio.agregarCliente(cliente);
 
                     lblRespuesta.Text = "Te registraste con exito!";
-                
+                }
+                else
+                {
+                    lblRespuesta.Text = "No te pudiste registrar!";
+                }
+
             }
 
         }
