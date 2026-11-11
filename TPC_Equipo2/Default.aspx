@@ -34,9 +34,9 @@
                                         <%# Eval("Descripcion") %>
                                     </p>
 
-                                    <p class="card-text">
-                                        <%# Eval("Precio") %>
-                                    </p>
+                                    <h5 class="text-success fw-bold mb-3">
+                                        $ <%# Eval("Precio", "{0:N2}") %>
+                                    </h5>
                                  <asp:LinkButton ID="btnCarrito" runat="server"
                                 CssClass="btn btn-primary" OnClick="btnCarrito_Click"
                                 CommandArgument='<%# Eval("IdProducto")%>'
