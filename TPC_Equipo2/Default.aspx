@@ -10,28 +10,36 @@
 
                     <div class="col-12 col-md-4 mb-3">
 
-                        <div class="card h-100">
+                        <asp:LinkButton
+                            ID="btnProducto"
+                            runat="server"
+                            CssClass="text-decoration-none text-dark"
+                            CommandArgument='<%# Eval("IdProducto") %>'
+                            OnClick="btnProducto_Click">
 
-                            <img src="<%# Eval("Imagen.ImagenUrl") %>"
-                                class="card-img-top"
-                                alt="Imagen del producto"
-                                style="height: 220px; object-fit: contain; background-color: #f0f0f0;" />
+                            <div class="card h-100">
 
-                            <div class="card-body">
+                                <img src="<%# Eval("Imagen.ImagenUrl") %>"
+                                    class="card-img-top"
+                                    alt="Imagen del producto"
+                                    style="height: 220px; object-fit: contain; background-color: #f0f0f0;" />
 
-                                <h5 class="card-title">
-                                    <%# Eval("Nombre") %>
-                                </h5>
+                                <div class="card-body">
 
-                                <p class="card-text">
-                                    <%# Eval("Descripcion") %>
-                                </p>
+                                    <h5 class="card-title">
+                                        <%# Eval("Nombre") %>
+                                    </h5>
+
+                                    <p class="card-text">
+                                        <%# Eval("Descripcion") %>
+                                    </p>
+
+                                </div>
 
                             </div>
 
+                        </asp:LinkButton>
 
-
-                        </div>
                     </div>
 
                 </itemtemplate>

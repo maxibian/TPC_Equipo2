@@ -21,5 +21,14 @@ namespace TPC_Equipo2
             repRepeater.DataBind();
 
         }
+        protected void btnProducto_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+
+            int idProducto = Convert.ToInt32(btn.CommandArgument);
+
+            Response.Redirect("Producto.aspx?id=" + idProducto);
+        }
     }
+
 }
