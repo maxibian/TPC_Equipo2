@@ -46,6 +46,7 @@
     <Compile Include="Cliente.cs" />
     <Compile Include="DetalleVenta.cs" />
     <Compile Include="Direccion.cs" />
+    <Compile Include="EstadoVenta.cs" />
     <Compile Include="FormaEntrega.cs" />
     <Compile Include="FormaPago.cs" />
     <Compile Include="Imagen.cs" />
