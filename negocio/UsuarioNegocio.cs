@@ -17,7 +17,7 @@ namespace negocio
             List<Usuario> lista = new List<Usuario>();
             try
             {
-                datos.setearConsulta("SELECT IdUsuario, NombreUsuario, Contrasena, IdRol, Estado FROM USUARIO");
+                datos.setearConsulta("SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, R.IdRol, U.Estado FROM USUARIO U INNER JOIN ROL R ON U.IdRol = R.IdRol WHERE U.Estado = 1");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -25,7 +25,9 @@ namespace negocio
                     aux.IdUsuario = (int)datos.Lector["IdUsuario"];
                     aux.NombreUsuario = (string)datos.Lector["NombreUsuario"];
                     aux.Contrasena = (string)datos.Lector["Contrasena"];
-                    aux.IdRol = (int)datos.Lector["IdRol"];
+
+                    aux.Rol = new Rol();
+                    aux.Rol.IdRol = (int)datos.Lector["IdRol"];
                     aux.Estado = (bool)datos.Lector["Estado"];
                     lista.Add(aux);
                 }
@@ -37,7 +39,7 @@ namespace negocio
             }
             finally { datos.cerrarConexion(); }
         }
-    public void modificarUsuario(Usuario aux)
+        public void modificarUsuario(Usuario aux)
         {
             try
             {
@@ -53,5 +55,29 @@ namespace negocio
             finally { datos.cerrarConexion(); }
         }
 
+
+    public void agregarUsuario(Usuario usuario)
+        {
+            try
+            {
+                datos.setearConsulta("INSERT INTO USUARIO (NombreUsuario, Contrasena, IdRol, Estado)VALUES(@NombreUsuario, @Contrasena, @IdRol, @Estado)");
+                datos.setearParametro("@NombreUsuario", usuario.NombreUsuario);
+                datos.setearParametro("@Contrasena", usuario.Contrasena);
+                datos.setearParametro("@IdRol", usuario.Rol.IdRol);
+                datos.setearParametro("@Estado", 1);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
     }
 }
