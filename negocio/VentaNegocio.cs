@@ -9,10 +9,10 @@ namespace negocio
 {
     public class VentaNegocio
     {
-        AccesoDatos datos = new AccesoDatos();
-
         public List<Venta> listarVentas()
         {
+            AccesoDatos datos = new AccesoDatos();
+
             List<Venta> lista = new List<Venta>();
             try
             {
@@ -65,9 +65,55 @@ namespace negocio
         }
         public Venta obtenerVenta(int idVenta)
         {
-            Venta venta = new Venta();
-            //
-            return venta;
+            AccesoDatos datos = new AccesoDatos();
+            Venta venta = null;
+
+            try
+            {
+                datos.setearConsulta("SELECT V.IdVenta, V.IdCliente, C.Nombre AS NombreCliente, C.Apellido AS ApellidoCliente, V.Fecha, V.VentaTotal, V.IdFormaPago, FP.Nombre AS NombreFormaPago, V.IdFormaEntrega, FE.Nombre AS NombreFormaEntrega, V.IdDireccion, V.IdEstadoVenta, EV.Nombre AS NombreEstado, V.Observaciones FROM VENTA V INNER JOIN CLIENTE C ON V.IdCliente = C.IdCliente INNER JOIN FORMAPAGO FP ON V.IdFormaPago = FP.IdFormaPago INNER JOIN FORMAENTREGA FE ON V.IdFormaEntrega = FE.IdFormaEntrega INNER JOIN ESTADOVENTA EV  ON V.IdEstadoVenta = EV.IdEstadoVenta WHERE V.IdVenta = @id");
+                datos.setearParametro("@id", idVenta);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    venta = new Venta();
+
+                    venta.IdVenta = (int)datos.Lector["IdVenta"];
+                    venta.Cliente = new Cliente();
+                    venta.Cliente.IdCliente = (int)datos.Lector["IdCliente"];
+                    venta.Cliente.Nombre = (string)datos.Lector["NombreCliente"];
+                    venta.Cliente.Apellido = (string)datos.Lector["ApellidoCliente"];
+                    venta.Fecha = (DateTime)datos.Lector["Fecha"];
+                    venta.VentaTotal = (decimal)datos.Lector["VentaTotal"];
+                    venta.FormaPago = new FormaPago();
+                    venta.FormaPago.IdFormaPago = (int)datos.Lector["IdFormaPago"];
+                    venta.FormaPago.Nombre = (string)datos.Lector["NombreFormaPago"];
+                    venta.FormaEntrega = new FormaEntrega();
+                    venta.FormaEntrega.IdFormaEntrega = (int)datos.Lector["IdFormaEntrega"];
+                    venta.FormaEntrega.Nombre = (string)datos.Lector["NombreFormaEntrega"];
+
+                    if (datos.Lector["IdDireccion"] != DBNull.Value)
+                    {
+                        venta.Direccion = new Direccion();
+                        venta.Direccion.IdDireccion = (int)datos.Lector["IdDireccion"];
+                    }
+
+                    venta.EstadoVenta = new EstadoVenta();
+                    venta.EstadoVenta.IdEstadoVenta = (int)datos.Lector["IdEstadoVenta"];
+                    venta.EstadoVenta.Nombre = (string)datos.Lector["NombreEstado"];
+
+                    if (datos.Lector["Observaciones"] != DBNull.Value)
+                    {
+                        venta.Observaciones = (string)datos.Lector["Observaciones"];
+                    }
+                }
+
+                return venta;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
         public void agregar(Venta venta)
         {
