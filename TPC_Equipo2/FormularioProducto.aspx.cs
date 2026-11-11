@@ -16,12 +16,16 @@ namespace TPC_Equipo2
         {
             if (!IsPostBack)
             {
-                //ddlCategoria.DataSource = new CategoriaNegocio().listarCategorias();
+                ddlCategoria.DataSource = new CategoriaNegocio().ListarCategorias();
                 ddlCategoria.DataValueField = "IdCategoria";
                 ddlCategoria.DataTextField = "Nombre";
-                ddlCategoria.DataBind();
-                ddlCategoria.Items.Insert(0, new System.Web.UI.WebControls.ListItem("-- Seleccioná --", "0"));
+                ddlCategoria.DataBind(); 
             }
+        }
+        private void MostrarMensaje(string texto, bool esError)
+        {
+            lblMensaje.CssClass = "d-block mt-3 " + (esError ? "text-danger" : "text-success");
+            lblMensaje.Text = texto;
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -29,27 +33,27 @@ namespace TPC_Equipo2
             // Validaciones
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
-                lblMensaje.Text = "Ingresá el nombre.";
+                MostrarMensaje("Ingresá el nombre.", true);
                 return;
             }
 
             decimal precio;
             if (!decimal.TryParse(txtPrecio.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out precio) || precio < 0)
             {
-                lblMensaje.Text = "El precio no es válido.";
+                MostrarMensaje("El precio no es válido.", true);
                 return;
             }
 
             int stock;
             if (!int.TryParse(txtStock.Text, out stock) || stock < 0)
             {
-                lblMensaje.Text = "El stock no es válido.";
+                MostrarMensaje("El stock no es válido.", true);
                 return;
             }
 
             if (ddlCategoria.SelectedValue == "0")
             {
-                lblMensaje.Text = "Seleccioná una categoría.";
+                MostrarMensaje("Seleccioná una categoría.", true);
                 return;
             }
 
@@ -73,13 +77,13 @@ namespace TPC_Equipo2
 
                 new ProductoNegocio().agregar(nuevo);
 
-                lblMensaje.Text = "Producto guardado.";
+                MostrarMensaje("Producto guardado.", false);
                 LimpiarFormulario();
             }
             catch (Exception ex)
             {
                 // Si el nombre ya existe, el UNIQUE tira error
-                lblMensaje.Text = "No se pudo guardar: " + ex.Message;
+                MostrarMensaje("No se pudo guardar: " + ex.Message, true);
             }
         }
 
@@ -92,5 +96,6 @@ namespace TPC_Equipo2
             txtImagenUrl.Text = "";
             ddlCategoria.SelectedIndex = 0;
         }
+        
     }
 }
