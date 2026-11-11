@@ -9,21 +9,17 @@ namespace negocio
 {
     public class ItemCarritoNegocio
     {
-        //public int IdItemCarrito { get; set; }
-        //public int IdCarrito { get; set; }
-        //public Producto Producto { get; set; }
-        //public int Cantidad { get; set; }
-
         AccesoDatos datos = new AccesoDatos();
 
-        public void agregarItemCarrito(int IdCarrito, int IdProducto, int Cantidad)
+        public void agregarItemCarrito(int IdCarrito, int IdProducto, int Cantidad, decimal PrecioUnitario)
         {
             try
             {
-                datos.setearConsulta("INSERT INTO ITEMCARRITO (IdCarrito, IdProducto, Cantidad) VALUES (@IdCarrito, @IdProducto, @Cantidad)");
+                datos.setearConsulta("INSERT INTO ITEMCARRITO (IdCarrito, IdProducto, Cantidad, PrecioUnitario) VALUES (@IdCarrito, @IdProducto, @Cantidad, @PrecioUnitario)");
                 datos.setearParametro("@IdCarrito", IdCarrito);
                 datos.setearParametro("@IdProducto", IdProducto);
                 datos.setearParametro("@Cantidad", Cantidad);
+                datos.setearParametro("@PrecioUnitario", PrecioUnitario);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
@@ -36,13 +32,12 @@ namespace negocio
             }
         }
 
-        public void modificarItemCarrito(int IdCarrito, int IdProducto, int Cantidad)
+        public void modificarItemCarrito(int IdCarrito, int Cantidad)
         {
             try
             {
-                datos.setearConsulta("UPDATE ITEMCARRITO SET Cantidad = @Cantidad WHERE IdCarrito = @IdCarrito AND IdProducto = @IdProducto");
+                datos.setearConsulta("UPDATE ITEMCARRITO SET Cantidad = @Cantidad WHERE IdCarrito = @IdCarrito");
                 datos.setearParametro("@IdCarrito", IdCarrito);
-                datos.setearParametro("@IdProducto", IdProducto);
                 datos.setearParametro("@Cantidad", Cantidad);
                 datos.ejecutarAccion();
             }
@@ -55,13 +50,12 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public void eliminarItemCarrito(int IdCarrito, int IdProducto)
+        public void eliminarItemCarrito(int IdCarrito)
         {
             try
             {
-                datos.setearConsulta("DELETE FROM ITEMCARRITO WHERE IdCarrito = @IdCarrito AND IdProducto = @IdProducto");
+                datos.setearConsulta("DELETE FROM ITEMCARRITO WHERE IdCarrito = @IdCarrito");
                 datos.setearParametro("@IdCarrito", IdCarrito);
-                datos.setearParametro("@IdProducto", IdProducto);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
@@ -72,6 +66,40 @@ namespace negocio
             {
                 datos.cerrarConexion();
             }
+        }
+        public List<ItemCarrito> listar(int idCarrito)
+        {
+            List<ItemCarrito> lista = new List<ItemCarrito>();
+
+            datos.setearConsulta("SELECT IC.IdItemCarrito, IC.IdCarrito,IC.IdProducto, IC.Cantidad, IC.PrecioUnitario,P.Nombre, P.Descripcion, P.Precio, P.Stock FROM ITEMCARRITO IC INNER JOIN PRODUCTO P ON P.IdProducto = IC.IdProducto WHERE IC.IdCarrito = @IdCarrito");
+            datos.setearParametro("@IdCarrito", idCarrito);
+            datos.ejecutarLectura();
+
+            while (datos.Lector.Read())
+            {
+                ItemCarrito item = new ItemCarrito();
+
+                item.IdItemCarrito = (int)datos.Lector["IdItemCarrito"];
+                item.IdCarrito = (int)datos.Lector["IdCarrito"];
+                item.Cantidad = (int)datos.Lector["Cantidad"];
+                item.PrecioUnitario = (decimal)datos.Lector["PrecioUnitario"];
+
+                Producto producto = new Producto();
+
+                producto.IdProducto = (int)datos.Lector["IdProducto"];
+                producto.Nombre = (string)datos.Lector["Nombre"];
+                producto.Descripcion = (string)datos.Lector["Descripcion"];
+                producto.Precio = (decimal)datos.Lector["Precio"];
+                producto.Stock = (int)datos.Lector["Stock"];
+
+                item.Producto = producto;
+
+                lista.Add(item);
+            }
+
+            datos.cerrarConexion();
+
+            return lista;
         }
     }
 }
