@@ -152,6 +152,12 @@ CREATE TABLE FORMAENTREGA (
 );
 GO
 
+CREATE TABLE ESTADOVENTA (
+    IdEstadoVenta INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL UNIQUE
+);
+GO
+
 CREATE TABLE VENTA (
         IdVenta INT IDENTITY(1,1) PRIMARY KEY,
         IdCliente INT NOT NULL,
@@ -161,6 +167,9 @@ CREATE TABLE VENTA (
         IdFormaEntrega INT NOT NULL,
         IdDireccion INT NULL, --Puede ser null si se selecciona "Retiro en local" como forma de entrega
         IdTarjeta INT NULL,
+
+        IdEstadoVenta INT NOT NULL,
+        Observaciones VARCHAR(500) NULL,
         
         CONSTRAINT CK_VENTA_Total CHECK (VentaTotal >= 0),
         
@@ -168,6 +177,8 @@ CREATE TABLE VENTA (
         FOREIGN KEY (IdFormaPago) REFERENCES FORMAPAGO(IdFormaPago),
         FOREIGN KEY (IdFormaEntrega) REFERENCES FORMAENTREGA(IdFormaEntrega),
         
+        CONSTRAINT FK_Venta_EstadoVenta FOREIGN KEY (IdEstadoVenta)
+        REFERENCES ESTADOVENTA(IdEstadoVenta),
 
 		CONSTRAINT FK_Venta_Direccion_Cliente FOREIGN KEY (IdDireccion, IdCliente)
         REFERENCES DIRECCION(IdDireccion, IdCliente),
@@ -196,6 +207,7 @@ CREATE TABLE DETALLEVENTA (
 		CONSTRAINT UQ_DetalleVenta_Producto UNIQUE (IdVenta, IdProducto)
 );
 GO
+
 
 ALTER TABLE ITEMCARRITO
 ADD PrecioUnitario DECIMAL (18,2) NOT NULL DEFAULT 0;
