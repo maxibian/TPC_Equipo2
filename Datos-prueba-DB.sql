@@ -1,6 +1,9 @@
 USE Ecommerce_DB;
 GO
 
+INSERT INTO ROL(Nombre)
+VALUES('Administrador'),('Usuario');
+
 INSERT INTO CATEGORIA(Nombre, Estado)
 VALUES('Computación',1),('Impresión', 1);
 GO
