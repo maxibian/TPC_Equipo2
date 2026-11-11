@@ -2,7 +2,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 
-
     <div class="container mt-5">
 
     <div class="row justify-content-center">
@@ -68,87 +67,5 @@
     </div>
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <%--<div class="container mt-4">
-
-        <div class="row justify-content-center">
-
-            <div class="col-12 col-md-10">
-
-                <div class="card shadow-sm">
-
-                    <div class="row g-0">
-
-                        <div class="col-md-5">
-                            <asp:Image
-                                ID="imgProducto"
-                                runat="server"
-                                CssClass="img-fluid w-100 h-100"
-                                Style="object-fit: contain; min-height: 300px; background-color: #f0f0f0;" />
-                        </div>
-
-                        <div class="col-md-7">
-
-                            <div class="card-body">
-
-                                <h2 class="card-title">
-                                    <asp:Label ID="lblNombre" runat="server" />
-                                </h2>
-
-                                <p class="card-text text-muted">
-                                    <asp:Label ID="lblDescripcion" runat="server" />
-                                </p>
-
-                                <h3 class="text-success mt-4">
-                                    $ <asp:Label ID="lblPrecio" runat="server" />
-                                </h3>
-
-                                <asp:Label
-                                    ID="lblStock"
-                                    runat="server"
-                                    CssClass="text-muted" />
-
-                                <div class="mt-4">
-                                    <a href="Default.aspx" class="btn btn-outline-secondary">
-                                        Volver al catálogo
-                                    </a>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>--%>
-
 
 </asp:Content>
