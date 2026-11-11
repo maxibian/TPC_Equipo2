@@ -12,12 +12,24 @@ namespace negocio
     {
         AccesoDatos datos = new AccesoDatos();
 
-        public List<Usuario> listarUsuarios()
+        public List<Usuario> listarUsuarios(string nombre)
         {
             List<Usuario> lista = new List<Usuario>();
             try
             {
-                datos.setearConsulta("SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, R.IdRol, U.Estado FROM USUARIO U INNER JOIN ROL R ON U.IdRol = R.IdRol WHERE U.Estado = 1");
+                string consulta = "SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, R.IdRol, U.Estado FROM USUARIO U INNER JOIN ROL R ON U.IdRol = R.IdRol WHERE U.Estado = 1";
+                if(nombre != "")
+                {
+                    consulta += " AND U.NombreUsuario = @nombre";
+                }
+
+                datos.setearConsulta(consulta);
+
+                if(nombre != "")
+                {
+                    datos.setearParametro("@nombre", nombre);
+                }
+
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -56,16 +68,18 @@ namespace negocio
         }
 
 
-    public void agregarUsuario(Usuario usuario)
+    public int agregarUsuario(Usuario usuario)
         {
             try
             {
-                datos.setearConsulta("INSERT INTO USUARIO (NombreUsuario, Contrasena, IdRol, Estado)VALUES(@NombreUsuario, @Contrasena, @IdRol, @Estado)");
+                datos.setearConsulta("INSERT INTO USUARIO (NombreUsuario, Contrasena, IdRol, Estado)VALUES(@NombreUsuario, @Contrasena, @IdRol, @Estado) SELECT CAST(SCOPE_IDENTITY() AS INT)");
                 datos.setearParametro("@NombreUsuario", usuario.NombreUsuario);
                 datos.setearParametro("@Contrasena", usuario.Contrasena);
-                datos.setearParametro("@IdRol", usuario.Rol.IdRol);
+                datos.setearParametro("@IdRol", 2);
                 datos.setearParametro("@Estado", 1);
-                datos.ejecutarAccion();
+
+
+                return datos.ejecutarEscalar();
 
             }
             catch (Exception ex)

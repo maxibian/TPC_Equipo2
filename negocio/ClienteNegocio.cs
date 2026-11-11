@@ -71,13 +71,12 @@ namespace negocio
             try
             {
 
-            datos.setearConsulta("INSERT INTO CLIENTE (Nombre, Apellido, Email, Telefono, IdUsuario, IdTarjeta)VALUES(@Nombre, @Apellido, @Email, @Telefono, @IdUsuario, @IdTarjeta)");
+            datos.setearConsulta("INSERT INTO CLIENTE (Nombre, Apellido, Email, Telefono, IdUsuario)VALUES(@Nombre, @Apellido, @Email, @Telefono, @IdUsuario)");
             datos.setearParametro("@Nombre", cliente.Nombre);
             datos.setearParametro("@Apellido", cliente.Apellido);
             datos.setearParametro("@Email", cliente.Email);
             datos.setearParametro("@Telefono", cliente.Telefono);
-            datos.setearParametro("@Usuario", cliente.Usuario.IdUsuario);
-            datos.setearParametro("@IdTarjeta", cliente.Tarjeta.IdTarjeta);
+            datos.setearParametro("@IdUsuario", cliente.Usuario.IdUsuario);
             datos.ejecutarAccion();
             
             }

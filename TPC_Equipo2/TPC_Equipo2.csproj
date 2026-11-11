@@ -122,6 +122,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="FormularioAgregarCliente.aspx" />
     <Content Include="FormularioFormaEntrega.aspx" />
     <Content Include="FormularioFormaPago.aspx" />
     <Content Include="FormularioProducto.aspx" />
@@ -249,6 +250,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormularioAgregarCliente.aspx.cs">
+      <DependentUpon>FormularioAgregarCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioAgregarCliente.aspx.designer.cs">
+      <DependentUpon>FormularioAgregarCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="FormularioFormaEntrega.aspx.cs">
       <DependentUpon>FormularioFormaEntrega.aspx</DependentUpon>
