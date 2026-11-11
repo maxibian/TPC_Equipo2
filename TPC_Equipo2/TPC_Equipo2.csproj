@@ -99,6 +99,7 @@
     <Content Include="About.aspx" />
     <Content Include="AdminFormasEntrega.aspx" />
     <Content Include="AdminFormasPago.aspx" />
+    <Content Include="AdminVentas.aspx" />
     <Content Include="Carrito.aspx" />
     <Content Include="Categoria.aspx" />
     <Content Include="Contact.aspx" />
@@ -204,6 +205,13 @@
     </Compile>
     <Compile Include="AdminFormasPago.aspx.designer.cs">
       <DependentUpon>AdminFormasPago.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminVentas.aspx.cs">
+      <DependentUpon>AdminVentas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminVentas.aspx.designer.cs">
+      <DependentUpon>AdminVentas.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">

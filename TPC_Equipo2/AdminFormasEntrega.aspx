@@ -18,6 +18,7 @@
                 <asp:TextBox ID="txtNombreFormaEntrega" runat="server" CssClass="form-control" MaxLength="50"></asp:TextBox>
             </div>
             <asp:Button ID="btnAgregarFormaEntrega" runat="server" Text="Agregar" OnClick="btnAgregarFormaEntrega_Click" CssClass="btn btn-primary" />
+            <a href="HerramientasAdmin.aspx" class="btn btn-outline-secondary">Volver a herramientas Admin</a>
             <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mt-2"></asp:Label>
         </div>
     </div>
