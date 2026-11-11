@@ -40,6 +40,7 @@ namespace negocio
                         aux.Imagen.ImagenUrl = (string)datos.Lector["Imagen"];
                         aux.Imagen.Estado = (bool)datos.Lector["EstadoImagen"];
                     }
+                    
                     lista.Add(aux);
                 }
                 return lista;

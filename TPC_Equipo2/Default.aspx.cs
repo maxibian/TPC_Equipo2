@@ -17,6 +17,11 @@ namespace TPC_Equipo2
             ProductoNegocio negocio = new ProductoNegocio();
 
             listaProducto = negocio.listarProductos();
+
+            foreach (dominio.Producto producto in listaProducto)
+                if (producto.Imagen == null || string.IsNullOrWhiteSpace(producto.Imagen.ImagenUrl))
+                    producto.Imagen = new Imagen() { ImagenUrl = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg" };
+
             repRepeater.DataSource = listaProducto;
             repRepeater.DataBind();
 

@@ -30,7 +30,9 @@ namespace TPC_Equipo2
                         lblPrecio.Text = producto.Precio.ToString("N2");
                         lblStock.Text = producto.Stock.ToString();
 
-                        if (producto.Imagen != null)
+                        if (producto.Imagen == null || string.IsNullOrEmpty(producto.Imagen.ImagenUrl))
+                            imgProducto.ImageUrl = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
+                        else 
                             imgProducto.ImageUrl = producto.Imagen.ImagenUrl;
                     }
                     else
