@@ -43,3 +43,12 @@ VALUES
 (10, 'https://http2.mlstatic.com/D_NQ_NP_2X_946152-MLA99581037044_122025-F.webp', 1);
 GO
 
+INSERT INTO ESTADOVENTA (Nombre)
+VALUES
+    ('Pendiente'),
+    ('Pagado'),
+    ('En preparación'),
+    ('Enviado'),
+    ('Entregado'),
+    ('Cancelado');
+GO
