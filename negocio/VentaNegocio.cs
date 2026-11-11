@@ -115,6 +115,42 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public List<DetalleVenta> listarDetallesPorVenta(int idVenta)
+        {
+            List<DetalleVenta> lista = new List<DetalleVenta>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT D.IdDetalleVenta, D.IdVenta, D.IdProducto, P.Nombre AS NombreProducto, D.Cantidad, D.PrecioUnitario FROM DETALLEVENTA D INNER JOIN PRODUCTO P ON P.IdProducto = D.IdProducto WHERE D.IdVenta = @idVenta");
+                datos.setearParametro("@idVenta", idVenta);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    DetalleVenta aux = new DetalleVenta();
+
+                    aux.IdDetalleVenta = (int)datos.Lector["IdDetalleVenta"];
+                    aux.IdVenta = (int)datos.Lector["IdVenta"];
+
+                    aux.Producto = new Producto();
+                    aux.Producto.IdProducto = (int)datos.Lector["IdProducto"];
+                    aux.Producto.Nombre = (string)datos.Lector["NombreProducto"];
+
+                    aux.Cantidad = (int)datos.Lector["Cantidad"];
+                    aux.PrecioUnitario = (decimal)datos.Lector["PrecioUnitario"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
         public void agregar(Venta venta)
         {
 
