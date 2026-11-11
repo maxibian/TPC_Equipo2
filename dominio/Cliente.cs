@@ -14,5 +14,6 @@ namespace dominio
         public string Email { get; set; }
         public string Telefono { get; set; }
         public Usuario Usuario { get; set; }
+        public Tarjeta Tarjeta { get; set; }
     }
 }

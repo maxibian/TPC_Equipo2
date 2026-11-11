@@ -14,7 +14,7 @@ namespace negocio
         public List<Cliente> listarClientes()
         {
             List<Cliente> listar = new List<Cliente>();
-            datos.setearConsulta("SELECT IdCliente, Nombre, Apellido, Email, Telefono, IdUsuario, IdTarjeta FROM CLIENTE");
+            datos.setearConsulta("SELECT C.IdCliente, C.Nombre, C.Apellido, C.Email, C.Telefono, U.IdUsuario, T.IdTarjeta FROM CLIENTE C INNER JOIN USUARIO U ON C.IdUsuario = U.IdUsuario INNER JOIN TARJETA T ON C.IdCliente = T.IdCliente");
             datos.ejecutarLectura();
             try
             {
@@ -26,8 +26,12 @@ namespace negocio
                     aux.Apellido = (string)datos.Lector["Apellido"];
                     aux.Email = (string)datos.Lector["Email"];
                     aux.Telefono = (string)datos.Lector["Telefono"];
-                    aux.IdUsuario = (int)datos.Lector["IdUsuario"];
-                    aux.IdTarjeta = (int)datos.Lector["IdTarjeta"];
+                    
+                    aux.Usuario = new Usuario();
+                    aux.Usuario.IdUsuario = (int)datos.Lector["IdUsuario"];
+
+                    aux.Tarjeta = new Tarjeta();
+                    aux.Tarjeta.IdTarjeta = (int)datos.Lector["IdTarjeta"];
                     listar.Add(aux);
                 }
                 return listar;
@@ -43,21 +47,47 @@ namespace negocio
         {
             try
             {
+
             datos.setearConsulta("UPDATE CLIENTE SET Nombre = @Nombre, Apellido = @Apellido, Email = @Email, Telefono = @Telefono, IdUsuario = @IdUsuario, IdTarjeta = @IdTarjeta WHERE IdCliente = @IdCliente");
             datos.setearParametro("Nombre", cliente.Nombre);
             datos.setearParametro("Apellido", cliente.Apellido);
             datos.setearParametro("Email", cliente.Email);
             datos.setearParametro("Telefono", cliente.Telefono);
-            datos.setearParametro("IdUsuario", cliente.IdUsuario);
-            datos.setearParametro("IdTarjeta", cliente.IdTarjeta);
+            datos.setearParametro("IdUsuario", cliente.Usuario.IdUsuario);
+            datos.setearParametro("IdTarjeta", cliente.Tarjeta.IdTarjeta);
             datos.setearParametro("IdCliente", cliente.IdCliente);
             datos.ejecutarAccion();
+            
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+
             finally{ datos.cerrarConexion();}
+        }
+    public void agregarCliente(Cliente cliente)
+        {
+            try
+            {
+
+            datos.setearConsulta("INSERT INTO CLIENTE (Nombre, Apellido, Email, Telefono, IdUsuario, IdTarjeta)VALUES(@Nombre, @Apellido, @Email, @Telefono, @IdUsuario, @IdTarjeta)");
+            datos.setearParametro("@Nombre", cliente.Nombre);
+            datos.setearParametro("@Apellido", cliente.Apellido);
+            datos.setearParametro("@Email", cliente.Email);
+            datos.setearParametro("@Telefono", cliente.Telefono);
+            datos.setearParametro("@Usuario", cliente.Usuario.IdUsuario);
+            datos.setearParametro("@IdTarjeta", cliente.Tarjeta.IdTarjeta);
+            datos.ejecutarAccion();
+            
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            finally { datos.cerrarConexion();}
         }
     }
 }
