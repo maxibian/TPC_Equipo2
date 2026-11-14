@@ -83,9 +83,9 @@
                         Administrá los productos de la tienda     
                     </p>
 
-                    <%-- <a href="paginaParaAdministrarLosProductos.aspx"
+                     <a href="FormularioProducto.aspx"
                         class="btn btn-outline-primary mt-auto">Administrar Productos
-                </a>--%>
+                </a>
                 </div>
             </div>
         </div>
