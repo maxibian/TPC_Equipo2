@@ -17,11 +17,12 @@ namespace negocio
             get { return lector; }
         }
 
-        public AccesoDatos(){
+        public AccesoDatos()
+        {
             conexion = new SqlConnection("server=.\\SQLEXPRESS; database=Ecommerce_DB; integrated security=true");
             comando = new SqlCommand();
         }
-        public void setearConsulta(string consulta) 
+        public void setearConsulta(string consulta)
         {
             comando.Parameters.Clear();
             comando.CommandType = System.Data.CommandType.Text;
@@ -33,7 +34,7 @@ namespace negocio
             try
             {
                 conexion.Open();
-                lector = comando.ExecuteReader();   
+                lector = comando.ExecuteReader();
             }
             catch (Exception ex)
             {
@@ -45,7 +46,7 @@ namespace negocio
         public void cerrarConexion()
         {
             if (lector != null)
-               lector.Close();
+                lector.Close();
             conexion.Close();
         }
         public void setearParametro(string nombre, object valor)
@@ -98,6 +99,10 @@ namespace negocio
             catch (Exception)
             {
                 throw;
+            }
+            finally
+            {
+                conexion.Close();
             }
         }
     }

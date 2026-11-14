@@ -8,6 +8,7 @@
         Número de venta:
    
         <asp:Label ID="lblIdVenta" runat="server" />
+
     </p>
 
 </asp:Content>

@@ -21,21 +21,21 @@ namespace negocio
                 while (datos.Lector.Read())
                 {
                     Venta aux = new Venta();
-                    aux.IdVenta = (int)datos.Lector["IdVenta"]; 
+                    aux.IdVenta = (int)datos.Lector["IdVenta"];
                     aux.Cliente = new Cliente();
-                    aux.Cliente.IdCliente = (int)datos.Lector["IdCliente"]; 
-                    aux.Cliente.Nombre = (string)datos.Lector["NombreCliente"]; 
-                    aux.Cliente.Apellido = (string)datos.Lector["ApellidoCliente"]; 
+                    aux.Cliente.IdCliente = (int)datos.Lector["IdCliente"];
+                    aux.Cliente.Nombre = (string)datos.Lector["NombreCliente"];
+                    aux.Cliente.Apellido = (string)datos.Lector["ApellidoCliente"];
                     aux.Fecha = (DateTime)datos.Lector["Fecha"];
-                    aux.VentaTotal = (decimal)datos.Lector["VentaTotal"]; 
+                    aux.VentaTotal = (decimal)datos.Lector["VentaTotal"];
                     aux.FormaPago = new FormaPago();
-                    aux.FormaPago.IdFormaPago = (int)datos.Lector["IdFormaPago"]; 
-                    aux.FormaPago.Nombre = (string)datos.Lector["NombreFormaPago"]; 
+                    aux.FormaPago.IdFormaPago = (int)datos.Lector["IdFormaPago"];
+                    aux.FormaPago.Nombre = (string)datos.Lector["NombreFormaPago"];
                     aux.FormaEntrega = new FormaEntrega();
-                    aux.FormaEntrega.IdFormaEntrega = (int)datos.Lector["IdFormaEntrega"]; 
-                    aux.FormaEntrega.Nombre = (string)datos.Lector["NombreFormaEntrega"]; 
+                    aux.FormaEntrega.IdFormaEntrega = (int)datos.Lector["IdFormaEntrega"];
+                    aux.FormaEntrega.Nombre = (string)datos.Lector["NombreFormaEntrega"];
 
-                    if (datos.Lector["IdDireccion"] != DBNull.Value) 
+                    if (datos.Lector["IdDireccion"] != DBNull.Value)
                     {
                         aux.Direccion = new Direccion();
                         aux.Direccion.IdDireccion = (int)datos.Lector["IdDireccion"];
@@ -45,9 +45,9 @@ namespace negocio
                     aux.EstadoVenta.IdEstadoVenta = (int)datos.Lector["IdEstadoVenta"];
                     aux.EstadoVenta.Nombre = (string)datos.Lector["NombreEstado"];
 
-                    if (datos.Lector["Observaciones"] != DBNull.Value) 
+                    if (datos.Lector["Observaciones"] != DBNull.Value)
                     {
-                        aux.Observaciones = (string)datos.Lector["Observaciones"]; 
+                        aux.Observaciones = (string)datos.Lector["Observaciones"];
                     }
 
                     lista.Add(aux);
@@ -153,10 +153,75 @@ namespace negocio
         }
         public void agregar(Venta venta)
         {
+            AccesoDatos datos = new AccesoDatos();
+
+            if (venta == null)
+            {
+                throw new ArgumentNullException(nameof(venta));
+            }
+
+            if (venta.Detalles == null || venta.Detalles.Count == 0)
+            {
+                throw new ArgumentException(
+                    "La venta debe contener al menos un producto."
+                );
+            }
+
+            if (venta.Cliente == null || venta.Cliente.IdCliente <= 0)
+            {
+                throw new ArgumentException(
+                    "La venta debe tener un cliente válido."
+                );
+            }
+
+            if (venta.FormaEntrega == null || venta.FormaEntrega.IdFormaEntrega <= 0)
+            {
+                throw new ArgumentException(
+                    "La venta debe tener una forma de entrega válida."
+                );
+            }
+
+            if (venta.FormaPago == null || venta.FormaPago.IdFormaPago <= 0)
+            {
+                throw new ArgumentException(
+                    "La venta debe tener una forma de pago válida."
+                );
+            }
+
+            foreach (DetalleVenta detalle in venta.Detalles)
+            {
+                if (detalle == null || detalle.Producto == null || detalle.Producto.IdProducto <= 0 || detalle.Cantidad <= 0)
+                {
+                    throw new ArgumentException(
+                        "La venta contiene un detalle inválido."
+                    );
+                }
+            }
+
+            datos.setearConsulta("INSERT INTO VENTA(IdCliente, VentaTotal, IdFormaPago, IdFormaEntrega, IdDireccion, IdEstadoVenta, Observaciones) VALUES (@IdCliente, @VentaTotal, @IdFormaPago, @IdFormaEntrega, @IdDireccion, @IdEstadoVenta, @Observaciones);SELECT CAST(SCOPE_IDENTITY() AS INT)");
+            datos.setearParametro("@IdCliente", venta.Cliente.IdCliente);
+            datos.setearParametro("@VentaTotal", venta.VentaTotal);
+            datos.setearParametro("@IdFormaPago", venta.FormaPago.IdFormaPago);
+            datos.setearParametro("@IdFormaEntrega", venta.FormaEntrega.IdFormaEntrega);
+
+            if (venta.Direccion != null)
+            {
+                datos.setearParametro("@IdDireccion", venta.Direccion.IdDireccion);
+            }
+            else
+            {
+                datos.setearParametro("@IdDireccion", DBNull.Value);
+            }
+
+            datos.setearParametro("@IdEstadoVenta", venta.EstadoVenta.IdEstadoVenta);
+
+            datos.setearParametro("@Observaciones", venta.Observaciones);
+
+            int idGenerado = datos.ejecutarEscalar();
+
+            venta.IdVenta = idGenerado;
 
         }
-
-
 
     }
 }
