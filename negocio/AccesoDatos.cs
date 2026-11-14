@@ -68,6 +68,7 @@ namespace negocio
 
                 throw ex;
             }
+
         }
         //public object ejecutarScalar()
         //{

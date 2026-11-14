@@ -198,6 +198,48 @@ namespace negocio
                 }
             }
 
+            decimal total = 0;
+
+            foreach (DetalleVenta detalle in venta.Detalles)
+            {
+                AccesoDatos datosProducto = new AccesoDatos();
+
+                try
+                {
+                    datosProducto.setearConsulta("SELECT Precio, Stock FROM PRODUCTO WHERE IdProducto = @IdProducto");
+
+                    datosProducto.setearParametro("@IdProducto", detalle.Producto.IdProducto);
+
+                    datosProducto.ejecutarLectura();
+
+                    if (!datosProducto.Lector.Read())
+                    {
+                        throw new ArgumentException(
+                            "El producto seleccionado no existe."
+                        );
+                    }
+
+                    decimal precioActual = (decimal)datosProducto.Lector["Precio"];
+                    int stockDisponible = (int)datosProducto.Lector["Stock"];
+
+                    if (detalle.Cantidad > stockDisponible)
+                    {
+                        throw new ArgumentException(
+                            "No hay stock suficiente para el producto."
+                        );
+                    }
+
+                    detalle.PrecioUnitario = precioActual;
+                    total += precioActual * detalle.Cantidad;
+                }
+                finally
+                {
+                    datosProducto.cerrarConexion();
+                }
+            }
+
+            venta.VentaTotal = total;
+
             datos.setearConsulta("INSERT INTO VENTA(IdCliente, VentaTotal, IdFormaPago, IdFormaEntrega, IdDireccion, IdEstadoVenta, Observaciones) VALUES (@IdCliente, @VentaTotal, @IdFormaPago, @IdFormaEntrega, @IdDireccion, @IdEstadoVenta, @Observaciones);SELECT CAST(SCOPE_IDENTITY() AS INT)");
             datos.setearParametro("@IdCliente", venta.Cliente.IdCliente);
             datos.setearParametro("@VentaTotal", venta.VentaTotal);
@@ -213,6 +255,13 @@ namespace negocio
                 datos.setearParametro("@IdDireccion", DBNull.Value);
             }
 
+            if (venta.EstadoVenta == null || venta.EstadoVenta.IdEstadoVenta <= 0)
+            {
+                throw new ArgumentException(
+                    "La venta debe tener un estado válido."
+                );
+            }
+
             datos.setearParametro("@IdEstadoVenta", venta.EstadoVenta.IdEstadoVenta);
 
             datos.setearParametro("@Observaciones", venta.Observaciones);
@@ -220,6 +269,59 @@ namespace negocio
             int idGenerado = datos.ejecutarEscalar();
 
             venta.IdVenta = idGenerado;
+
+
+            foreach (DetalleVenta detalle in venta.Detalles)
+            {
+                AccesoDatos datosDetalle = new AccesoDatos();
+
+                try
+                {
+                    datosDetalle.setearConsulta("INSERT INTO DETALLEVENTA(IdVenta, IdProducto, Cantidad, PrecioUnitario) VALUES (@IdVenta, @IdProducto, @Cantidad, @PrecioUnitario)");
+
+                    datosDetalle.setearParametro("@IdVenta", venta.IdVenta);
+
+                    datosDetalle.setearParametro("@IdProducto", detalle.Producto.IdProducto);
+
+                    datosDetalle.setearParametro("@Cantidad", detalle.Cantidad);
+
+                    datosDetalle.setearParametro("@PrecioUnitario", detalle.PrecioUnitario);
+
+                    datosDetalle.ejecutarAccion();
+
+                }
+                finally
+                {
+                    datosDetalle.cerrarConexion();
+                }
+            }
+
+            foreach (DetalleVenta detalle in venta.Detalles)
+            {
+                AccesoDatos datosStock = new AccesoDatos();
+
+                try
+                {
+                    datosStock.setearConsulta("UPDATE PRODUCTO SET Stock = Stock - @Cantidad WHERE IdProducto = @IdProducto AND Stock >= @Cantidad; SELECT @@ROWCOUNT;");
+
+                    datosStock.setearParametro("@Cantidad", detalle.Cantidad);
+
+                    datosStock.setearParametro("@IdProducto", detalle.Producto.IdProducto);
+
+                    int filasActualizadas = datosStock.ejecutarEscalar();
+
+                    if (filasActualizadas == 0)
+                    {
+                        throw new InvalidOperationException(
+                            "No se pudo descontar el stock del producto."
+                        );
+                    }
+                }
+                finally
+                {
+                    datosStock.cerrarConexion();
+                }
+            }
 
         }
 
