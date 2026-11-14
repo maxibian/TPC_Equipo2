@@ -188,6 +188,15 @@ namespace negocio
                 );
             }
 
+            if (venta.EstadoVenta == null || venta.EstadoVenta.IdEstadoVenta <= 0)
+            {
+                throw new ArgumentException(
+                    "La venta debe tener un estado válido."
+                );
+            }
+
+            List<int> productosRevisados = new List<int>();
+
             foreach (DetalleVenta detalle in venta.Detalles)
             {
                 if (detalle == null || detalle.Producto == null || detalle.Producto.IdProducto <= 0 || detalle.Cantidad <= 0)
@@ -196,7 +205,19 @@ namespace negocio
                         "La venta contiene un detalle inválido."
                     );
                 }
+
+                int idProducto = detalle.Producto.IdProducto;
+
+                if (productosRevisados.Contains(idProducto))
+                {
+                    throw new ArgumentException(
+                        "La venta contiene un producto repetido."
+                    );
+                }
+
+                productosRevisados.Add(idProducto);
             }
+
 
             decimal total = 0;
 
@@ -253,14 +274,7 @@ namespace negocio
             else
             {
                 datos.setearParametro("@IdDireccion", DBNull.Value);
-            }
-
-            if (venta.EstadoVenta == null || venta.EstadoVenta.IdEstadoVenta <= 0)
-            {
-                throw new ArgumentException(
-                    "La venta debe tener un estado válido."
-                );
-            }
+            }   
 
             datos.setearParametro("@IdEstadoVenta", venta.EstadoVenta.IdEstadoVenta);
 
@@ -325,5 +339,24 @@ namespace negocio
 
         }
 
+
+        public void cambiarEstado(int idVenta, int idEstadoVenta)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE VENTA SET IdEstadoVenta = @IdEstadoVenta WHERE IdVenta = @IdVenta");
+
+                datos.setearParametro("@IdEstadoVenta", idEstadoVenta);
+                datos.setearParametro("@IdVenta", idVenta);
+
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
