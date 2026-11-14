@@ -39,6 +39,8 @@ namespace TPC_Equipo2
                         gvDetalles.DataBind();
 
                         lblTotal.Text = venta.VentaTotal.ToString("N2");
+
+                        txtObservaciones.Text = venta.Observaciones ?? "";
                     }
                     else
                     {
