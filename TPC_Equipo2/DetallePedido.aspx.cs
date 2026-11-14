@@ -41,6 +41,19 @@ namespace TPC_Equipo2
                         lblTotal.Text = venta.VentaTotal.ToString("N2");
 
                         txtObservaciones.Text = venta.Observaciones ?? "";
+
+                        EstadoVentaNegocio negocioEstados = new EstadoVentaNegocio();
+
+                        ddlEstado.DataSource = negocioEstados.listar();
+                        ddlEstado.DataTextField = "Nombre";
+                        ddlEstado.DataValueField = "IdEstadoVenta";
+                        ddlEstado.DataBind();
+                        ddlEstado.SelectedValue = venta.EstadoVenta.IdEstadoVenta.ToString();
+
+                        if (venta.EstadoVenta.Nombre == "Entregado" || venta.EstadoVenta.Nombre == "Cancelado")
+                        {
+                            ddlEstado.Enabled = false;
+                        }
                     }
                     else
                     {
@@ -55,6 +68,33 @@ namespace TPC_Equipo2
                 }
 
             }
+
+        }
+
+        protected void btnGuardarCambios_Click(object sender, EventArgs e)
+        {
+            string id = Request.QueryString["id"];
+
+            bool valido = int.TryParse(id, out int numero);
+
+            if (!valido || numero <= 0)
+            {
+                Response.Redirect("AdminVentas.aspx");
+            }
+
+            string observaciones = txtObservaciones.Text.Trim();
+
+            if (observaciones.Length > 500)
+            {
+                lblMensaje.Text = "Las observaciones no pueden superar los 500 caracteres.";
+                return;
+            }
+
+            VentaNegocio negocio = new VentaNegocio();
+
+            negocio.actualizarObservaciones(numero, observaciones);
+
+            lblMensaje.Text = "Observaciones guardadas correctamente.";
 
         }
     }

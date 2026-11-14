@@ -117,7 +117,8 @@
         </div>
 
         <div class="d-flex justify-content-end">
-            <asp:Button ID="btnGuardarCambios" runat="server" Text="Guardar cambios" CssClass="btn btn-primary" Enabled="false" />
+            <asp:Button ID="btnGuardarCambios" runat="server" Text="Guardar cambios" CssClass="btn btn-primary" OnClick="btnGuardarCambios_Click" />
+            <asp:Label ID="lblMensaje" runat="server" CssClass="text-success" />
         </div>
 
     </div>
