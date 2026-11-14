@@ -37,14 +37,21 @@ namespace TPC_Equipo2
 
                         gvDetalles.DataSource = detalleVentas;
                         gvDetalles.DataBind();
+
+                        lblTotal.Text = venta.VentaTotal.ToString("N2");
                     }
                     else
                     {
                         Response.Redirect("AdminVentas.aspx");
                     }
+
+
+                }
+                else
+                {
+                    Response.Redirect("AdminVentas.aspx");
                 }
 
-                
             }
 
         }
