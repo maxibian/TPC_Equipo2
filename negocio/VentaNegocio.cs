@@ -344,6 +344,15 @@ namespace negocio
         {
             AccesoDatos datos = new AccesoDatos();
 
+            Venta ventaActual = obtenerVenta(idVenta);
+
+            if (ventaActual == null)
+            {
+                throw new ArgumentException(
+                    "La venta seleccionada no existe."
+                );
+            }
+
             try
             {
                 datos.setearConsulta("UPDATE VENTA SET IdEstadoVenta = @IdEstadoVenta WHERE IdVenta = @IdVenta");
@@ -362,6 +371,20 @@ namespace negocio
         public void actualizarObservaciones(int idVenta, string observaciones)
         {
             AccesoDatos datos = new AccesoDatos();
+
+            if (idVenta <= 0)
+            {
+                throw new ArgumentException(
+                    "El identificador de la venta no es válido."
+                );
+            }
+
+            if (observaciones != null && observaciones.Length > 500)
+            {
+                throw new ArgumentException(
+                    "Las observaciones no pueden superar los 500 caracteres."
+                );
+            }
 
             try
             {

@@ -27,6 +27,11 @@ namespace TPC_Equipo2
                     if (venta != null)
                     {
                         lblIdVenta.Text = venta.IdVenta.ToString();
+                        lblFecha.Text = venta.Fecha.ToString();
+                        lblCliente.Text = venta.Cliente.Nombre;
+                        lblEstado.Text = venta.EstadoVenta.Nombre;
+                        lblFormaPago.Text = venta.FormaPago.Nombre;
+                        lblFormaEntrega.Text = venta.FormaEntrega.Nombre;
                     }
                     else
                     {
