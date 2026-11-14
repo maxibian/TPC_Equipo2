@@ -29,7 +29,7 @@ namespace TPC_Equipo2
         protected void gvVentas_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idVenta = Convert.ToInt32(gvVentas.SelectedDataKey.Value);
-            //Response.Redirect("DetalleVenta.aspx?id=" + idVenta);
+            Response.Redirect("DetallePedido.aspx?id=" + idVenta);
         }
     }
 }
