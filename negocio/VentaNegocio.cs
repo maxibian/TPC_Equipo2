@@ -358,5 +358,24 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void actualizarObservaciones(int idVenta, string observaciones)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE VENTA SET Observaciones = @Observaciones WHERE IdVenta = @IdVenta");
+
+                datos.setearParametro("@Observaciones", observaciones);
+                datos.setearParametro("@IdVenta", idVenta);
+
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
