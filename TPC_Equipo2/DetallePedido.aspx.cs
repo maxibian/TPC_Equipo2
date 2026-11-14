@@ -27,15 +27,20 @@ namespace TPC_Equipo2
                     if (venta != null)
                     {
                         lblIdVenta.Text = venta.IdVenta.ToString();
-                        lblFecha.Text = venta.Fecha.ToString();
-                        lblCliente.Text = venta.Cliente.Nombre;
+                        lblFecha.Text = venta.Fecha.ToString("dd/MM/yyyy");
+                        lblCliente.Text = venta.Cliente.Nombre + " " + venta.Cliente.Apellido;
                         lblEstado.Text = venta.EstadoVenta.Nombre;
                         lblFormaPago.Text = venta.FormaPago.Nombre;
                         lblFormaEntrega.Text = venta.FormaEntrega.Nombre;
+
+                        List<DetalleVenta> detalleVentas = negocio.listarDetallesPorVenta(numero);
+
+                        gvDetalles.DataSource = detalleVentas;
+                        gvDetalles.DataBind();
                     }
                     else
                     {
-                        
+                        Response.Redirect("AdminVentas.aspx");
                     }
                 }
 

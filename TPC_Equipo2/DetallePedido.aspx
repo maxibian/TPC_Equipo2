@@ -9,6 +9,7 @@
         </p>
     </div>
 
+
     <div class="card shadow-sm mb-4">
         <div class="card-body">
 
@@ -50,6 +51,37 @@
             </div>
         </div>
     </div>
+
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+
+            <h5 class="card-title mb-3">Productos comprados
+        </h5>
+
+            <div class="table-responsive">
+                <asp:GridView ID="gvDetalles" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-hover align-middle" GridLines="None" EmptyDataText="No hay productos registrados.">
+
+                    <Columns>
+
+                        <asp:TemplateField HeaderText="Producto">
+                            <ItemTemplate>
+                                <%# Eval("Producto.Nombre") %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+
+                        <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio unitario" DataFormatString="{0:N2}" />
+
+                    </Columns>
+
+                </asp:GridView>
+            </div>
+
+        </div>
+    </div>
+
 
 
 </asp:Content>
