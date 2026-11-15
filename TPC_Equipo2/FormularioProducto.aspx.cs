@@ -26,7 +26,6 @@ namespace TPC_Equipo2
                 {
                     lblTitulo.Text = "Modificar producto";
                     btnGuardar.Visible = false;
-                    //btnModificar.
                     int idProducto;
                     if (int.TryParse(Request.QueryString["id"], out idProducto))
                     {
@@ -52,6 +51,11 @@ namespace TPC_Equipo2
                     {
                         MostrarMensaje("ID de producto inválido.", true);
                     }
+                }
+                else
+                {
+                    btnModificar.Visible = false;
+                    btnEliminar.Visible = false;
                 }
             
             }
