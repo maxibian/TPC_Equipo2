@@ -33,7 +33,7 @@ namespace TPC_Equipo2
                         txtDescripcion.Text = producto.Descripcion;
                         txtPrecio.Text = producto.Precio.ToString();
                         txtStock.Text = producto.Stock.ToString();
-                        //ddlCategoria.SelectedValue = producto.Categoria.IdCategoria.ToString();
+                        ddlCategoria.SelectedValue = producto.Categoria.IdCategoria.ToString();
                         if (producto.Imagen != null)
                         {
                             txtImagenUrl.Text = producto.Imagen.ImagenUrl;

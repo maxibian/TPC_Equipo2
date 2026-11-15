@@ -169,7 +169,7 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("SELECT P.IdProducto, P.Nombre, P.Descripcion, P.Precio, P.Stock, P.Estado as EstadoProducto, I.ImagenUrl FROM PRODUCTO P INNER JOIN CATEGORIA C ON P.IdCategoria = C.IdCategoria INNER JOIN IMAGEN I ON P.IdProducto = I.IdProducto WHERE P.IdProducto = @id;");
+                datos.setearConsulta("SELECT P.IdProducto, P.Nombre, P.Descripcion, P.Precio, P.Stock, P.Estado as EstadoProducto, C.IdCategoria, I.ImagenUrl FROM PRODUCTO P INNER JOIN CATEGORIA C ON P.IdCategoria = C.IdCategoria INNER JOIN IMAGEN I ON P.IdProducto = I.IdProducto WHERE P.IdProducto = @id;");
                 datos.setearParametro("@id", idProducto);
                 datos.ejecutarLectura();
                 if (datos.Lector.Read())
@@ -182,6 +182,8 @@ namespace negocio
                     aux.Precio = (decimal)datos.Lector["Precio"];
                     aux.Estado = (bool)datos.Lector["EstadoProducto"];
                     aux.Stock = (int)datos.Lector["Stock"];
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
                     aux.Imagen = new Imagen();
                     aux.Imagen.ImagenUrl = (string)datos.Lector["ImagenUrl"];
 
