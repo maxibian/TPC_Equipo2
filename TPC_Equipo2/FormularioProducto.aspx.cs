@@ -1,6 +1,7 @@
 ﻿using dominio;
 using negocio;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -187,6 +188,26 @@ namespace TPC_Equipo2
             catch (Exception)
             {
                 MostrarMensaje("No se pudo modificar el producto.", true);
+            }
+        }
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idProducto = int.Parse(Request.QueryString["id"]);
+
+                Producto producto = new Producto();
+
+                producto.IdProducto = idProducto;
+                producto.Estado = false;
+
+                new ProductoNegocio().eliminar(producto);
+
+                MostrarMensaje("Producto dado de baja correctamente.", false);
+            }
+            catch (Exception)
+            {
+                MostrarMensaje("No se pudo dar de baja el producto.", true);
             }
         }
 
