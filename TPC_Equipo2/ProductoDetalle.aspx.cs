@@ -46,5 +46,17 @@ namespace TPC_Equipo2
                 }
             }
         }
+        public void btnModificar_Click(object sender, EventArgs e)
+        {
+            int idProducto;
+            if (int.TryParse(Request.QueryString["id"], out idProducto))
+            {
+                Response.Redirect($"FormularioProducto.aspx?id={idProducto}");
+            }
+            else
+            {
+                Response.Redirect("Default.aspx");
+            }
+        }
     }
 }

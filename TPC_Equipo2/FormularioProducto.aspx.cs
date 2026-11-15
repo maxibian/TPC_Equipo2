@@ -21,6 +21,34 @@ namespace TPC_Equipo2
                 ddlCategoria.DataTextField = "Nombre";
                 ddlCategoria.DataBind(); 
             }
+            if(Request.QueryString["id"] != null)
+            {
+                int idProducto;
+                if (int.TryParse(Request.QueryString["id"], out idProducto))
+                {
+                    Producto producto = new ProductoNegocio().obtenerProducto(idProducto);
+                    if (producto != null)
+                    {
+                        txtNombre.Text = producto.Nombre;
+                        txtDescripcion.Text = producto.Descripcion;
+                        txtPrecio.Text = producto.Precio.ToString();
+                        txtStock.Text = producto.Stock.ToString();
+                        //ddlCategoria.SelectedValue = producto.Categoria.IdCategoria.ToString();
+                        if (producto.Imagen != null)
+                        {
+                            txtImagenUrl.Text = producto.Imagen.ImagenUrl;
+                        }
+                    }
+                    else
+                    {
+                        MostrarMensaje("Producto no encontrado.", true);
+                    }
+                }
+                else
+                {
+                    MostrarMensaje("ID de producto inválido.", true);
+                }
+            }
         }
         private void MostrarMensaje(string texto, bool esError)
         {
@@ -80,10 +108,9 @@ namespace TPC_Equipo2
                 MostrarMensaje("Producto guardado.", false);
                 LimpiarFormulario();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // Si el nombre ya existe, el UNIQUE tira error
-                MostrarMensaje("No se pudo guardar: " + ex.Message, true);
+                MostrarMensaje("No se pudo guardar. Producto con nombre duplicado",true);
             }
         }
 
