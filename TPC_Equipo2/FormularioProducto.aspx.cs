@@ -19,35 +19,40 @@ namespace TPC_Equipo2
                 ddlCategoria.DataSource = new CategoriaNegocio().ListarCategorias();
                 ddlCategoria.DataValueField = "IdCategoria";
                 ddlCategoria.DataTextField = "Nombre";
-                ddlCategoria.DataBind(); 
-            }
-            if(Request.QueryString["id"] != null)
-            {
-                int idProducto;
-                if (int.TryParse(Request.QueryString["id"], out idProducto))
+                ddlCategoria.DataBind();
+
+                if (Request.QueryString["id"] != null)
                 {
-                    Producto producto = new ProductoNegocio().obtenerProducto(idProducto);
-                    if (producto != null)
+                    lblTitulo.Text = "Modificar producto";
+                    btnGuardar.Visible = false;
+                    //btnModificar.
+                    int idProducto;
+                    if (int.TryParse(Request.QueryString["id"], out idProducto))
                     {
-                        txtNombre.Text = producto.Nombre;
-                        txtDescripcion.Text = producto.Descripcion;
-                        txtPrecio.Text = producto.Precio.ToString();
-                        txtStock.Text = producto.Stock.ToString();
-                        ddlCategoria.SelectedValue = producto.Categoria.IdCategoria.ToString();
-                        if (producto.Imagen != null)
+                        Producto producto = new ProductoNegocio().obtenerProducto(idProducto);
+                        if (producto != null)
                         {
-                            txtImagenUrl.Text = producto.Imagen.ImagenUrl;
+                            txtNombre.Text = producto.Nombre;
+                            txtDescripcion.Text = producto.Descripcion;
+                            txtPrecio.Text = producto.Precio.ToString();
+                            txtStock.Text = producto.Stock.ToString();
+                            ddlCategoria.SelectedValue = producto.Categoria.IdCategoria.ToString();
+                            if (producto.Imagen != null)
+                            {
+                                txtImagenUrl.Text = producto.Imagen.ImagenUrl;
+                            }
+                        }
+                        else
+                        {
+                            MostrarMensaje("Producto no encontrado.", true);
                         }
                     }
                     else
                     {
-                        MostrarMensaje("Producto no encontrado.", true);
+                        MostrarMensaje("ID de producto inválido.", true);
                     }
                 }
-                else
-                {
-                    MostrarMensaje("ID de producto inválido.", true);
-                }
+            
             }
         }
         private void MostrarMensaje(string texto, bool esError)
@@ -58,6 +63,7 @@ namespace TPC_Equipo2
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            
             // Validaciones
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
@@ -123,6 +129,67 @@ namespace TPC_Equipo2
             txtImagenUrl.Text = "";
             ddlCategoria.SelectedIndex = 0;
         }
-        
+        protected void btnModificar_Click(object sender, EventArgs e)
+        {
+            // Validaciones
+            if (string.IsNullOrWhiteSpace(txtNombre.Text))
+            {
+                MostrarMensaje("Ingresá el nombre.", true);
+                return;
+            }
+
+            decimal precio;
+            if (!decimal.TryParse(txtPrecio.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out precio) || precio < 0)
+            {
+                MostrarMensaje("El precio no es válido.", true);
+                return;
+            }
+            MostrarMensaje("Stock ingresado: " + txtStock.Text, false);
+            int stock;
+            if (!int.TryParse(txtStock.Text, out stock) || stock < 0)
+            {
+                MostrarMensaje("El stock no es válido.", true);
+                return;
+            }
+
+            if (ddlCategoria.SelectedValue == "0")
+            {
+                MostrarMensaje("Seleccioná una categoría.", true);
+                return;
+            }
+            try
+            {
+                int idProducto = int.Parse(Request.QueryString["id"]);
+
+                Producto modificar = new Producto();
+
+                modificar.IdProducto = idProducto;
+                modificar.Nombre = txtNombre.Text.Trim();
+                modificar.Descripcion = string.IsNullOrWhiteSpace(txtDescripcion.Text) ? null : txtDescripcion.Text.Trim();
+                modificar.Precio = precio;
+                modificar.Stock = stock;
+
+                modificar.Categoria = new dominio.Categoria();
+                modificar.Categoria.IdCategoria = int.Parse(ddlCategoria.SelectedValue);
+
+                if (!string.IsNullOrWhiteSpace(txtImagenUrl.Text))
+                {
+                    modificar.Imagen = new Imagen();
+                    modificar.Imagen.ImagenUrl = txtImagenUrl.Text.Trim();
+                }
+
+                new ProductoNegocio().modificar(modificar);
+
+
+
+                MostrarMensaje("Producto modificado correctamente.", false);
+            }
+            catch (Exception)
+            {
+                MostrarMensaje("No se pudo modificar el producto.", true);
+            }
+        }
+
+
     }
 }
