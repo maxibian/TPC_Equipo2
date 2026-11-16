@@ -50,7 +50,8 @@
                         </li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/MiCuenta">Mi Cuenta</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/HerramientasAdmin">Admin</a></li>
-                        
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/ConfirmarCompra">Confirmar compra</a></li>
+
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">

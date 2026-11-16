@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-<%--    <asp:Repeater ID="repRepeater" runat="server">
+    <%--    <asp:Repeater ID="repRepeater" runat="server">
         <ItemTemplate>
             <section class="card" style="max-width: 320px">
                 <img src="<%#Eval("ImagenUrl") %>" class="card-img-top" alt="...">
@@ -13,6 +13,10 @@
             </section>
         </ItemTemplate>
     </asp:Repeater>--%>
+
+   <%-- <asp:Button ID="btnProbarVenta" runat="server" Text="Registrar venta de prueba" OnClick="btnProbarVenta_Click1"/>
+
+    <asp:Label ID="lblResultado" runat="server"/>--%>
 
 </asp:Content>
 

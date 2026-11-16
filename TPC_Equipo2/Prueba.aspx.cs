@@ -19,5 +19,47 @@ namespace TPC_Equipo2
         //    repRepeater.DataSource = listaProducto;
         //    repRepeater.DataBind();
         }
+
+        protected void btnProbarVenta_Click1(object sender, EventArgs e)
+        {
+            //Venta venta = new Venta();
+
+            //venta.Cliente = new Cliente();
+            //venta.Cliente.IdCliente = 2;
+
+            //venta.FormaPago = new FormaPago();
+            //venta.FormaPago.IdFormaPago = 1;
+
+            //venta.FormaEntrega = new FormaEntrega();
+            //venta.FormaEntrega.IdFormaEntrega = 1;
+
+            //venta.EstadoVenta = new EstadoVenta();
+            //venta.EstadoVenta.IdEstadoVenta = 3;
+
+            //DetalleVenta detalle = new DetalleVenta();
+
+            //detalle.Producto = new Producto();
+            //detalle.Producto.IdProducto = 5;
+
+            //detalle.Cantidad = 1;
+
+            //venta.Detalles.Add(detalle);
+
+            //DetalleVenta detalle2 = new DetalleVenta();
+
+            //detalle2.Producto = new Producto();
+            //detalle2.Producto.IdProducto = 2;
+
+            //detalle2.Cantidad = 2;
+
+            //venta.Detalles.Add(detalle2);
+
+            //VentaNegocio negocio = new VentaNegocio();
+
+            //negocio.agregar(venta);
+
+            //lblResultado.Text = "Venta registrada con ID: " + venta.IdVenta;
+
+        }
     }
 }
