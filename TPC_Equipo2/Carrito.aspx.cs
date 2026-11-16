@@ -65,5 +65,18 @@ namespace TPC_Equipo2
                 lblTotal.Visible = false;
             }
         }
+
+        protected void btnRealizarCompra_Click(object sender, EventArgs e)
+        {
+            List<ItemCarrito> carrito = Session["Carrito"] as List<ItemCarrito>;
+
+            if (carrito == null || carrito.Count == 0)
+            {
+                lblVacio.Text = "No hay productos en el carrito.";
+                return;
+            }
+
+            Response.Redirect("ConfirmarCompra.aspx");
+        }
     }
 }

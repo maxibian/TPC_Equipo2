@@ -27,7 +27,7 @@
         <asp:Label ID="lblTotal" runat="server"
             style="display: block; font-weight: bold; font-size: 20px;" />
 
-        <asp:Button runat="server" ID="btnRealizarCompra" Text="Realizar compra" />
+        <asp:Button runat="server" ID="btnRealizarCompra" Text="Realizar compra" OnClick="btnRealizarCompra_Click" />
 
     </asp:Panel>
 
