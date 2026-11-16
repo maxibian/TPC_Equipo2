@@ -11,6 +11,7 @@ namespace TPC_Equipo2
 {
     public partial class _Default : Page
     {
+
         public List<Producto> listaProducto {  get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -35,26 +36,40 @@ namespace TPC_Equipo2
             Response.Redirect("ProductoDetalle.aspx?id=" + idProducto);
         }
 
-        protected void btnCarrito_Click(object sender, EventArgs e)
+        protected void btnAgregarAlCarrito_Click(object sender, EventArgs e)
         {
-            LinkButton producto = (LinkButton)sender;
-            int id = int.Parse(producto.CommandArgument);
-            List<int> carritoIds;
+            LinkButton productoSeleccionado = (LinkButton)sender;
+            int id = int.Parse(productoSeleccionado.CommandArgument);
+            List<ItemCarrito> carrito;
 
-            if (Session["CarritoIds"] != null)
+            if (Session["Carrito"] != null)
             {
-                carritoIds = (List<int>)Session["CarritoIds"];
+                carrito = (List<ItemCarrito>)Session["Carrito"];
             }
             else
             {
-                carritoIds = new List<int>();
+                carrito = new List<ItemCarrito>();
             }
 
-            carritoIds.Add(id);
+            ItemCarrito item = carrito.FirstOrDefault(x => x.Producto.IdProducto == id);
+            if (item != null)
+            {
+                item.Cantidad++;
+            }
+            else
+            {
+                Producto producto = new ProductoNegocio().obtenerProducto(id);
 
-            Session["CarritoIds"] = carritoIds;
+                ItemCarrito nuevo = new ItemCarrito();
 
+                nuevo.Producto = producto;
+                nuevo.Cantidad = 1;
+                nuevo.PrecioUnitario = producto.Precio;
+
+                carrito.Add(nuevo);
+            }
+
+            Session["Carrito"] = carrito;
         }
     }
-
 }
