@@ -86,6 +86,27 @@ namespace TPC_Equipo2
 
                 lblTotal.Text = total.ToString("N2");
 
+                FormaPagoNegocio negocioPago = new FormaPagoNegocio();
+
+                List<FormaPago> formasPago = negocioPago.listarFormasPago();
+
+                List<FormaPago> pagosActivos = new List<FormaPago>();
+
+                foreach (FormaPago pago in formasPago)
+                {
+                    if (pago.Estado)
+                    {
+                        pagosActivos.Add(pago);
+                    }
+                }
+
+                ddlFormaPago.DataSource = pagosActivos;
+                ddlFormaPago.DataTextField = "Nombre";
+                ddlFormaPago.DataValueField = "IdFormaPago";
+                ddlFormaPago.DataBind();
+
+                ddlFormaPago.Items.Insert(0, new ListItem("Seleccione una forma de pago"));
+
             }
         }
     }
