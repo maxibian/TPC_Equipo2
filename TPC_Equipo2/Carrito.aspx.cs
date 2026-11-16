@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dominio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,18 +14,17 @@ namespace TPC_Equipo2
         {
             if (!IsPostBack)
             {
-                if (Session["CarritoIds"] != null)
+                if (Session["Carrito"] != null)
                 {
-                    List<int> idsGuardados = (List<int>)Session["CarritoIds"];
+                    List<ItemCarrito> carrito = (List<ItemCarrito>)Session["Carrito"];
+
+                    dgvCarrito.DataSource = carrito;
+                    dgvCarrito.DataBind();
                 }
                 else
                 {
                     lblVacio.Text = "Carrito vacio";
                 }
-                dgvCarrito.DataSource = Session["CarritoIds"];
-                dgvCarrito.DataBind();
-
-
             }
         }
     }

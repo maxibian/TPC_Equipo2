@@ -56,8 +56,7 @@ namespace TPC_Equipo2
                 {
                     btnModificar.Visible = false;
                     btnEliminar.Visible = false;
-                }
-            
+                }  
             }
         }
         private void MostrarMensaje(string texto, bool esError)
