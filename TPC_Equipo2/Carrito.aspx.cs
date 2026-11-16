@@ -20,11 +20,49 @@ namespace TPC_Equipo2
 
                     dgvCarrito.DataSource = carrito;
                     dgvCarrito.DataBind();
+
+                    CalcularTotales(carrito);
                 }
-                else
-                {
-                    lblVacio.Text = "Carrito vacio";
-                }
+
+            }
+        }
+        protected void dgvCarrito_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            List<ItemCarrito> carrito = (List<ItemCarrito>)Session["Carrito"];
+
+            ItemCarrito item = carrito[e.RowIndex];
+
+            if (item.Cantidad > 1)
+            {
+                item.Cantidad--;
+            }
+            else
+            {
+                carrito.RemoveAt(e.RowIndex);
+            }
+            Session["Carrito"] = carrito;
+
+            dgvCarrito.DataSource = carrito;
+            dgvCarrito.DataBind();
+
+            CalcularTotales(carrito);
+        }
+        private void CalcularTotales(List<ItemCarrito> carrito)
+        {
+            decimal subtotal = carrito.Sum(x => x.PrecioUnitario * x.Cantidad);
+            decimal envio = 5000;
+            decimal total = subtotal + envio;
+            lblSubtotal.Text = "Subtotal: $" + subtotal.ToString("N2");
+            lblEnvio.Text = "Envío: $" + envio.ToString("N2");
+            lblTotal.Text = "Total: $" + total.ToString("N2");
+
+            if(carrito.Count == 0)
+            {
+                lblVacio.Text = "Carrito vacío";
+                btnRealizarCompra.Visible = false;
+                lblSubtotal.Visible = false;
+                lblEnvio.Visible = false;
+                lblTotal.Visible = false;
             }
         }
     }
