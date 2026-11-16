@@ -43,13 +43,37 @@ namespace TPC_Equipo2
 
                 foreach (DetalleVenta detalle in detallesCarrito)
                 {
+
+                    if (detalle.Producto == null || detalle.Cantidad <= 0)
+                    {
+                        lblCarrito.Text = "Hay un producto inválido en el carrito.";
+                        return;
+                    }
+
+                    bool encontrado = false;
+
                     foreach (Producto producto in productos)
                     {
                         if (detalle.Producto.IdProducto == producto.IdProducto)
                         {
+                            encontrado = true;
+
+                            if (detalle.Cantidad > producto.Stock)
+                            {
+                                lblCarrito.Text = "No hay stock suficiente para " + producto.Nombre;
+                                return;
+                            }
+
                             detalle.Producto = producto;
                             detalle.PrecioUnitario = producto.Precio;
+                            break;
                         }
+                    }
+
+                    if (!encontrado)
+                    {
+                        lblCarrito.Text = "Uno de los productos del carrito ya no está disponible.";
+                        return;
                     }
                 }
 
@@ -84,7 +108,7 @@ namespace TPC_Equipo2
                 ddlFormaPago.DataValueField = "IdFormaPago";
                 ddlFormaPago.DataBind();
 
-                ddlFormaPago.Items.Insert(0, new ListItem("Seleccione una forma de pago"));
+                ddlFormaPago.Items.Insert(0, new ListItem("Seleccione una forma de pago", ""));
 
                 FormaEntregaNegocio negocioEntrega = new FormaEntregaNegocio();
 
@@ -105,7 +129,7 @@ namespace TPC_Equipo2
                 ddlFormaEntrega.DataValueField = "IdFormaEntrega";
                 ddlFormaEntrega.DataBind();
 
-                ddlFormaEntrega.Items.Insert(0, new ListItem("Seleccione una forma de entrega"));
+                ddlFormaEntrega.Items.Insert(0, new ListItem("Seleccione una forma de entrega", ""));
 
             }
         }
