@@ -3,12 +3,13 @@
 
 
 
-<asp:GridView ID="dgvCarrito" runat="server" AutoGenerateColumns="false" CssClass="table table-borderer">
+<asp:GridView ID="dgvCarrito" runat="server" AutoGenerateColumns="false" CssClass="table table-borderer" OnRowDeleting="dgvCarrito_RowDeleting">
 
     <Columns>
         <asp:BoundField DataField="NombreProducto" HeaderText="Producto" />
         <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
         <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio unitario" />
+       <asp:CommandField ShowDeleteButton="true" DeleteText="Eliminar" ButtonType="Button" />
     </Columns>
    
 </asp:GridView>

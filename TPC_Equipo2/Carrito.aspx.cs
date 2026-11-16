@@ -27,5 +27,24 @@ namespace TPC_Equipo2
                 }
             }
         }
+        protected void dgvCarrito_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            List<ItemCarrito> carrito = (List<ItemCarrito>)Session["Carrito"];
+
+            ItemCarrito item = carrito[e.RowIndex];
+
+            if (item.Cantidad > 1)
+            {
+                item.Cantidad--;
+            }
+            else
+            {
+                carrito.RemoveAt(e.RowIndex);
+            }
+            Session["Carrito"] = carrito;
+
+            dgvCarrito.DataSource = carrito;
+            dgvCarrito.DataBind();
+        }
     }
 }
