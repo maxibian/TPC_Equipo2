@@ -15,44 +15,23 @@ namespace TPC_Equipo2
         {
             if (!IsPostBack)
             {
-                List<int> carritoIds = Session["CarritoIds"] as List<int>;
+                List<ItemCarrito> carrito = Session["Carrito"] as List<ItemCarrito>;
 
-                if (carritoIds == null || carritoIds.Count == 0)
+                if (carrito == null || carrito.Count == 0)
                 {
                     lblCarrito.Text = "No hay productos en el carrito.";
                     return;
                 }
 
-                List<int> productosUnicos = new List<int>();
-
-                foreach (int id in carritoIds)
-                {
-                    if (!productosUnicos.Contains(id))
-                    {
-                        productosUnicos.Add(id);
-                    }
-                }
-
                 List<DetalleVenta> detallesCarrito = new List<DetalleVenta>();
 
-                foreach (int idProducto in productosUnicos)
+                foreach (ItemCarrito item in carrito)
                 {
-                    int cantidad = 0;
-
-                    foreach (int id in carritoIds)
-                    {
-                        if (id == idProducto)
-                        {
-                            cantidad++;
-                        }
-                    }
-
                     DetalleVenta detalle = new DetalleVenta();
 
-                    detalle.Producto = new Producto();
-
-                    detalle.Producto.IdProducto = idProducto;
-                    detalle.Cantidad = cantidad;
+                    detalle.Producto = item.Producto;
+                    detalle.Cantidad = item.Cantidad;
+                    detalle.PrecioUnitario = item.PrecioUnitario;
 
                     detallesCarrito.Add(detalle);
                 }
