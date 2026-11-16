@@ -77,6 +77,15 @@ namespace TPC_Equipo2
                 gvResumen.DataSource = detallesCarrito;
                 gvResumen.DataBind();
 
+                decimal total = 0;
+
+                foreach (DetalleVenta detalle in detallesCarrito)
+                {
+                    total += detalle.Subtotal;
+                }
+
+                lblTotal.Text = total.ToString("N2");
+
             }
         }
     }
