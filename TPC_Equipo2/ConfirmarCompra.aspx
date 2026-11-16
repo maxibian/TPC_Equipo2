@@ -42,4 +42,33 @@
     </div>
 
 
+    <div class="card shadow-sm mt-4">
+        <div class="card-body">
+
+            <h5 class="card-title mb-3">Datos de la compra
+        </h5>
+
+            <div class="mb-3">
+                <label class="form-label">
+                    Forma de pago
+                </label>
+
+                <asp:DropDownList ID="ddlFormaPago" runat="server" CssClass="form-select" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">
+                    Forma de entrega
+                </label>
+
+                <asp:DropDownList ID="ddlFormaEntrega" runat="server" CssClass="form-select" />
+            </div>
+
+            <asp:Button ID="btnConfirmarCompra" runat="server" Text="Confirmar compra" CssClass="btn btn-primary" Enabled="false" />
+
+        </div>
+    </div>
+
+
+
 </asp:Content>
