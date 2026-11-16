@@ -86,6 +86,27 @@ namespace TPC_Equipo2
 
                 ddlFormaPago.Items.Insert(0, new ListItem("Seleccione una forma de pago"));
 
+                FormaEntregaNegocio negocioEntrega = new FormaEntregaNegocio();
+
+                List<FormaEntrega> formasEntrega = negocioEntrega.listarFormasEntrega();
+
+                List<FormaEntrega> entregasActivas = new List<FormaEntrega>();
+
+                foreach (FormaEntrega entrega in formasEntrega)
+                {
+                    if (entrega.Estado)
+                    {
+                        entregasActivas.Add(entrega);
+                    }
+                }
+
+                ddlFormaEntrega.DataSource = entregasActivas;
+                ddlFormaEntrega.DataTextField = "Nombre";
+                ddlFormaEntrega.DataValueField = "IdFormaEntrega";
+                ddlFormaEntrega.DataBind();
+
+                ddlFormaEntrega.Items.Insert(0, new ListItem("Seleccione una forma de entrega"));
+
             }
         }
     }
