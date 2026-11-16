@@ -60,7 +60,7 @@ namespace TPC_Equipo2
 
                             if (detalle.Cantidad > producto.Stock)
                             {
-                                lblCarrito.Text = "No hay stock suficiente para " + producto.Nombre;
+                                lblCarrito.Text = "No hay stock suficiente para " + producto.Nombre + ". Cantidad solicitada: " + detalle.Cantidad + ". Stock disponible: " + producto.Stock;
                                 return;
                             }
 

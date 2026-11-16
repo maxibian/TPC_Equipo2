@@ -6,6 +6,11 @@
 
     <asp:Label ID="lblCarrito" runat="server" />
 
+    <div class="mt-3">
+        <asp:HyperLink ID="lnkVolverCarrito" runat="server" NavigateUrl="~/Carrito.aspx" Text="Volver al carrito" CssClass="btn btn-outline-secondary me-2" />
+
+        <asp:HyperLink ID="lnkVolverCatalogo" runat="server" NavigateUrl="~/Default.aspx" Text="Seguir comprando" CssClass="btn btn-outline-primary" />
+    </div>
 
     <div class="card shadow-sm mt-4">
         <div class="card-body">
