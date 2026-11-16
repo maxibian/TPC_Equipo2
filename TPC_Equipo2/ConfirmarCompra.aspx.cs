@@ -131,7 +131,30 @@ namespace TPC_Equipo2
 
                 ddlFormaEntrega.Items.Insert(0, new ListItem("Seleccione una forma de entrega", ""));
 
+                btnConfirmarCompra.Enabled = true;
+
             }
+        }
+
+        protected void btnConfirmarCompra_Click(object sender, EventArgs e)
+        {
+            List<ItemCarrito> carrito = Session["Carrito"] as List<ItemCarrito>;
+
+            if (carrito == null || carrito.Count == 0)
+            {
+                lblMensaje.Text = "El carrito está vacío.";
+                return;
+            }
+
+            if (ddlFormaPago.SelectedValue == "" || ddlFormaEntrega.SelectedValue == "")
+            {
+                lblMensaje.Text =
+                    "Debés seleccionar una forma de pago y una forma de entrega.";
+                return;
+            }
+
+            lblMensaje.Text =
+                "Datos seleccionados correctamente.";
         }
     }
 }

@@ -69,7 +69,9 @@
                 <asp:DropDownList ID="ddlFormaEntrega" runat="server" CssClass="form-select" />
             </div>
 
-            <asp:Button ID="btnConfirmarCompra" runat="server" Text="Confirmar compra" CssClass="btn btn-primary" Enabled="false" />
+            <asp:Button ID="btnConfirmarCompra" runat="server" Text="Confirmar compra" CssClass="btn btn-primary" Enabled="false" OnClick="btnConfirmarCompra_Click"/>
+
+            <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mt-3" />
 
         </div>
     </div>
