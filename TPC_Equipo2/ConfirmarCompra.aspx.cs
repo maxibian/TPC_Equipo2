@@ -153,8 +153,62 @@ namespace TPC_Equipo2
                 return;
             }
 
-            lblMensaje.Text =
-                "Datos seleccionados correctamente.";
+            int idFormaPago = int.Parse(ddlFormaPago.SelectedValue);
+            int idFormaEntrega = int.Parse(ddlFormaEntrega.SelectedValue);
+
+            Venta venta = new Venta();
+
+            venta.FormaPago = new FormaPago();
+            venta.FormaPago.IdFormaPago = idFormaPago;
+
+            venta.FormaEntrega = new FormaEntrega();
+            venta.FormaEntrega.IdFormaEntrega = idFormaEntrega;
+
+            foreach (ItemCarrito item in carrito)
+            {
+                if (item == null || item.Producto == null || item.Producto.IdProducto <= 0 || item.Cantidad <= 0)
+                {
+                    lblMensaje.Text = "El carrito contiene productos inválidos.";
+                    return;
+                }
+
+                DetalleVenta detalle = new DetalleVenta();
+
+                detalle.Producto = new Producto();
+
+                detalle.Producto.IdProducto = item.Producto.IdProducto;
+
+                detalle.Cantidad = item.Cantidad;
+
+                venta.Detalles.Add(detalle);
+            }
+
+            EstadoVentaNegocio negocioEstados = new EstadoVentaNegocio();
+
+            List<EstadoVenta> estados = negocioEstados.listar();
+
+            EstadoVenta estadoInicial = null;
+
+            foreach (EstadoVenta estado in estados)
+            {
+                if (estado.Nombre == "Pendiente")
+                {
+                    estadoInicial = estado;
+                    break;
+                }
+            }
+
+            if (estadoInicial == null)
+            {
+                lblMensaje.Text = "No se encontró el estado inicial de la venta.";
+                return;
+            }
+
+            venta.EstadoVenta = estadoInicial;
+
+            //Falta identificar el cliente.
+
+            lblMensaje.Text = "Venta preparada correctamente.";
         }
     }
 }
