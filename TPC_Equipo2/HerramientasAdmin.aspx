@@ -100,9 +100,9 @@
                         Administrá los usuarios de la tienda     
                     </p>
 
-                    <%-- <a href="paginaParaAdministrarLosUsuarios.aspx"
+                     <a href="AdministrarUsuarios.aspx"
                         class="btn btn-outline-primary mt-auto">Administrar Usuarios
-                </a>--%>
+                </a>
                 </div>
             </div>
         </div>
