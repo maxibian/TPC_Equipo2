@@ -78,12 +78,13 @@ namespace negocio
             }
         }
 
-        public void modificarItemCarrito(int IdCarrito, int Cantidad)
+        public void modificarItemCarrito(int IdCarrito, int IdProducto, int Cantidad)
         {
             try
             {
-                datos.setearConsulta("UPDATE ITEMCARRITO SET Cantidad = @Cantidad WHERE IdItemCarrito = @IdItemCarrito");
+                datos.setearConsulta("UPDATE ITEMCARRITO SET Cantidad = @Cantidad WHERE IdItemCarrito = @IdItemCarrito AND IdProducto = @IdProducto");
                 datos.setearParametro("@IdItemCarrito", IdCarrito);
+                datos.setearParametro("@IdProducto", IdProducto);
                 datos.setearParametro("@Cantidad", Cantidad);
                 datos.ejecutarAccion();
             }
@@ -96,17 +97,32 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public void eliminarItemCarrito(int IdCarrito)
+        public void eliminarItemCarrito(int IdCarrito, int IdProducto)
         {
             try
             {
-                datos.setearConsulta("DELETE FROM ITEMCARRITO WHERE IdItemCarrito = @IdItemCarrito");
+                datos.setearConsulta("DELETE FROM ITEMCARRITO WHERE IdItemCarrito = @IdItemCarrito AND IdProducto = @IdProducto");
                 datos.setearParametro("@IdItemCarrito", IdCarrito);
+                datos.setearParametro("@IdProducto", IdProducto);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void vaciarCarrito(int idCarrito)
+        {
+            try
+            {
+                datos.setearConsulta("DELETE FROM ITEMCARRITO WHERE IdCarrito = @IdCarrito");
+                datos.setearParametro("@IdCarrito", idCarrito);
+                datos.ejecutarAccion();
             }
             finally
             {

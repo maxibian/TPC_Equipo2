@@ -75,19 +75,5 @@ namespace negocio
                 itemNegocio.agregarItemCarrito(carrito.IdCarrito, item.Producto.IdProducto, item.Cantidad, item.PrecioUnitario);
             }
         }
-
-        public void vaciarCarrito(int idCarrito)
-        {
-            try
-            {
-                datos.setearConsulta("DELETE FROM ITEMCARRITO WHERE IdCarrito = @IdCarrito");
-                datos.setearParametro("@IdCarrito", idCarrito);
-                datos.ejecutarAccion();
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
     }
 }
