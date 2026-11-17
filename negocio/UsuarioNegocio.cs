@@ -12,20 +12,20 @@ namespace negocio
     {
         AccesoDatos datos = new AccesoDatos();
 
-        public List<Usuario> listarUsuarios(string nombre="")
+        public List<Usuario> listarUsuarios(string nombre = "")
         {
             List<Usuario> lista = new List<Usuario>();
             try
             {
                 string consulta = "SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, R.IdRol, U.Estado FROM USUARIO U INNER JOIN ROL R ON U.IdRol = R.IdRol WHERE U.Estado = 1";
-                if(nombre != "")
+                if (nombre != "")
                 {
                     consulta += " AND U.NombreUsuario = @nombre";
                 }
 
                 datos.setearConsulta(consulta);
 
-                if(nombre != "")
+                if (nombre != "")
                 {
                     datos.setearParametro("@nombre", nombre);
                 }
@@ -68,7 +68,7 @@ namespace negocio
         }
 
 
-    public int agregarUsuario(Usuario usuario)
+        public int agregarUsuario(Usuario usuario)
         {
             try
             {
@@ -77,6 +77,7 @@ namespace negocio
                 datos.setearParametro("@Contrasena", usuario.Contrasena);
                 datos.setearParametro("@IdRol", 2);
                 datos.setearParametro("@Estado", 1);
+                datos.ejecutarAccion();
 
 
                 return datos.ejecutarEscalar();
@@ -87,6 +88,58 @@ namespace negocio
 
                 throw ex;
             }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+        public void usuarioAdministrador(Usuario usuario)
+        {
+            try
+            {
+                datos.setearConsulta("INSERT INTO USUARIO (NombreUsuario, Contrasena, IdRol, Estado)VALUES(@NombreUsuario, @Contrasena, @IdRol, @Estado)");
+                datos.setearParametro("@NombreUsuario", usuario.NombreUsuario);
+                datos.setearParametro("@Contrasena", usuario.Contrasena);
+                datos.setearParametro("@IdRol", 1);
+                datos.setearParametro("@Estado", usuario.Estado);
+                datos.ejecutarAccion();
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
+        public bool isExist(string nombre)
+        {
+            try
+            {
+                List<Usuario> veficiarLista = new List<Usuario>();
+                veficiarLista = listarUsuarios(nombre);
+
+                if (veficiarLista.Count == 0)
+                {
+                    return false;
+                }
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
             finally
             {
                 datos.cerrarConexion();

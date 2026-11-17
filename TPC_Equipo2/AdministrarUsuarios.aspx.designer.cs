@@ -51,40 +51,49 @@ namespace TPC_Equipo2
         protected global::System.Web.UI.WebControls.TextBox txtEmailUsuario;
 
         /// <summary>
-        /// pnlAdministrarUsuario control.
+        /// pnlPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlAdministrarUsuario;
+        protected global::System.Web.UI.WebControls.Panel pnlPassword;
 
         /// <summary>
-        /// lblAdministrarDrop control.
+        /// lblPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAdministrarDrop;
+        protected global::System.Web.UI.WebControls.Label lblPassword;
 
         /// <summary>
-        /// ddlRol control.
+        /// txtPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlRol;
+        protected global::System.Web.UI.WebControls.TextBox txtPassword;
 
         /// <summary>
-        /// btnGuardar control.
+        /// btnAlta control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGuardar;
+        protected global::System.Web.UI.WebControls.Button btnAlta;
+
+        /// <summary>
+        /// btnBaja control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBaja;
 
         /// <summary>
         /// lnkCancelar control.
