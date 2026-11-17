@@ -47,82 +47,18 @@ namespace TPC_Equipo2
             Response.Redirect("DetallePedido.aspx?id=" + idVenta);
         }
 
-        //protected void btnBuscarVenta_Click(object sender, EventArgs e)
-        //{
-        //    int idVenta;
-
-        //    bool valido = int.TryParse(txtBuscarVenta.Text, out idVenta);
-
-        //    //lblMensaje.Text = "";
-
-        //    if (!valido || idVenta <= 0)
-        //    {
-        //        //lblMensaje.Text = "Ingresá un número de venta válido.";
-        //        return;
-        //    }
-
-        //    VentaNegocio negocio = new VentaNegocio();
-
-        //    Venta venta = negocio.obtenerVenta(idVenta);
-
-        //    List<Venta> ventasEncontradas = new List<Venta>();
-
-        //    if (venta != null)
-        //    {
-        //        ventasEncontradas.Add(venta);
-        //    }
-        //    else
-        //    {
-        //        //lblMensaje.Text = "No se encontró una venta con ese número.";
-        //    }
-
-        //    gvVentas.DataSource = ventasEncontradas;
-        //    gvVentas.DataBind();
-
-        //}
-
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             txtBuscarVenta.Text = "";
             lblMensaje.Text = "";
             txtBuscarCliente.Text = "";
             ddlFiltroEstado.SelectedIndex = 0;
+
+            txtFechaDesde.Text = "";
+            txtFechaHasta.Text = "";
+
             cargarVentas();
         }
-
-        //protected void btnBuscarCliente_Click(object sender, EventArgs e)
-        //{
-        //    string texto = txtBuscarCliente.Text.Trim().ToLower();
-
-        //    //lblMensaje.Text = "";
-
-        //    if (texto == "")
-        //    {
-        //        //lblMensaje.Text = "Ingresá un nombre o apellido.";
-        //        return;
-        //    }
-
-        //    VentaNegocio negocio = new VentaNegocio();
-
-        //    List<Venta> ventas = negocio.listarVentas();
-
-        //    List<Venta> ventasEncontradas = new List<Venta>();
-
-        //    foreach (Venta venta in ventas)
-        //    {
-        //        string nombre = venta.Cliente.Nombre.ToLower();
-        //        string apellido = venta.Cliente.Apellido.ToLower();
-
-        //        if (nombre.Contains(texto) || apellido.Contains(texto))
-        //        {
-        //            ventasEncontradas.Add(venta);
-        //        }
-        //    }
-
-        //    gvVentas.DataSource = ventasEncontradas;
-        //    gvVentas.DataBind();
-
-        //}
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
         {
@@ -130,6 +66,39 @@ namespace TPC_Equipo2
             string textoNumero = txtBuscarVenta.Text.Trim();
             string textoCliente = txtBuscarCliente.Text.Trim().ToLower();
             string textoEstado = ddlFiltroEstado.SelectedValue;
+            string textoFechaDesde = txtFechaDesde.Text.Trim();
+            string textoFechaHasta = txtFechaHasta.Text.Trim();
+
+            DateTime fechaDesde = new DateTime();
+            DateTime fechaHasta = new DateTime();
+
+            if (textoFechaDesde != "")
+            {
+                if (!DateTime.TryParse(textoFechaDesde, out fechaDesde))
+                {
+                    lblMensaje.Text = "La fecha desde no es válida.";
+                    return;
+                }
+            }
+
+            if (textoFechaHasta != "")
+            {
+                if (!DateTime.TryParse(textoFechaHasta, out fechaHasta))
+                {
+                    lblMensaje.Text = "La fecha hasta no es válida.";
+                    return;
+                }
+            }
+
+            if (textoFechaDesde != "" && textoFechaHasta != "")
+            {
+                if (fechaDesde > fechaHasta)
+                {
+                    lblMensaje.Text =
+                        "La fecha desde no puede ser posterior a la fecha hasta.";
+                    return;
+                }
+            }
 
             int idVenta = 0;
 
@@ -169,7 +138,11 @@ namespace TPC_Equipo2
 
                 bool coincideEstado = textoEstado == "" || venta.EstadoVenta.IdEstadoVenta == idEstado;
 
-                if (coincideNumero && coincideCliente && coincideEstado)
+                bool coincideFechaDesde = textoFechaDesde == "" || venta.Fecha.Date >= fechaDesde.Date;
+
+                bool coincideFechaHasta = textoFechaHasta == "" || venta.Fecha.Date <= fechaHasta.Date;
+
+                if (coincideNumero && coincideCliente && coincideEstado && coincideFechaDesde && coincideFechaHasta)
                 {
                     ventasFiltradas.Add(venta);
                 }
