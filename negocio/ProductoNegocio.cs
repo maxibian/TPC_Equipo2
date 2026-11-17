@@ -197,6 +197,21 @@ namespace negocio
             }
             finally { datos.cerrarConexion(); }
         }
+
+        public void descontarStock(int idProducto, int cantidad)
+        {
+            try
+            {
+                datos.setearConsulta("UPDATE PRODUCTO SET Stock = Stock - @Cantidad WHERE IdProducto = @IdProducto");
+                datos.setearParametro("@Cantidad", cantidad);
+                datos.setearParametro("@IdProducto", idProducto);
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
 
