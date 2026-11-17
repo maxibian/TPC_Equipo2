@@ -1,4 +1,5 @@
-﻿using negocio;
+﻿using dominio;
+using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,34 @@ namespace TPC_Equipo2
         {
             int idVenta = Convert.ToInt32(gvVentas.SelectedDataKey.Value);
             Response.Redirect("DetallePedido.aspx?id=" + idVenta);
+        }
+
+        protected void btnBuscarVenta_Click(object sender, EventArgs e)
+        {
+            int idVenta;
+
+            bool valido = int.TryParse(txtBuscarVenta.Text, out idVenta);
+
+            if (!valido || idVenta <= 0)
+            {
+                lblMensaje.Text = "Ingresá un número de venta válido.";
+                return;
+            }
+
+            VentaNegocio negocio = new VentaNegocio();
+
+            Venta venta = negocio.obtenerVenta(idVenta);
+
+            List<Venta> ventasEncontradas = new List<Venta>();
+
+            if (venta != null)
+            {
+                ventasEncontradas.Add(venta);
+            }
+
+            gvVentas.DataSource = ventasEncontradas;
+            gvVentas.DataBind();
+
         }
     }
 }

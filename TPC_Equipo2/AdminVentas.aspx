@@ -13,9 +13,23 @@
         <div class="card-body">
 
             <h5 class="card-title mb-3">Ventas registradas
-        </h5>
+            </h5>
 
             <div class="table-responsive">
+
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <asp:TextBox ID="txtBuscarVenta" runat="server" CssClass="form-control" placeholder="Número de venta" />
+                    </div>
+
+                    <div class="col-md-auto">
+                        <asp:Button ID="btnBuscarVenta" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscarVenta_Click"/>
+                    </div>
+
+                    <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger d-block mb-3" />
+                </div>
+
 
                 <asp:GridView ID="gvVentas" runat="server" AutoGenerateColumns="false" DataKeyNames="IdVenta" CssClass="table table-striped table-hover align-middle" GridLines="None" EmptyDataText="No hay ventas registradas." OnSelectedIndexChanged="gvVentas_SelectedIndexChanged">
 
