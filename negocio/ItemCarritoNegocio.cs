@@ -78,6 +78,64 @@ namespace negocio
             }
         }
 
+        public void agregarItemSession(List<ItemCarrito> lista, int idProducto, int cantidad)
+        {
+            if (cantidad <= 0)
+                throw new Exception("La cantidad debe ser mayor a cero.");
+
+            
+            foreach (ItemCarrito item in lista)
+            {
+                if (item.Producto.IdProducto == idProducto)
+                {
+                    if (item.Producto.Stock < item.Cantidad + cantidad)
+                        throw new Exception("No hay stock suficiente.");
+
+                    item.Cantidad += cantidad;
+                    return;
+                }
+            }
+
+            
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            Producto producto = productoNegocio.obtenerProducto(idProducto);
+            if (producto == null)
+                return;
+
+            if (producto.Stock < cantidad)
+                throw new Exception("No hay stock suficiente.");
+
+            ItemCarrito nuevo = new ItemCarrito();
+            nuevo.Producto = producto;
+            nuevo.Cantidad = cantidad;
+            nuevo.PrecioUnitario = producto.Precio;
+            lista.Add(nuevo);
+        }
+
+        public void modificarItemSession(List<ItemCarrito> lista, int idProducto, int cantidad)
+        {
+            foreach (ItemCarrito item in lista)
+            {
+                if (item.Producto.IdProducto == idProducto)
+                {
+                    item.Cantidad = cantidad;
+                    return;
+                }
+            }
+        }
+
+        public void eliminarItemSession(List<ItemCarrito> lista, int idProducto)
+        {
+            for (int i = 0; i < lista.Count; i++)
+            {
+                if (lista[i].Producto.IdProducto == idProducto)
+                {
+                    lista.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+
         public void modificarItemCarrito(int IdCarrito, int IdProducto, int Cantidad)
         {
             try
@@ -97,6 +155,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
         public void eliminarItemCarrito(int IdCarrito, int IdProducto)
         {
             try
@@ -115,6 +174,8 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+
 
         public void vaciarCarrito(int idCarrito)
         {

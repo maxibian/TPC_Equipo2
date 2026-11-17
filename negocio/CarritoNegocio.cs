@@ -39,6 +39,7 @@ namespace negocio
                 
                 if (datos.Lector.Read())
                 {
+                    carrito = new Carrito();
                     carrito.IdCarrito = (int)datos.Lector["IdCarrito"];
                     carrito.IdCliente = (int)datos.Lector["IdCliente"];
                 }
