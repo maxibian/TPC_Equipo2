@@ -31,7 +31,7 @@ namespace TPC_Equipo2
                 usuario.NombreUsuario = txtEmailUsuario.Text;
                 usuario.Contrasena = txtPassword.Text;
                 usuario.Estado = true;
-                negocio.usuarioAdministrador(usuario);
+                negocio.agregarAdministrador(usuario);
 
                 if (negocio.isExist(email))
                 {
@@ -46,14 +46,52 @@ namespace TPC_Equipo2
 
             else
             {
-                lblRespuesta.Text = "EL USUARIO YA EXISTE";
+                if (listaUsuarios[0].Estado == false)
+                {
+                    if(txtPassword.Text == listaUsuarios[0].Contrasena)
+                    {
+                    negocio.altaAdministrador(listaUsuarios[0].IdUsuario);
+                    lblRespuesta.Text = "USUARIO AGREGADO";
+                    }
+                    else { lblRespuesta.Text = "CONTRASEÑA INCORRECTA"; }
+                }
+
+                else
+                {
+                    lblRespuesta.Text = "EL USUARIO YA EXISTE";
+                }
             }
 
         }
 
         protected void btnBaja_Click(object sender, EventArgs e)
         {
+            UsuarioNegocio negocio = new UsuarioNegocio();
 
+            string email = txtEmailUsuario.Text;
+
+            listaUsuarios = negocio.listarUsuarios(email);
+
+            if (listaUsuarios.Count != 0)
+            {
+                int id = listaUsuarios[0].IdUsuario;
+
+                if(txtPassword.Text == listaUsuarios[0].Contrasena)
+                {
+                negocio.bajaAdministrador(id);
+
+                lblRespuesta.Text = "USUARIO ELIMINADO";
+                }
+                else
+                {
+                    lblRespuesta.Text = "CONTRASEÑA INCORRECTA";
+                }
+
+            }
+            else
+            {
+                lblRespuesta.Text = "EL USUARIO NO EXISTE";
+            }
         }
     }
 }

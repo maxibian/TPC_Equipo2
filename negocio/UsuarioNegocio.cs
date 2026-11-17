@@ -17,7 +17,7 @@ namespace negocio
             List<Usuario> lista = new List<Usuario>();
             try
             {
-                string consulta = "SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, R.IdRol, U.Estado FROM USUARIO U INNER JOIN ROL R ON U.IdRol = R.IdRol WHERE U.Estado = 1";
+                string consulta = "SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, R.IdRol, U.Estado FROM USUARIO U INNER JOIN ROL R ON U.IdRol = R.IdRol";
                 if (nombre != "")
                 {
                     consulta += " AND U.NombreUsuario = @nombre";
@@ -51,7 +51,7 @@ namespace negocio
             }
             finally { datos.cerrarConexion(); }
         }
-        public void modificarUsuario(Usuario aux)
+        public void modificarUsuarioContrasena(Usuario aux)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace negocio
             }
 
         }
-        public void usuarioAdministrador(Usuario usuario)
+        public void agregarAdministrador(Usuario usuario)
         {
             try
             {
@@ -104,8 +104,6 @@ namespace negocio
                 datos.setearParametro("@IdRol", 1);
                 datos.setearParametro("@Estado", usuario.Estado);
                 datos.ejecutarAccion();
-
-
             }
             catch (Exception ex)
             {
@@ -118,6 +116,40 @@ namespace negocio
             }
 
         }
+        public void altaAdministrador(int id)
+        {
+            try
+            {
+                datos.setearConsulta("UPDATE USUARIO SET Estado = @Estado WHERE IdUsuario = @id");
+                datos.setearParametro("@id", id);
+                datos.setearParametro("@Estado", 1);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally { datos.cerrarConexion(); }
+        }
+
+        public void bajaAdministrador(int id)
+        {
+            try
+            {
+                datos.setearConsulta("UPDATE USUARIO SET Estado = @Estado WHERE IdUsuario = @id");
+                datos.setearParametro("@id", id);
+                datos.setearParametro("@Estado", 0);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally { datos.cerrarConexion(); }
+        }
+
 
         public bool isExist(string nombre)
         {
