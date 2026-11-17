@@ -14,7 +14,8 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("INSERT INTO CARRITO (IdCliente) VALUES (@IdCliente)");
+                datos.setearConsulta("IF NOT EXISTS (SELECT 1 FROM CARRITO WHERE IdCliente = @IdCliente) INSERT INTO CARRITO (IdCliente) VALUES (@IdCliente)");
+                //datos.setearConsulta("INSERT INTO CARRITO (IdCliente) VALUES (@IdCliente)");
                 datos.setearParametro("@IdCliente", idCliente);
                 datos.ejecutarAccion();
             }
@@ -41,13 +42,40 @@ namespace negocio
                     carrito.IdCarrito = (int)datos.Lector["IdCarrito"];
                     carrito.IdCliente = (int)datos.Lector["IdCliente"];
                 }
+                return carrito;
             }
             finally
             {
                 datos.cerrarConexion();
+            }   
+        }
+
+        public Carrito obtenerOCrearCarrito(int idCliente)
+        {
+            Carrito carrito = obtenerCarrito(idCliente);
+            if (carrito == null)
+            {
+                agregar(idCliente);
+                carrito = obtenerCarrito(idCliente);
             }
             return carrito;
         }
+
+
+        public void pasarItemsDeSession(int idCliente, List<ItemCarrito> listaSession)
+        {
+            if (listaSession == null || listaSession.Count == 0)
+                return;
+
+            Carrito carrito = obtenerOCrearCarrito(idCliente);
+            ItemCarritoNegocio itemNegocio = new ItemCarritoNegocio();
+
+            foreach (ItemCarrito item in listaSession)
+            {
+                itemNegocio.agregarItemCarrito(carrito.IdCarrito, item.Producto.IdProducto, item.Cantidad, item.PrecioUnitario);
+            }
+        }
+
         public void eliminar(int idCarrito)
         {
             try
