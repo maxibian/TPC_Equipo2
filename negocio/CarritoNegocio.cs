@@ -76,11 +76,11 @@ namespace negocio
             }
         }
 
-        public void eliminar(int idCarrito)
+        public void vaciarCarrito(int idCarrito)
         {
             try
             {
-                datos.setearConsulta("DELETE FROM CARRITO WHERE IdCarrito = @IdCarrito");
+                datos.setearConsulta("DELETE FROM ITEMCARRITO WHERE IdCarrito = @IdCarrito");
                 datos.setearParametro("@IdCarrito", idCarrito);
                 datos.ejecutarAccion();
             }

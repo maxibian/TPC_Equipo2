@@ -136,7 +136,8 @@ namespace negocio
 
                     producto.IdProducto = (int)datos.Lector["IdProducto"];
                     producto.Nombre = (string)datos.Lector["Nombre"];
-                    producto.Descripcion = (string)datos.Lector["Descripcion"];
+                    if (datos.Lector["Descripcion"] != DBNull.Value)
+                        producto.Descripcion = (string)datos.Lector["Descripcion"];
                     producto.Precio = (decimal)datos.Lector["Precio"];
                     producto.Stock = (int)datos.Lector["Stock"];
 
