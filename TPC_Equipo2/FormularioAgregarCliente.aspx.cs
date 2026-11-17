@@ -65,9 +65,13 @@ namespace TPC_Equipo2
                 }
                 else
                 {
-                    lblRespuesta.Text = "No te pudiste registrar!";
+                    lblRespuesta.Text = "El email ya existe";
                 }
 
+            }
+            else
+            {
+                lblRespuesta.Text = "Los emails son distintos";
             }
 
         }
