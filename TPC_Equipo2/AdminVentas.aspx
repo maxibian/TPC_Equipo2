@@ -9,6 +9,36 @@
         </p>
     </div>
 
+
+    <div class="row g-3 mb-3 align-items-end">
+
+        <div class="col-md-3">
+            <label class="form-label">N° de venta</label>
+            <asp:TextBox ID="txtBuscarVenta" runat="server" CssClass="form-control" placeholder="Número de venta" />
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Cliente</label>
+            <asp:TextBox ID="txtBuscarCliente" runat="server" CssClass="form-control" placeholder="Nombre o apellido" />
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Estado</label>
+            <asp:DropDownList ID="ddlFiltroEstado" runat="server" CssClass="form-select" />
+        </div>
+
+        <div class="col-md-3 d-flex gap-2">
+            <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary" OnClick="btnFiltrar_Click"/>
+
+            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-outline-secondary" OnClick="btnLimpiar_Click" />
+        </div>
+
+    </div>
+
+    <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger d-block mb-3" />
+
+
+
     <div class="card shadow-sm mb-4">
         <div class="card-body">
 
@@ -16,24 +46,6 @@
             </h5>
 
             <div class="table-responsive">
-
-
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <asp:TextBox ID="txtBuscarVenta" runat="server" CssClass="form-control" placeholder="Número de venta" />
-                        <asp:TextBox ID="txtBuscarCliente" runat="server" CssClass="form-control" placeholder="Nombre o apellido del cliente" />
-
-                    </div>
-
-                    <div class="col-md-auto">
-                        <asp:Button ID="btnBuscarVenta" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscarVenta_Click" />
-                        <asp:Button ID="btnBuscarCliente" runat="server" Text="Buscar cliente" CssClass="btn btn-primary" OnClick="btnBuscarCliente_Click" />
-                        <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-outline-secondary" OnClick="btnLimpiar_Click" />
-                    </div>
-
-                    <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger d-block mb-3" />
-                </div>
-
 
                 <asp:GridView ID="gvVentas" runat="server" AutoGenerateColumns="false" DataKeyNames="IdVenta" CssClass="table table-striped table-hover align-middle" GridLines="None" EmptyDataText="No hay ventas para mostrar." OnSelectedIndexChanged="gvVentas_SelectedIndexChanged">
 
