@@ -42,6 +42,24 @@ namespace TPC_Equipo2
         protected global::System.Web.UI.WebControls.DropDownList ddlFiltroEstado;
 
         /// <summary>
+        /// Control txtFechaDesde.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFechaDesde;
+
+        /// <summary>
+        /// Control txtFechaHasta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFechaHasta;
+
+        /// <summary>
         /// Control btnFiltrar.
         /// </summary>
         /// <remarks>
