@@ -101,15 +101,20 @@ namespace TPC_Equipo2
 
         protected void btnRealizarCompra_Click(object sender, EventArgs e)
         {
-            List<ItemCarrito> carrito = Session["Carrito"] as List<ItemCarrito>;
+            List<ItemCarrito> carrito = ObtenerItems();
 
             if (carrito == null || carrito.Count == 0)
             {
                 lblVacio.Text = "No hay productos en el carrito.";
                 return;
             }
+            if (Session["cliente"] == null)
+            {
+                Response.Redirect("Login.aspx", false);
+                return;
+            }
 
-            Response.Redirect("ConfirmarCompra.aspx");
+            Response.Redirect("ConfirmarCompra.aspx", false);
         }
     }
 }
