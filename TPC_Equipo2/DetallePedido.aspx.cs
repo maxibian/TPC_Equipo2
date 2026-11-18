@@ -42,19 +42,9 @@ namespace TPC_Equipo2
 
                         txtObservaciones.Text = venta.Observaciones ?? "";
 
-                        EstadoVentaNegocio negocioEstados = new EstadoVentaNegocio();
-
-                        ddlEstado.DataSource = negocioEstados.listar();
-                        ddlEstado.DataTextField = "Nombre";
-                        ddlEstado.DataValueField = "IdEstadoVenta";
-                        ddlEstado.DataBind();
-                        ddlEstado.SelectedValue = venta.EstadoVenta.IdEstadoVenta.ToString();
-
-                        if (venta.EstadoVenta.Nombre == "Entregado" || venta.EstadoVenta.Nombre == "Cancelado")
-                        {
-                            ddlEstado.Enabled = false;
-                        }
+                        cargarEstadosDisponibles(venta);
                     }
+
                     else
                     {
                         Response.Redirect("AdminVentas.aspx");
@@ -80,22 +70,85 @@ namespace TPC_Equipo2
             if (!valido || numero <= 0)
             {
                 Response.Redirect("AdminVentas.aspx");
+                return;
             }
 
             string observaciones = txtObservaciones.Text.Trim();
 
             if (observaciones.Length > 500)
             {
+                lblMensaje.CssClass = "text-danger";
                 lblMensaje.Text = "Las observaciones no pueden superar los 500 caracteres.";
+                return;
+            }
+
+            int idEstadoSeleccionado;
+
+            if (!int.TryParse(ddlEstado.SelectedValue, out idEstadoSeleccionado)
+                || idEstadoSeleccionado <= 0)
+            {
+                lblMensaje.CssClass = "text-danger";
+                lblMensaje.Text = "Seleccioná un estado válido.";
                 return;
             }
 
             VentaNegocio negocio = new VentaNegocio();
 
-            negocio.actualizarObservaciones(numero, observaciones);
+            Venta ventaActual = negocio.obtenerVenta(numero);
 
-            lblMensaje.Text = "Observaciones guardadas correctamente.";
+            if (ventaActual == null)
+            {
+                lblMensaje.CssClass = "text-danger";
+                lblMensaje.Text = "No se encontró la venta.";
+                return;
+            }
 
+            try
+            {
+                if (ventaActual.EstadoVenta.IdEstadoVenta != idEstadoSeleccionado)
+                {
+                    negocio.cambiarEstado(numero, idEstadoSeleccionado);
+                }
+
+                negocio.actualizarObservaciones(numero, observaciones);
+
+                Venta ventaActualizada = negocio.obtenerVenta(numero);
+
+                if (ventaActualizada == null)
+                {
+                    lblMensaje.CssClass = "text-danger";
+                    lblMensaje.Text = "No se pudo recuperar la venta actualizada.";
+                    return;
+                }
+
+                lblEstado.Text = ventaActualizada.EstadoVenta.Nombre;
+
+                cargarEstadosDisponibles(ventaActualizada);
+
+                lblMensaje.CssClass = "text-success";
+                lblMensaje.Text = "Cambios guardados correctamente.";
+            }
+            catch (InvalidOperationException ex)
+            {
+                lblMensaje.CssClass = "text-danger";
+                lblMensaje.Text = ex.Message;
+            }
+
+        }
+
+        private void cargarEstadosDisponibles(Venta venta)
+        {
+            VentaNegocio negocio = new VentaNegocio();
+
+            ddlEstado.DataSource = negocio.listarEstadosDisponibles(venta);
+            ddlEstado.DataTextField = "Nombre";
+            ddlEstado.DataValueField = "IdEstadoVenta";
+            ddlEstado.DataBind();
+
+            ddlEstado.SelectedValue =
+                venta.EstadoVenta.IdEstadoVenta.ToString();
+
+            ddlEstado.Enabled = ddlEstado.Items.Count > 1;
         }
     }
 }

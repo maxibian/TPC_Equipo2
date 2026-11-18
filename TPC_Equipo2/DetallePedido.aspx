@@ -13,8 +13,7 @@
     <div class="card shadow-sm mb-4">
         <div class="card-body">
 
-            <h5 class="card-title mb-3">
-                Información general
+            <h5 class="card-title mb-3">Información general
             </h5>
 
             <div class="row g-3">
@@ -57,8 +56,7 @@
     <div class="card shadow-sm mb-4">
         <div class="card-body">
 
-            <h5 class="card-title mb-3">
-                Productos comprados
+            <h5 class="card-title mb-3">Productos comprados
             </h5>
 
             <div class="table-responsive">
@@ -92,37 +90,43 @@
         </div>
     </div>
 
-    
-<div class="card shadow-sm mb-4">
-    <div class="card-body">
 
-        <h5 class="card-title mb-3">
-            Gestión del pedido
-        </h5>
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
 
-        <div class="mb-3">
-            <label class="form-label">
-                Estado del pedido
-            </label>
+            <h5 class="card-title mb-3">Gestión del pedido
+            </h5>
 
-            <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select" />
+            <div class="mb-3">
+                <label class="form-label">
+                    Estado del pedido
+                </label>
+
+                <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">
+                    Observaciones internas
+                </label>
+
+                <asp:TextBox ID="txtObservaciones" runat="server" TextMode="MultiLine" Rows="3" MaxLength="500" CssClass="form-control" />
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+
+                <a href="AdminVentas.aspx" class="btn btn-outline-secondary">Volver a ventas</a>
+
+                <asp:Button ID="btnGuardarCambios" runat="server" Text="Guardar cambios" CssClass="btn btn-primary" OnClick="btnGuardarCambios_Click" />
+
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <asp:Label ID="lblMensaje" runat="server" />
+            </div>
+
         </div>
-
-        <div class="mb-3">
-            <label class="form-label">
-                Observaciones internas
-            </label>
-
-            <asp:TextBox ID="txtObservaciones" runat="server" TextMode="MultiLine" Rows="3" MaxLength="500" CssClass="form-control" />
-        </div>
-
-        <div class="d-flex justify-content-end">
-            <asp:Button ID="btnGuardarCambios" runat="server" Text="Guardar cambios" CssClass="btn btn-primary" OnClick="btnGuardarCambios_Click" />
-            <asp:Label ID="lblMensaje" runat="server" CssClass="text-success" />
-        </div>
-
     </div>
-</div>
 
 
 

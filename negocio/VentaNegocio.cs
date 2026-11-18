@@ -274,7 +274,7 @@ namespace negocio
             else
             {
                 datos.setearParametro("@IdDireccion", DBNull.Value);
-            }   
+            }
 
             datos.setearParametro("@IdEstadoVenta", venta.EstadoVenta.IdEstadoVenta);
 
@@ -353,6 +353,35 @@ namespace negocio
                 );
             }
 
+            EstadoVentaNegocio negocioEstados = new EstadoVentaNegocio();
+
+            List<EstadoVenta> estados = negocioEstados.listar();
+
+            EstadoVenta estadoNuevo = null;
+
+            foreach (EstadoVenta estado in estados)
+            {
+                if (estado.IdEstadoVenta == idEstadoVenta)
+                {
+                    estadoNuevo = estado;
+                    break;
+                }
+            }
+
+            if (estadoNuevo == null)
+            {
+                throw new ArgumentException(
+                    "El estado seleccionado no existe."
+                );
+            }
+
+            if (!transicionValida(ventaActual.EstadoVenta.Nombre, estadoNuevo.Nombre))
+            {
+                throw new InvalidOperationException(
+                    "No se permite realizar ese cambio de estado."
+                );
+            }
+
             try
             {
                 datos.setearConsulta("UPDATE VENTA SET IdEstadoVenta = @IdEstadoVenta WHERE IdVenta = @IdVenta");
@@ -399,6 +428,49 @@ namespace negocio
             {
                 datos.cerrarConexion();
             }
+        }
+
+        private bool transicionValida(string estadoActual, string estadoSeleccionado)
+        {
+            estadoActual = estadoActual.Trim().ToLower();
+            estadoSeleccionado = estadoSeleccionado.Trim().ToLower();
+
+            switch (estadoActual)
+            {
+                case "pendiente":
+                    return estadoSeleccionado == "pagado";
+
+                case "pagado":
+                    return estadoSeleccionado == "en preparación";
+
+                case "en preparación":
+                    return estadoSeleccionado == "enviado";
+
+                case "enviado":
+                    return estadoSeleccionado == "entregado";
+
+                default:
+                    return false;
+            }
+        }
+
+        public List<EstadoVenta> listarEstadosDisponibles(Venta venta)
+        {
+            EstadoVentaNegocio negocioEstados = new EstadoVentaNegocio();
+
+            List<EstadoVenta> estados = negocioEstados.listar();
+            List<EstadoVenta> disponibles = new List<EstadoVenta>();
+
+            foreach (EstadoVenta estado in estados)
+            {
+                if (estado.IdEstadoVenta == venta.EstadoVenta.IdEstadoVenta ||
+                    transicionValida(venta.EstadoVenta.Nombre, estado.Nombre))
+                {
+                    disponibles.Add(estado);
+                }
+            }
+
+            return disponibles;
         }
     }
 }
