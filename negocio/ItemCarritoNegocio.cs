@@ -196,7 +196,7 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("SELECT IC.IdItemCarrito, IC.IdCarrito,IC.IdProducto, IC.Cantidad, IC.PrecioUnitario,P.Nombre, P.Descripcion, P.Precio, P.Stock FROM ITEMCARRITO IC INNER JOIN PRODUCTO P ON P.IdProducto = IC.IdProducto WHERE IC.IdCarrito = @IdCarrito");
+                datos.setearConsulta("SELECT IC.IdItemCarrito, IC.IdCarrito,IC.IdProducto, IC.Cantidad, IC.PrecioUnitario,P.Nombre, P.Descripcion, P.Precio, P.Stock FROM ITEMCARRITO IC INNER JOIN PRODUCTO P ON P.IdProducto = IC.IdProducto WHERE IC.IdCarrito = @IdCarrito ORDER BY IC.IdItemCarrito");
                 datos.setearParametro("@IdCarrito", idCarrito);
                 datos.ejecutarLectura();
 

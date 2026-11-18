@@ -4,7 +4,7 @@
 
 
 
-    <asp:GridView ID="dgvCarrito" runat="server" AutoGenerateColumns="false" CssClass="table table-borderer" OnRowDeleting="dgvCarrito_RowDeleting">
+    <asp:GridView ID="dgvCarrito" runat="server" AutoGenerateColumns="false" CssClass="table table-borderer" OnRowDeleting="dgvCarrito_BorrarFila">
 
         <columns>
             <asp:BoundField DataField="NombreProducto" HeaderText="Producto" />

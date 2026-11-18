@@ -1,4 +1,5 @@
 ﻿using dominio;
+using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,33 +15,45 @@ namespace TPC_Equipo2
         {
             if (!IsPostBack)
             {
-                if (Session["Carrito"] != null)
-                {
-                    List<ItemCarrito> carrito = (List<ItemCarrito>)Session["Carrito"];
+                List<ItemCarrito> carrito = ObtenerItems();
 
                     dgvCarrito.DataSource = carrito;
                     dgvCarrito.DataBind();
 
                     CalcularTotales(carrito);
-                }
-
             }
         }
-        protected void dgvCarrito_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        protected void dgvCarrito_BorrarFila(object sender, GridViewDeleteEventArgs e)
         {
-            List<ItemCarrito> carrito = (List<ItemCarrito>)Session["Carrito"];
+            List<ItemCarrito> carrito = ObtenerItems();
 
             ItemCarrito item = carrito[e.RowIndex];
+            int idProducto = item.Producto.IdProducto;
 
-            if (item.Cantidad > 1)
+            ItemCarritoNegocio itemNegocio = new ItemCarritoNegocio();
+
+            if (Session["cliente"] != null)
             {
-                item.Cantidad--;
+                Cliente cliente = (Cliente)Session["cliente"];
+
+                dominio.Carrito carritoDb = new CarritoNegocio().obtenerOCrearCarrito(cliente.IdCliente);
+
+                if (item.Cantidad > 1)
+                    itemNegocio.modificarItemCarrito(carritoDb.IdCarrito, idProducto, item.Cantidad - 1);
+                else
+                    itemNegocio.eliminarItemCarrito(carritoDb.IdCarrito, idProducto);
             }
+            
             else
             {
-                carrito.RemoveAt(e.RowIndex);
+                if (item.Cantidad > 1)
+                    itemNegocio.modificarItemSession(carrito, idProducto, item.Cantidad - 1);
+                else
+                    itemNegocio.eliminarItemSession(carrito, idProducto);
+
+                Session["Carrito"] = carrito;
             }
-            Session["Carrito"] = carrito;
+            carrito = ObtenerItems();
 
             dgvCarrito.DataSource = carrito;
             dgvCarrito.DataBind();
@@ -63,6 +76,26 @@ namespace TPC_Equipo2
                 lblSubtotal.Visible = false;
                 lblEnvio.Visible = false;
                 lblTotal.Visible = false;
+            }
+        }
+
+        private List<ItemCarrito> ObtenerItems()
+        {
+            if (Session["cliente"] != null)
+            {
+                Cliente cliente = (Cliente)Session["cliente"];
+                CarritoNegocio carritoNegocio = new CarritoNegocio();
+                dominio.Carrito carrito = carritoNegocio.obtenerOCrearCarrito(cliente.IdCliente);
+
+                ItemCarritoNegocio itemNegocio = new ItemCarritoNegocio();
+                return itemNegocio.listar(carrito.IdCarrito);
+            }
+            else
+            {
+                List<ItemCarrito> lista = (List<ItemCarrito>)Session["Carrito"];
+                if (lista == null)
+                    lista = new List<ItemCarrito>();
+                return lista;
             }
         }
 
