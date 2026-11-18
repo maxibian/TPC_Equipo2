@@ -453,5 +453,24 @@ namespace negocio
                     return false;
             }
         }
+
+        public List<EstadoVenta> listarEstadosDisponibles(Venta venta)
+        {
+            EstadoVentaNegocio negocioEstados = new EstadoVentaNegocio();
+
+            List<EstadoVenta> estados = negocioEstados.listar();
+            List<EstadoVenta> disponibles = new List<EstadoVenta>();
+
+            foreach (EstadoVenta estado in estados)
+            {
+                if (estado.IdEstadoVenta == venta.EstadoVenta.IdEstadoVenta ||
+                    transicionValida(venta.EstadoVenta.Nombre, estado.Nombre))
+                {
+                    disponibles.Add(estado);
+                }
+            }
+
+            return disponibles;
+        }
     }
 }
