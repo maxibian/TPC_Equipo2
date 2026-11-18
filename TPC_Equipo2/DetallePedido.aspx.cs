@@ -80,6 +80,7 @@ namespace TPC_Equipo2
             if (!valido || numero <= 0)
             {
                 Response.Redirect("AdminVentas.aspx");
+                return;
             }
 
             string observaciones = txtObservaciones.Text.Trim();
@@ -87,6 +88,15 @@ namespace TPC_Equipo2
             if (observaciones.Length > 500)
             {
                 lblMensaje.Text = "Las observaciones no pueden superar los 500 caracteres.";
+                return;
+            }
+
+            int idEstadoSeleccionado;
+
+            if (!int.TryParse(ddlEstado.SelectedValue, out idEstadoSeleccionado)
+                || idEstadoSeleccionado <= 0)
+            {
+                lblMensaje.Text = "Seleccioná un estado válido.";
                 return;
             }
 
