@@ -113,12 +113,16 @@
                 <asp:TextBox ID="txtObservaciones" runat="server" TextMode="MultiLine" Rows="3" MaxLength="500" CssClass="form-control" />
             </div>
 
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end gap-2">
+
+                <a href="AdminVentas.aspx" class="btn btn-outline-secondary">Volver a ventas</a>
+
                 <asp:Button ID="btnGuardarCambios" runat="server" Text="Guardar cambios" CssClass="btn btn-primary" OnClick="btnGuardarCambios_Click" />
+
             </div>
 
             <div class="d-flex justify-content-end">
-                <asp:Label ID="lblMensaje" runat="server"/>
+                <asp:Label ID="lblMensaje" runat="server" />
             </div>
 
         </div>
