@@ -42,19 +42,9 @@ namespace TPC_Equipo2
 
                         txtObservaciones.Text = venta.Observaciones ?? "";
 
-                        EstadoVentaNegocio negocioEstados = new EstadoVentaNegocio();
-
-                        ddlEstado.DataSource = negocioEstados.listar();
-                        ddlEstado.DataTextField = "Nombre";
-                        ddlEstado.DataValueField = "IdEstadoVenta";
-                        ddlEstado.DataBind();
-                        ddlEstado.SelectedValue = venta.EstadoVenta.IdEstadoVenta.ToString();
-
-                        if (venta.EstadoVenta.Nombre == "Entregado" || venta.EstadoVenta.Nombre == "Cancelado")
-                        {
-                            ddlEstado.Enabled = false;
-                        }
+                        cargarEstadosDisponibles(venta);
                     }
+
                     else
                     {
                         Response.Redirect("AdminVentas.aspx");
@@ -122,14 +112,21 @@ namespace TPC_Equipo2
 
                 negocio.actualizarObservaciones(numero, observaciones);
 
+                Venta ventaActualizada = negocio.obtenerVenta(numero);
+
+                if (ventaActualizada == null)
+                {
+                    lblMensaje.CssClass = "text-danger";
+                    lblMensaje.Text = "No se pudo recuperar la venta actualizada.";
+                    return;
+                }
+
+                lblEstado.Text = ventaActualizada.EstadoVenta.Nombre;
+
+                cargarEstadosDisponibles(ventaActualizada);
+
                 lblMensaje.CssClass = "text-success";
                 lblMensaje.Text = "Cambios guardados correctamente.";
-                lblEstado.Text = ddlEstado.SelectedItem.Text;
-
-                if (lblEstado.Text == "Entregado" || lblEstado.Text == "Cancelado")
-                {
-                    ddlEstado.Enabled = false;
-                }
             }
             catch (InvalidOperationException ex)
             {
@@ -137,6 +134,21 @@ namespace TPC_Equipo2
                 lblMensaje.Text = ex.Message;
             }
 
+        }
+
+        private void cargarEstadosDisponibles(Venta venta)
+        {
+            VentaNegocio negocio = new VentaNegocio();
+
+            ddlEstado.DataSource = negocio.listarEstadosDisponibles(venta);
+            ddlEstado.DataTextField = "Nombre";
+            ddlEstado.DataValueField = "IdEstadoVenta";
+            ddlEstado.DataBind();
+
+            ddlEstado.SelectedValue =
+                venta.EstadoVenta.IdEstadoVenta.ToString();
+
+            ddlEstado.Enabled = ddlEstado.Items.Count > 1;
         }
     }
 }
