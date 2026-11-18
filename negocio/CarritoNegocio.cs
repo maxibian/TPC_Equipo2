@@ -73,7 +73,16 @@ namespace negocio
 
             foreach (ItemCarrito item in listaSession)
             {
-                itemNegocio.agregarItemCarrito(carrito.IdCarrito, item.Producto.IdProducto, item.Cantidad, item.PrecioUnitario);
+                try
+                {
+                    itemNegocio.agregarItemCarrito(carrito.IdCarrito, item.Producto.IdProducto, item.Cantidad, item.PrecioUnitario);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                
             }
         }
     }

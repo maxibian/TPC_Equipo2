@@ -40,36 +40,37 @@ namespace TPC_Equipo2
         {
             LinkButton productoSeleccionado = (LinkButton)sender;
             int id = int.Parse(productoSeleccionado.CommandArgument);
-            List<ItemCarrito> carrito;
 
-            if (Session["Carrito"] != null)
+            ItemCarritoNegocio itemNegocio = new ItemCarritoNegocio();
+            try
             {
-                carrito = (List<ItemCarrito>)Session["Carrito"];
+                if (Session["cliente"] != null)
+                {
+                    // El cliente está logueado, se puede agregar al carrito
+                    Cliente cliente = (Cliente)Session["cliente"];
+                    CarritoNegocio carritoNegocio = new CarritoNegocio();
+                    dominio.Carrito carrito = carritoNegocio.obtenerOCrearCarrito(cliente.IdCliente);
+
+                    Producto producto = new ProductoNegocio().obtenerProducto(id);
+                    itemNegocio.agregarItemCarrito(carrito.IdCarrito, id, 1, producto.Precio);
+                }
+                else
+                {
+                    // El cliente no está logueado, se puede agregar al carrito de sesión
+                    List<ItemCarrito> lista = (List<ItemCarrito>)Session["Carrito"];
+                    if (lista == null)
+                        lista = new List<ItemCarrito>();
+
+                    itemNegocio.agregarItemSession(lista, id, 1);
+                    Session["Carrito"] = lista;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                carrito = new List<ItemCarrito>();
+
+                lblMensaje.Text = ex.Message;
             }
-
-            ItemCarrito item = carrito.FirstOrDefault(x => x.Producto.IdProducto == id);
-            if (item != null)
-            {
-                item.Cantidad++;
-            }
-            else
-            {
-                Producto producto = new ProductoNegocio().obtenerProducto(id);
-
-                ItemCarrito nuevo = new ItemCarrito();
-
-                nuevo.Producto = producto;
-                nuevo.Cantidad = 1;
-                nuevo.PrecioUnitario = producto.Precio;
-
-                carrito.Add(nuevo);
-            }
-
-            Session["Carrito"] = carrito;
+            
         }
     }
 }
