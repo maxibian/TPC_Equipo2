@@ -87,6 +87,7 @@ namespace TPC_Equipo2
 
             if (observaciones.Length > 500)
             {
+                lblMensaje.CssClass = "text-danger";
                 lblMensaje.Text = "Las observaciones no pueden superar los 500 caracteres.";
                 return;
             }
@@ -96,15 +97,45 @@ namespace TPC_Equipo2
             if (!int.TryParse(ddlEstado.SelectedValue, out idEstadoSeleccionado)
                 || idEstadoSeleccionado <= 0)
             {
+                lblMensaje.CssClass = "text-danger";
                 lblMensaje.Text = "Seleccioná un estado válido.";
                 return;
             }
 
             VentaNegocio negocio = new VentaNegocio();
 
-            negocio.actualizarObservaciones(numero, observaciones);
+            Venta ventaActual = negocio.obtenerVenta(numero);
 
-            lblMensaje.Text = "Observaciones guardadas correctamente.";
+            if (ventaActual == null)
+            {
+                lblMensaje.CssClass = "text-danger";
+                lblMensaje.Text = "No se encontró la venta.";
+                return;
+            }
+
+            try
+            {
+                if (ventaActual.EstadoVenta.IdEstadoVenta != idEstadoSeleccionado)
+                {
+                    negocio.cambiarEstado(numero, idEstadoSeleccionado);
+                }
+
+                negocio.actualizarObservaciones(numero, observaciones);
+
+                lblMensaje.CssClass = "text-success";
+                lblMensaje.Text = "Cambios guardados correctamente.";
+                lblEstado.Text = ddlEstado.SelectedItem.Text;
+
+                if (lblEstado.Text == "Entregado" || lblEstado.Text == "Cancelado")
+                {
+                    ddlEstado.Enabled = false;
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                lblMensaje.CssClass = "text-danger";
+                lblMensaje.Text = ex.Message;
+            }
 
         }
     }

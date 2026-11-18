@@ -118,7 +118,7 @@
             </div>
 
             <div class="d-flex justify-content-end">
-                <asp:Label ID="lblMensaje" runat="server" CssClass="text-success" />
+                <asp:Label ID="lblMensaje" runat="server"/>
             </div>
 
         </div>
