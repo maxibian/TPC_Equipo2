@@ -48,12 +48,8 @@ namespace TPC_Equipo2
             {
                 if (listaUsuarios[0].Estado == false)
                 {
-                    if(txtPassword.Text == listaUsuarios[0].Contrasena)
-                    {
                     negocio.altaAdministrador(listaUsuarios[0].IdUsuario);
                     lblRespuesta.Text = "USUARIO AGREGADO";
-                    }
-                    else { lblRespuesta.Text = "CONTRASEÑA INCORRECTA"; }
                 }
 
                 else
@@ -76,17 +72,9 @@ namespace TPC_Equipo2
             {
                 int id = listaUsuarios[0].IdUsuario;
 
-                if(txtPassword.Text == listaUsuarios[0].Contrasena)
-                {
                 negocio.bajaAdministrador(id);
 
                 lblRespuesta.Text = "USUARIO ELIMINADO";
-                }
-                else
-                {
-                    lblRespuesta.Text = "CONTRASEÑA INCORRECTA";
-                }
-
             }
             else
             {
