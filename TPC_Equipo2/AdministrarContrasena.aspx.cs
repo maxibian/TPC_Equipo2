@@ -13,5 +13,10 @@ namespace TPC_Equipo2
         {
 
         }
+
+        protected void btnGuardar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
