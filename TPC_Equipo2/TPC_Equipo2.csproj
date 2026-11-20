@@ -99,6 +99,9 @@
     <Content Include="About.aspx" />
     <Content Include="AdminFormasEntrega.aspx" />
     <Content Include="AdminFormasPago.aspx" />
+    <Content Include="AdministrarContrasena.aspx" />
+    <Content Include="AdministrarDireccion.aspx" />
+    <Content Include="AdministrarTarjetas.aspx" />
     <Content Include="AdministrarUsuarios.aspx" />
     <Content Include="AdminVentas.aspx" />
     <Content Include="Carrito.aspx" />
@@ -131,6 +134,7 @@
     <Content Include="FormularioProducto.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HerramientasAdmin.aspx" />
+    <Content Include="HistorialPedidos.aspx" />
     <Content Include="Inicio.aspx" />
     <Content Include="MiCuenta.aspx" />
     <Content Include="ProductoDetalle.aspx" />
@@ -209,6 +213,27 @@
     </Compile>
     <Compile Include="AdminFormasPago.aspx.designer.cs">
       <DependentUpon>AdminFormasPago.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdministrarContrasena.aspx.cs">
+      <DependentUpon>AdministrarContrasena.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdministrarContrasena.aspx.designer.cs">
+      <DependentUpon>AdministrarContrasena.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdministrarDireccion.aspx.cs">
+      <DependentUpon>AdministrarDireccion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdministrarDireccion.aspx.designer.cs">
+      <DependentUpon>AdministrarDireccion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdministrarTarjetas.aspx.cs">
+      <DependentUpon>AdministrarTarjetas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdministrarTarjetas.aspx.designer.cs">
+      <DependentUpon>AdministrarTarjetas.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdministrarUsuarios.aspx.cs">
       <DependentUpon>AdministrarUsuarios.aspx</DependentUpon>
@@ -312,6 +337,13 @@
     </Compile>
     <Compile Include="HerramientasAdmin.aspx.designer.cs">
       <DependentUpon>HerramientasAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HistorialPedidos.aspx.cs">
+      <DependentUpon>HistorialPedidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HistorialPedidos.aspx.designer.cs">
+      <DependentUpon>HistorialPedidos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inicio.aspx.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>

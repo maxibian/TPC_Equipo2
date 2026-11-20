@@ -1,10 +1,32 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MiCuenta.aspx.cs" Inherits="TPC_Equipo2.MiCuenta" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h5>Cambiar Contraseña</h5>
-    <h5>Historial de Pedidos</h5>
-    <h5>Modificar Tarjeta</h5>
-    <h5>Modificar Direccion</h5>
-    <h5>...</h5>
+    <div class="container-fluid mt-4">
+
+        <div class="d-flex flex-column align-items-start gap-3">
+
+            <a href="AdministrarContrasena.aspx"
+                class="btn btn-outline-primary">
+                Administrar Contraseña
+            </a>
+
+            <a href="HistorialPedidos.aspx"
+                class="btn btn-outline-primary">
+                Historial Compras
+            </a>
+
+            <a href="AdministrarTarjetas.aspx"
+                class="btn btn-outline-primary">
+                Administrar Tarjetas
+            </a>
+
+            <a href="AdministrarDireccion.aspx"
+                class="btn btn-outline-primary">
+                Administrar Direcciones
+            </a>
+
+        </div>
+
+    </div>
 
 </asp:Content>
