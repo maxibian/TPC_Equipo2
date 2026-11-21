@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using dominio;
+using System.Net;
 
 namespace negocio
 {
@@ -177,6 +178,37 @@ namespace negocio
                 datos.cerrarConexion();
             }
 
+        }
+
+        public bool Loguear(Usuario usuario)
+        {
+            try
+            {
+                datos.setearConsulta("SELECT IdUsuario, NombreUsuario, Contrasena, IdRol, Estado FROM USUARIO WHERE NombreUsuario = @NombreUsuario And Contrasena = @Contrasena And Estado = 1");
+                datos.setearParametro("@NombreUsuario", usuario.NombreUsuario);
+                datos.setearParametro("@Contrasena", usuario.Contrasena);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    usuario.IdUsuario = (int)datos.Lector["IdUsuario"];
+                    usuario.Rol = new Rol();
+                    usuario.Rol.IdRol = (int)datos.Lector["IdRol"];
+                    usuario.Estado = (bool)datos.Lector["Estado"];
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }
