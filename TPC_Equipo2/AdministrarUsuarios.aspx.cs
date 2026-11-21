@@ -14,7 +14,11 @@ namespace TPC_Equipo2
         List<Usuario> listaUsuarios = new List<Usuario>();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!(Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).Rol.IdRol == 1))
+            {
+                Session.Add("error", "No tenes permisos para entrar a esta pantalla. Necesitas ser Administrador.");
+                Response.Redirect("Error.aspx", false);
+            }
         }
         protected void btnAlta_Click(object sender, EventArgs e)
         {

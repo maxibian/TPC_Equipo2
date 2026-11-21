@@ -20,7 +20,7 @@
 
             <p class="text-muted mb-4">
                 <asp:Label ID="lblMensaje" runat="server"
-                    Text="El correo electrónico o la contraseña ingresados son incorrectos. Verificá tus datos e intentá nuevamente.">
+                    Text="Verificá tus datos e intentá nuevamente.">
                 </asp:Label>
             </p>
 

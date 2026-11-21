@@ -32,7 +32,7 @@ namespace TPC_Equipo2
             }
             else
             {
-                Session.Add("error", "USUARIO O CONTRASEÑA INCORRECTA");
+                Session.Add("error", "Usuario o contraseña incorrecta");
                 Response.Redirect("Error.aspx", false);
             }
 

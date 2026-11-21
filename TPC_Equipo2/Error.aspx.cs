@@ -11,7 +11,7 @@ namespace TPC_Equipo2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            lblTitulo.Text = Session["error"].ToString();
         }
     }
 }
