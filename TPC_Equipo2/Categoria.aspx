@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Categoria.aspx.cs" Inherits="TPC_Equipo2.Categoria" %>
+﻿<%@ page title="" language="C#" masterpagefile="~/Site.Master" autoeventwireup="true" codebehind="Categoria.aspx.cs" inherits="TPC_Equipo2.Categoria" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -6,41 +6,45 @@
         <div class="row">
 
             <asp:Repeater ID="repRepeater" runat="server">
-                <ItemTemplate>
+                <itemtemplate>
 
                     <div class="col-12 col-md-4 mb-3">
 
                         <div class="card h-100">
 
                             <img src="<%# Eval("Imagen.ImagenUrl") %>"
-                                class="card-img-top"
-                                alt="Imagen del producto"
-                                style="height: 220px; object-fit: contain; background-color: #f0f0f0;" />
+                                class="card-img-top card_style"
+                                alt="Imagen del producto" />
 
-                            <div class="card-body">
+                            <div class="card-body d-flex flex-column">
 
-                                <h4 class="card-title">
+                                <h5 class="card-title">
                                     <%# Eval("Nombre") %>
-                                </h4>
+                                </h5>
 
                                 <p class="card-text">
                                     <%# Eval("Descripcion") %>
                                 </p>
 
-                                <p class="card-text">
-                                    <%# Eval("Precio") %>
-                                </p>
-                                <asp:LinkButton ID="btnCarrito" runat="server"
-                                CssClass="btn btn-primary" OnClick="btnCarrito_Click"
-                                CommandArgument='<%# Eval("IdProducto")%>'
-                                >Agregar al carrito</asp:LinkButton>
+                                <div class="mt-auto">
+
+                                    <h5 class="text-success fw-bold mb-3">
+                                        $ <%# Eval("Precio", "{0:N2}") %>
+                                    </h5>
+                                    <asp:LinkButton ID="btnCarrito" runat="server"
+                                        CssClass="btn btn-primary" OnClick="btnCarrito_Click"
+                                        CommandArgument='<%# Eval("IdProducto")%>'>
+                                        Agregar al carrito</asp:LinkButton>
+
+                                </div>
+
                             </div>
 
                         </div>
 
                     </div>
 
-                </ItemTemplate>
+                </itemtemplate>
             </asp:Repeater>
 
         </div>

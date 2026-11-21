@@ -53,3 +53,15 @@ textarea {
     }
 
 
+    /* --- Estilo de Cards ---*/
+
+.card_style {
+    height: 220px;
+    object-fit: contain;
+    background-color: #f0f0f0;
+}
+
+.btn-carrito {
+    position: relative;
+    z-index: 2;
+}

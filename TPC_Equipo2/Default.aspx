@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TPC_Equipo2._Default" %>
+﻿<%@ page title="Home Page" language="C#" masterpagefile="~/Site.Master" autoeventwireup="true" codebehind="Default.aspx.cs" inherits="TPC_Equipo2._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -9,51 +9,50 @@
         <div class="row">
 
             <asp:Repeater ID="repRepeater" runat="server">
-                <ItemTemplate>
+                <itemtemplate>
 
                     <div class="col-12 col-md-4 mb-3">
 
-                        <asp:LinkButton
-                            ID="btnProducto"
-                            runat="server"
-                            CssClass="text-decoration-none text-dark"
-                            CommandArgument='<%# Eval("IdProducto") %>'
-                            OnClick="btnProducto_Click">
+                        <div class="card h-100">
 
-                            <div class="card h-100">
+                            <img src="<%# Eval("Imagen.ImagenUrl") %>"
+                                class="card-img-top card_style"
+                                alt="Imagen del producto" />
 
-                                <img src="<%# Eval("Imagen.ImagenUrl") %>"
-                                    class="card-img-top"
-                                    alt="Imagen del producto"
-                                    style="height: 220px; object-fit: contain; background-color: #f0f0f0;" />
+                            <div class="card-body d-flex flex-column">
 
-                                <div class="card-body">
-
-                                    <h5 class="card-title">
+                                <h5 class="card-title">
+                                    <asp:LinkButton
+                                        ID="btnProducto"
+                                        runat="server"
+                                        CssClass="stretched-link text-decoration-none text-dark"
+                                        CommandArgument='<%# Eval("IdProducto") %>'
+                                        OnClick="btnProducto_Click">
                                         <%# Eval("Nombre") %>
+                                    </asp:LinkButton>
+                                </h5>
+
+                                <p class="card-text">
+                                    <%# Eval("Descripcion") %>
+                                </p>
+
+                                <div class="mt-auto">
+
+                                    <h5 class="text-success fw-bold mb-3">$ <%# Eval("Precio", "{0:N2}") %>
                                     </h5>
-
-                                    <p class="card-text">
-                                        <%# Eval("Descripcion") %>
-                                    </p>
-
-                                    <h5 class="text-success fw-bold mb-3">
-                                        $ <%# Eval("Precio", "{0:N2}") %>
-                                    </h5>
-                                 <asp:LinkButton ID="btnAgregarAlCarrito" runat="server"
-                                CssClass="btn btn-primary" OnClick="btnAgregarAlCarrito_Click"
-                                CommandArgument='<%# Eval("IdProducto")%>'
-                                >Agregar al carrito</asp:LinkButton>
-
+                                    <asp:LinkButton ID="btnAgregarAlCarrito" runat="server"
+                                        CssClass="btn btn-primary btn-carrito" OnClick="btnAgregarAlCarrito_Click"
+                                        CommandArgument='<%# Eval("IdProducto")%>'>
+                                        Agregar al carrito</asp:LinkButton>
                                 </div>
 
                             </div>
 
-                        </asp:LinkButton>
+                        </div>
 
                     </div>
 
-                </ItemTemplate>
+                </itemtemplate>
             </asp:Repeater>
 
         </div>
