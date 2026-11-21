@@ -38,39 +38,15 @@ namespace TPC_Equipo2
 
         protected void btnAgregarAlCarrito_Click(object sender, EventArgs e)
         {
-            LinkButton productoSeleccionado = (LinkButton)sender;
-            int id = int.Parse(productoSeleccionado.CommandArgument);
-
-            ItemCarritoNegocio itemNegocio = new ItemCarritoNegocio();
             try
             {
-                if (Session["cliente"] != null)
-                {
-                    // El cliente está logueado, se puede agregar al carrito
-                    Cliente cliente = (Cliente)Session["cliente"];
-                    CarritoNegocio carritoNegocio = new CarritoNegocio();
-                    dominio.Carrito carrito = carritoNegocio.obtenerOCrearCarrito(cliente.IdCliente);
-
-                    Producto producto = new ProductoNegocio().obtenerProducto(id);
-                    itemNegocio.agregarItemCarrito(carrito.IdCarrito, id, 1, producto.Precio);
-                }
-                else
-                {
-                    // El cliente no está logueado, se puede agregar al carrito de sesión
-                    List<ItemCarrito> lista = (List<ItemCarrito>)Session["Carrito"];
-                    if (lista == null)
-                        lista = new List<ItemCarrito>();
-
-                    itemNegocio.agregarItemSession(lista, id, 1);
-                    Session["Carrito"] = lista;
-                }
+                int id = int.Parse(((LinkButton)sender).CommandArgument);
+                Helper.AgregarAlCarrito(id);
             }
             catch (Exception ex)
             {
-
                 lblMensaje.Text = ex.Message;
             }
-            
         }
     }
 }

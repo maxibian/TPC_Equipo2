@@ -29,6 +29,7 @@ namespace TPC_Equipo2
                         lblDescripcion.Text = producto.Descripcion;
                         lblPrecio.Text = producto.Precio.ToString("N2");
                         lblStock.Text = producto.Stock.ToString();
+                        btnAgregarAlCarrito.CommandArgument = producto.IdProducto.ToString();
 
                         if (producto.Imagen == null || string.IsNullOrEmpty(producto.Imagen.ImagenUrl))
                             imgProducto.ImageUrl = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
@@ -56,6 +57,19 @@ namespace TPC_Equipo2
             else
             {
                 Response.Redirect("Default.aspx");
+            }
+        }
+
+        protected void btnAgregarAlCarrito_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int id = int.Parse(((LinkButton)sender).CommandArgument);
+                Helper.AgregarAlCarrito(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

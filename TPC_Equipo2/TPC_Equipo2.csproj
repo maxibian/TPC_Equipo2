@@ -331,6 +331,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper.cs" />
     <Compile Include="HerramientasAdmin.aspx.cs">
       <DependentUpon>HerramientasAdmin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

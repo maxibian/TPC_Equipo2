@@ -53,5 +53,19 @@ namespace TPC_Equipo2
             Session["CarritoIds"] = carritoIds;
 
         }
+
+
+        protected void btnAgregarAlCarrito_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int id = int.Parse(((LinkButton)sender).CommandArgument);
+                Helper.AgregarAlCarrito(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
