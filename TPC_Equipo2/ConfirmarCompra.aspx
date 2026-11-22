@@ -76,7 +76,55 @@
                     <div class="mb-3">
                         <asp:Label ID="lblDireccion" runat="server" Text="Dirección de entrega" AssociatedControlID="ddlDireccion" CssClass="form-label" />
 
-                        <asp:DropDownList ID="ddlDireccion" runat="server" CssClass="form-select" />
+                        <asp:DropDownList ID="ddlDireccion" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlDireccion_SelectedIndexChanged" />
+
+
+                        <asp:Panel ID="pnlNuevaDireccion"
+                            runat="server"
+                            Visible="false"
+                            CssClass="mt-3">
+
+                            <h6>Nueva dirección</h6>
+                            <p>Completá los datos de tu domicilio.</p>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Calle</label>
+                                    <asp:TextBox ID="txtCalle" runat="server" CssClass="form-control" MaxLength="100" />
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Número</label>
+                                    <asp:TextBox ID="txtNumero" runat="server" CssClass="form-control" TextMode="Number" />
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Localidad</label>
+                                    <asp:TextBox ID="txtLocalidad" runat="server" CssClass="form-control" MaxLength="50" />
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Provincia</label>
+                                    <asp:TextBox ID="txtProvincia" runat="server" CssClass="form-control" MaxLength="50" />
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Código postal</label>
+                                    <asp:TextBox ID="txtCodigoPostal" runat="server" CssClass="form-control" MaxLength="10" />
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label class="form-label"> Observaciones (opcional)
+           
+                                    </label>
+                                    <asp:TextBox ID="txtObservacion" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" MaxLength="200" />
+                                </div>
+
+                            </div>
+
+                        </asp:Panel>
+
                     </div>
 
                 </asp:Panel>

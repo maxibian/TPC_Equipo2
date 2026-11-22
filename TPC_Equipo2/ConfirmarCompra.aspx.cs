@@ -152,6 +152,12 @@ namespace TPC_Equipo2
                 btnConfirmarCompra.Enabled = true;
 
             }
+
+            if (IsPostBack)
+            {
+                pnlDireccion.Visible = requiereDireccionSeleccionada();
+                pnlNuevaDireccion.Visible = pnlDireccion.Visible && ddlDireccion.SelectedValue == "nueva";
+            }
         }
 
         protected void btnConfirmarCompra_Click(object sender, EventArgs e)
@@ -322,6 +328,25 @@ namespace TPC_Equipo2
             }
 
             ddlDireccion.Items.Add(new ListItem("Ingresar una nueva dirección", "nueva"));
+        }
+
+        private bool requiereDireccionSeleccionada()
+        {
+            if (!int.TryParse(ddlFormaEntrega.SelectedValue, out int idFormaEntrega))
+            {
+                return false;
+            }
+
+            FormaEntregaNegocio negocioEntrega = new FormaEntregaNegocio();
+
+            FormaEntrega forma = negocioEntrega.buscarPorId(idFormaEntrega);
+
+            return forma != null && forma.Estado && forma.RequiereDireccion;
+        }
+
+        protected void ddlDireccion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pnlNuevaDireccion.Visible = pnlDireccion.Visible && ddlDireccion.SelectedValue == "nueva";
         }
     }
 }
