@@ -20,39 +20,18 @@ namespace TPC_Equipo2
                 ProductoNegocio negocio = new ProductoNegocio();
 
                 string id = Request.QueryString["id"].ToString();
-                if (int.TryParse(id, out int idresultado)) { 
-                productosLista = negocio.listarCategoria(idresultado);
-                repRepeater.DataSource = productosLista;
-                repRepeater.DataBind();       
+                if (int.TryParse(id, out int idresultado))
+                {
+                    productosLista = negocio.listarCategoria(idresultado);
+                    foreach (Producto producto in productosLista)
+                        if (producto.Imagen == null || string.IsNullOrWhiteSpace(producto.Imagen.ImagenUrl))
+                            producto.Imagen = new Imagen() { ImagenUrl = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg" };
+                    repRepeater.DataSource = productosLista;
+                    repRepeater.DataBind();
                 }
-
-
-
-
-
             }
         }
 
-        protected void btnCarrito_Click(object sender, EventArgs e)
-        {
-            LinkButton producto = (LinkButton)sender;
-            int id = int.Parse(producto.CommandArgument);
-            List<int> carritoIds;
-
-            if (Session["CarritoIds"] != null)
-            {
-                carritoIds = (List<int>)Session["CarritoIds"];
-            }
-            else
-            {
-                carritoIds = new List<int>();
-            }
-
-            carritoIds.Add(id);
-
-            Session["CarritoIds"] = carritoIds;
-
-        }
 
 
         protected void btnAgregarAlCarrito_Click(object sender, EventArgs e)
@@ -64,8 +43,15 @@ namespace TPC_Equipo2
             }
             catch (Exception ex)
             {
-                throw ex;
+                lblMensaje.Text = ex.Message;
             }
+        }
+
+        protected void btnProducto_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+            int idProducto = Convert.ToInt32(btn.CommandArgument);
+            Response.Redirect("ProductoDetalle.aspx?id=" + idProducto);
         }
     }
 }

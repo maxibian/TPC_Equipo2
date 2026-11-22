@@ -13,6 +13,9 @@ namespace TPC_Equipo2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario usuario = Session["usuario"] as Usuario;
+            btnModificar.Visible = usuario != null && usuario.Rol.IdRol == 1;
+
             if (!IsPostBack)
             {
                 int idProducto;

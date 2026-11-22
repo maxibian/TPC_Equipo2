@@ -58,7 +58,7 @@
                             
 
                             <asp:Button
-                                ID="Button2"
+                                ID="btnModificar"
                                 runat="server"
                                 Text="Modificar"
                                 CssClass="btn btn-primary btn-lg"

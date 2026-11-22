@@ -133,7 +133,7 @@ namespace negocio
             
             try
             {
-                datos.setearConsulta("SELECT P.IdProducto, P.Nombre, P.Descripcion, P.Precio, P.Stock, P.Estado as EstadoProducto, I.ImagenUrl FROM PRODUCTO P INNER JOIN CATEGORIA C ON P.IdCategoria = C.IdCategoria INNER JOIN IMAGEN I ON P.IdProducto = I.IdProducto WHERE P.IdCategoria = @id;");
+                datos.setearConsulta("SELECT P.IdProducto, P.Nombre, P.Descripcion, P.Precio, P.Stock, P.Estado as EstadoProducto, I.ImagenUrl FROM PRODUCTO P INNER JOIN CATEGORIA C ON P.IdCategoria = C.IdCategoria LEFT JOIN IMAGEN I ON P.IdProducto = I.IdProducto WHERE P.IdCategoria = @id;");
                 datos.setearParametro("@id", id);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
@@ -148,7 +148,8 @@ namespace negocio
                     aux.Stock = (int)datos.Lector["Stock"];
                     
                     aux.Imagen = new Imagen();
-                    aux.Imagen.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+                    if (datos.Lector["ImagenUrl"] != DBNull.Value)
+                        aux.Imagen.ImagenUrl = (string)datos.Lector["ImagenUrl"];
 
                     lista.Add(aux);
 
@@ -169,7 +170,7 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("SELECT P.IdProducto, P.Nombre, P.Descripcion, P.Precio, P.Stock, P.Estado as EstadoProducto, C.IdCategoria, I.ImagenUrl FROM PRODUCTO P INNER JOIN CATEGORIA C ON P.IdCategoria = C.IdCategoria INNER JOIN IMAGEN I ON P.IdProducto = I.IdProducto WHERE P.IdProducto = @id;");
+                datos.setearConsulta("SELECT P.IdProducto, P.Nombre, P.Descripcion, P.Precio, P.Stock, P.Estado as EstadoProducto, C.IdCategoria, I.ImagenUrl FROM PRODUCTO P INNER JOIN CATEGORIA C ON P.IdCategoria = C.IdCategoria LEFT JOIN IMAGEN I ON P.IdProducto = I.IdProducto WHERE P.IdProducto = @id;");
                 datos.setearParametro("@id", idProducto);
                 datos.ejecutarLectura();
                 if (datos.Lector.Read())
@@ -185,7 +186,8 @@ namespace negocio
                     aux.Categoria = new Categoria();
                     aux.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
                     aux.Imagen = new Imagen();
-                    aux.Imagen.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+                    if (datos.Lector["ImagenUrl"] != DBNull.Value)
+                        aux.Imagen.ImagenUrl = (string)datos.Lector["ImagenUrl"];
 
                     return aux;
                 }

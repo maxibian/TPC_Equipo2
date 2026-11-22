@@ -79,7 +79,7 @@ namespace negocio
                 datos.setearParametro("@Contrasena", usuario.Contrasena);
                 datos.setearParametro("@IdRol", 2);
                 datos.setearParametro("@Estado", 1);
-                datos.ejecutarAccion();
+                //datos.ejecutarAccion();
 
 
                 return datos.ejecutarEscalar();
