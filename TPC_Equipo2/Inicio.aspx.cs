@@ -24,20 +24,15 @@ namespace TPC_Equipo2
         {
             LinkButton producto = (LinkButton)sender;
             int id = int.Parse(producto.CommandArgument);
-            List<int> carritoIds;
-
-            if (Session["CarritoIds"] != null)
+            try
             {
-                carritoIds = (List<int>)Session["CarritoIds"];
+                Helper.AgregarAlCarrito(id);
             }
-            else
+            catch (Exception ex)
             {
-                carritoIds = new List<int>();
+                Session.Add("error", ex.Message);
+                Response.Redirect("Error.aspx", false);
             }
-
-            carritoIds.Add(id);
-
-            Session["CarritoIds"] = carritoIds;
 
         }
     }

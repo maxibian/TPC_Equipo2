@@ -49,10 +49,13 @@
                             <asp:LinkButton ID="btnAgregarAlCarrito" runat="server"
                                 CssClass="btn btn-primary btn-lg" OnClick="btnAgregarAlCarrito_Click">
                                 Agregar al carrito</asp:LinkButton>
+                            
 
                             <a href="Default.aspx"
                                 class="btn btn-outline-secondary btn-lg ms-2">Volver
                             </a>
+
+                            
 
                             <asp:Button
                                 ID="Button2"
@@ -61,7 +64,7 @@
                                 CssClass="btn btn-primary btn-lg"
                                 OnClick="btnModificar_Click" />
 
-
+                            <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger d-block mt-2" />
                         </div>
 
                     </div>

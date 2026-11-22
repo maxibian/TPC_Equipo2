@@ -66,12 +66,16 @@ namespace negocio
         }
 
 
-        public void pasarItemsDeSession(int idCliente, List<ItemCarrito> listaSession)
+        public void pasarItemsDeSession(int idUsuario, List<ItemCarrito> listaSession)
         {
             if (listaSession == null || listaSession.Count == 0)
                 return;
 
-            Carrito carrito = obtenerOCrearCarrito(idCliente);
+            Carrito carrito = obtenerOCrearCarrito(idUsuario);
+            
+            if (carrito == null)
+                return;
+
             ItemCarritoNegocio itemNegocio = new ItemCarritoNegocio();
 
             foreach (ItemCarrito item in listaSession)

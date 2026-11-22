@@ -15,6 +15,8 @@ namespace TPC_Equipo2
         {
             if (!IsPostBack)
             {
+                PasarCarritoDeSession();
+
                 List<ItemCarrito> carrito = ObtenerItems();
 
                     dgvCarrito.DataSource = carrito;
@@ -118,6 +120,21 @@ namespace TPC_Equipo2
             }
 
             Response.Redirect("ConfirmarCompra.aspx", false);
+        }
+
+        private void PasarCarritoDeSession()
+        {
+            if (Session["usuario"] == null)
+                return;
+
+            List<ItemCarrito> lista = Session["Carrito"] as List<ItemCarrito>;
+            if (lista == null || lista.Count == 0)
+                return;
+
+            Usuario usuario = (Usuario)Session["usuario"];
+            new CarritoNegocio().pasarItemsDeSession(usuario.IdUsuario, lista);
+
+            Session["Carrito"] = null; 
         }
     }
 }

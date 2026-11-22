@@ -69,7 +69,7 @@ namespace TPC_Equipo2
             }
             catch (Exception ex)
             {
-                throw ex;
+                lblMensaje.Text = ex.Message;
             }
         }
     }
