@@ -16,7 +16,7 @@ namespace negocio
             List<FormaEntrega> lista = new List<FormaEntrega>();
             try
             {
-                datos.setearConsulta("SELECT IdFormaEntrega, Nombre, Estado FROM FORMAENTREGA");
+                datos.setearConsulta("SELECT IdFormaEntrega, Nombre, Estado,  RequiereDireccion FROM FORMAENTREGA");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -24,6 +24,7 @@ namespace negocio
                     aux.IdFormaEntrega = (int)datos.Lector["IdFormaEntrega"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Estado = (bool)datos.Lector["Estado"];
+                    aux.RequiereDireccion = (bool)datos.Lector["RequiereDireccion"];
 
                     lista.Add(aux);
                 }
@@ -66,8 +67,9 @@ namespace negocio
 
                 if (!existeNombre(nueva.Nombre))
                 {
-                    datos.setearConsulta("INSERT INTO FORMAENTREGA (Nombre) values (@nombre)");
+                    datos.setearConsulta("INSERT INTO FORMAENTREGA (Nombre, RequiereDireccion) values (@nombre, @RequiereDireccion)");
                     datos.setearParametro("@nombre", nueva.Nombre);
+                    datos.setearParametro("@RequiereDireccion", nueva.RequiereDireccion);
                     datos.ejecutarAccion();
 
                     return true;
@@ -142,7 +144,7 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("SELECT idFormaEntrega, Nombre, Estado FROM FORMAENTREGA WHERE idFormaEntrega = @id");
+                datos.setearConsulta("SELECT idFormaEntrega, Nombre, Estado, RequiereDireccion FROM FORMAENTREGA WHERE idFormaEntrega = @id");
                 datos.setearParametro("@id", idFormaEntrega);
                 datos.ejecutarLectura();
 
@@ -152,6 +154,7 @@ namespace negocio
                     aux.IdFormaEntrega = (int)datos.Lector["idFormaEntrega"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Estado = (bool)datos.Lector["Estado"];
+                    aux.RequiereDireccion = (bool)datos.Lector["RequiereDireccion"];
                 }
 
                 return aux;
@@ -187,8 +190,9 @@ namespace negocio
 
                 if (!existeNombreEnOtroRegistro(forma.Nombre, forma.IdFormaEntrega))
                 {
-                    datos.setearConsulta("UPDATE FORMAENTREGA SET Nombre = @nombre WHERE idFormaEntrega = @id");
+                    datos.setearConsulta("UPDATE FORMAENTREGA SET Nombre = @nombre, RequiereDireccion = @RequiereDireccion WHERE idFormaEntrega = @id");
                     datos.setearParametro("@nombre", forma.Nombre);
+                    datos.setearParametro("@RequiereDireccion", forma.RequiereDireccion);
                     datos.setearParametro("@id", forma.IdFormaEntrega);
                     datos.ejecutarAccion();
 
