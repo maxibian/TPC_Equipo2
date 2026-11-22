@@ -472,5 +472,73 @@ namespace negocio
 
             return disponibles;
         }
+
+        public List<Venta> listarVentasPorCliente(int idCliente)
+        {
+            List<Venta> ventas = new List<Venta>();
+            
+
+            if (idCliente <= 0)
+            {
+                throw new ArgumentException("El identificador del cliente no es válido.");
+            }
+
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT V.IdVenta, V.IdCliente, C.Nombre AS NombreCliente, C.Apellido AS ApellidoCliente, V.Fecha, V.VentaTotal, V.IdFormaPago, FP.Nombre AS NombreFormaPago, V.IdFormaEntrega, FE.Nombre AS NombreFormaEntrega, V.IdDireccion, V.IdEstadoVenta, EV.Nombre AS NombreEstado, V.Observaciones FROM VENTA V INNER JOIN CLIENTE C ON V.IdCliente = C.IdCliente INNER JOIN FORMAPAGO FP ON V.IdFormaPago = FP.IdFormaPago INNER JOIN FORMAENTREGA FE ON V.IdFormaEntrega = FE.IdFormaEntrega INNER JOIN ESTADOVENTA EV  ON V.IdEstadoVenta = EV.IdEstadoVenta WHERE V.IdCliente = @IdCliente ORDER BY V.Fecha DESC, V.IdVenta DESC");
+                datos.setearParametro("@IdCliente", idCliente);
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Venta venta = new Venta();
+
+                    venta.IdVenta = (int)datos.Lector["IdVenta"];
+                    venta.Fecha = (DateTime)datos.Lector["Fecha"];
+                    venta.VentaTotal = (decimal)datos.Lector["VentaTotal"];
+
+                    venta.Cliente = new Cliente();
+
+                    venta.Cliente.IdCliente = (int)datos.Lector["IdCliente"];
+                    venta.Cliente.Nombre = (string)datos.Lector["NombreCliente"];
+                    venta.Cliente.Apellido = (string)datos.Lector["ApellidoCliente"];
+
+                    venta.EstadoVenta = new EstadoVenta();
+
+                    venta.EstadoVenta.IdEstadoVenta = (int)datos.Lector["IdEstadoVenta"];
+
+                    venta.EstadoVenta.Nombre = (string)datos.Lector["NombreEstado"];
+
+                    venta.FormaPago = new FormaPago();
+                    venta.FormaPago.IdFormaPago = (int)datos.Lector["IdFormaPago"];
+                    venta.FormaPago.Nombre = (string)datos.Lector["NombreFormaPago"];
+                    venta.FormaEntrega = new FormaEntrega();
+                    venta.FormaEntrega.IdFormaEntrega = (int)datos.Lector["IdFormaEntrega"];
+                    venta.FormaEntrega.Nombre = (string)datos.Lector["NombreFormaEntrega"];
+
+                    if (datos.Lector["IdDireccion"] != DBNull.Value)
+                    {
+                        venta.Direccion = new Direccion();
+                        venta.Direccion.IdDireccion = (int)datos.Lector["IdDireccion"];
+                    }
+
+                    if (datos.Lector["Observaciones"] != DBNull.Value)
+                    {
+                        venta.Observaciones = (string)datos.Lector["Observaciones"];
+                    }
+
+                    ventas.Add(venta);
+                }
+
+                return ventas;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
