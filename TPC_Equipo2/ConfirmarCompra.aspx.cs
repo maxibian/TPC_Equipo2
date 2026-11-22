@@ -37,6 +37,14 @@ namespace TPC_Equipo2
 
                 foreach (ItemCarrito item in carrito)
                 {
+
+                    if (item == null || item.Producto == null || item.Producto.IdProducto <= 0 || item.Cantidad <= 0)
+                    {
+                        lblCarrito.Text = "El carrito contiene productos inválidos.";
+                        btnConfirmarCompra.Enabled = false;
+                        return;
+                    }
+
                     DetalleVenta detalle = new DetalleVenta();
 
                     detalle.Producto = item.Producto;
@@ -157,6 +165,16 @@ namespace TPC_Equipo2
                 return;
             }
 
+            CarritoNegocio negocioCarrito = new CarritoNegocio();
+
+            int idCliente = negocioCarrito.obtenerIdCliente(usuario.IdUsuario);
+
+            if (idCliente <= 0)
+            {
+                lblMensaje.Text = "No se encontró un cliente asociado al usuario.";
+                return;
+            }
+
             List<ItemCarrito> carrito = obtenerItemsCarrito(usuario);
 
             if (carrito == null || carrito.Count == 0)
@@ -176,6 +194,9 @@ namespace TPC_Equipo2
             int idFormaEntrega = int.Parse(ddlFormaEntrega.SelectedValue);
 
             Venta venta = new Venta();
+
+            venta.Cliente = new Cliente();
+            venta.Cliente.IdCliente = idCliente;
 
             venta.FormaPago = new FormaPago();
             venta.FormaPago.IdFormaPago = idFormaPago;
@@ -224,8 +245,6 @@ namespace TPC_Equipo2
             }
 
             venta.EstadoVenta = estadoInicial;
-
-            //Falta identificar el cliente.
 
             lblMensaje.Text = "Venta preparada correctamente.";
         }
