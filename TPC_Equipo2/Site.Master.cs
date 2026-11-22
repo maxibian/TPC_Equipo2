@@ -37,5 +37,12 @@ namespace TPC_Equipo2
                 Response.Redirect("Categoria.aspx?id=" + id);
             }
         }
+
+        protected void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("~/Inicio.aspx", false);
+        }
     }
 }
