@@ -13,6 +13,12 @@ namespace TPC_Equipo2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                Response.Redirect("Inicio.aspx");
+                return;
+            }
+
             if (!IsPostBack)
             {
                 string id = Request.QueryString["id"];
@@ -63,6 +69,11 @@ namespace TPC_Equipo2
 
         protected void btnGuardarCambios_Click(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             string id = Request.QueryString["id"];
 
             bool valido = int.TryParse(id, out int numero);
@@ -149,6 +160,18 @@ namespace TPC_Equipo2
                 venta.EstadoVenta.IdEstadoVenta.ToString();
 
             ddlEstado.Enabled = ddlEstado.Items.Count > 1;
+        }
+
+        private bool esAdministrador()
+        {
+            Usuario usuario = Session["usuario"] as Usuario;
+
+            if (usuario == null || usuario.Rol == null)
+            {
+                return false;
+            }
+
+            return usuario.Rol.IdRol == 1 && usuario.Estado;
         }
     }
 }

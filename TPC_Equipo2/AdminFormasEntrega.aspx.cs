@@ -15,11 +15,11 @@ namespace TPC_Equipo2
         {
 
 
-            //if (!(Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).Rol.IdRol == 1))
-            //{
-            //    Session.Add("error", "No tenes permisos para entrar a esta pantalla. Necesitas ser Administrador.");
-            //    Response.Redirect("Error.aspx", false);
-            //}
+            if (!(Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).Rol.IdRol == 1))
+            {
+                Session.Add("error", "No tenes permisos para entrar a esta pantalla. Necesitas ser Administrador.");
+                Response.Redirect("Error.aspx", false);
+            }
 
 
             if (!IsPostBack)
