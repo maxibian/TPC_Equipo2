@@ -15,11 +15,21 @@ namespace TPC_Equipo2
         {
             if (!IsPostBack)
             {
-                List<ItemCarrito> carrito = Session["Carrito"] as List<ItemCarrito>;
+
+                Usuario usuario = Session["usuario"] as Usuario;
+
+                if (usuario == null)
+                {
+                    Response.Redirect("Login.aspx", false);
+                    return;
+                }
+
+                List<ItemCarrito> carrito = obtenerItemsCarrito(usuario);
 
                 if (carrito == null || carrito.Count == 0)
                 {
-                    lblCarrito.Text = "No hay productos en el carrito.";
+                    lblCarrito.Text = "El carrito está vacío.";
+                    btnConfirmarCompra.Enabled = false;
                     return;
                 }
 
@@ -138,7 +148,16 @@ namespace TPC_Equipo2
 
         protected void btnConfirmarCompra_Click(object sender, EventArgs e)
         {
-            List<ItemCarrito> carrito = Session["Carrito"] as List<ItemCarrito>;
+
+            Usuario usuario = Session["usuario"] as Usuario;
+
+            if (usuario == null)
+            {
+                Response.Redirect("Login.aspx", false);
+                return;
+            }
+
+            List<ItemCarrito> carrito = obtenerItemsCarrito(usuario);
 
             if (carrito == null || carrito.Count == 0)
             {
@@ -209,6 +228,22 @@ namespace TPC_Equipo2
             //Falta identificar el cliente.
 
             lblMensaje.Text = "Venta preparada correctamente.";
+        }
+
+        private List<ItemCarrito> obtenerItemsCarrito(Usuario usuario)
+        {
+            CarritoNegocio negocioCarrito = new CarritoNegocio();
+
+            dominio.Carrito carritoDb = negocioCarrito.obtenerOCrearCarrito(usuario.IdUsuario);
+
+            if (carritoDb == null)
+            {
+                return new List<ItemCarrito>();
+            }
+
+            ItemCarritoNegocio negocioItems = new ItemCarritoNegocio();
+
+            return negocioItems.listar(carritoDb.IdCarrito);
         }
     }
 }
