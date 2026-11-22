@@ -18,6 +18,10 @@
             </div>
 
             <div class="mb-3">
+                <asp:CheckBox ID="chkRequiereDireccion" runat="server" Text="Requiere dirección de entrega" />
+            </div>
+
+            <div class="mb-3">
                 <asp:CheckBox ID="chkEstado" Enabled="false" runat="server" Text="Activo" />
             </div>
 

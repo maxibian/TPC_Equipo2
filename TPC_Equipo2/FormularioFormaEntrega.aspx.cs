@@ -26,6 +26,7 @@ namespace TPC_Equipo2
                     btnGuardar.Enabled = false;
                     btnCambiarEstado.Enabled = false;
                     txtNombreFormaEntrega.Enabled = false;
+                    chkRequiereDireccion.Enabled = false;
                     return;
                 }
 
@@ -39,11 +40,13 @@ namespace TPC_Equipo2
                     btnGuardar.Enabled = false;
                     btnCambiarEstado.Enabled = false;
                     txtNombreFormaEntrega.Enabled = false;
+                    chkRequiereDireccion.Enabled = false;
                     return;
                 }
 
                 txtNombreFormaEntrega.Text = forma.Nombre;
                 chkEstado.Checked = forma.Estado;
+                chkRequiereDireccion.Checked = forma.RequiereDireccion;
 
                 if (forma.Estado)
                 {
@@ -74,6 +77,7 @@ namespace TPC_Equipo2
 
             forma.IdFormaEntrega = numero;
             forma.Nombre = txtNombreFormaEntrega.Text;
+            forma.RequiereDireccion = chkRequiereDireccion.Checked;
 
             FormaEntregaNegocio negocio = new FormaEntregaNegocio();
 
