@@ -51,7 +51,7 @@
                                 Agregar al carrito</asp:LinkButton>
                             
 
-                            <a href="Default.aspx"
+                            <a href="Inicio.aspx"
                                 class="btn btn-outline-secondary btn-lg ms-2">Volver
                             </a>
 

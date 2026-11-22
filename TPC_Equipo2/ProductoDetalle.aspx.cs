@@ -38,12 +38,12 @@ namespace TPC_Equipo2
                     }
                     else
                     {
-                        Response.Redirect("Default.aspx");
+                        Response.Redirect("Inicio.aspx");
                     }
                 }
                 else
                 {
-                    Response.Redirect("Default.aspx");
+                    Response.Redirect("Inicio.aspx");
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace TPC_Equipo2
             }
             else
             {
-                Response.Redirect("Default.aspx");
+                Response.Redirect("Inicio.aspx");
             }
         }
 

@@ -125,7 +125,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Default.aspx" />
+    <Content Include="Inicio.aspx" />
     <Content Include="DetallePedido.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="favicon.ico" />
@@ -136,7 +136,6 @@
     <Content Include="Global.asax" />
     <Content Include="HerramientasAdmin.aspx" />
     <Content Include="HistorialPedidos.aspx" />
-    <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="MiCuenta.aspx" />
     <Content Include="ProductoDetalle.aspx" />
@@ -288,12 +287,12 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="Inicio.aspx.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="Inicio.aspx.designer.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
     </Compile>
     <Compile Include="DetallePedido.aspx.cs">
       <DependentUpon>DetallePedido.aspx</DependentUpon>
@@ -354,13 +353,6 @@
     </Compile>
     <Compile Include="HistorialPedidos.aspx.designer.cs">
       <DependentUpon>HistorialPedidos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Inicio.aspx.cs">
-      <DependentUpon>Inicio.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Inicio.aspx.designer.cs">
-      <DependentUpon>Inicio.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

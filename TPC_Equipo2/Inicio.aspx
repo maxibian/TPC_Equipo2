@@ -1,40 +1,50 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Inicio.aspx.cs" Inherits="TPC_Equipo2.Inicio" %>
+﻿<%@ page title="Home Page" language="C#" masterpagefile="~/Site.Master" autoeventwireup="true" codebehind="Inicio.aspx.cs" inherits="TPC_Equipo2.Inicio" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
+    <div class="container">
 
-        <div class="container">
+        <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger d-block mb-3"></asp:Label>
+
         <div class="row">
+
             <asp:Repeater ID="repRepeater" runat="server">
-                <ItemTemplate>
+                <itemtemplate>
 
                     <div class="col-12 col-md-4 mb-3">
 
                         <div class="card h-100">
 
                             <img src="<%# Eval("Imagen.ImagenUrl") %>"
-                                class="card-img-top"
-                                alt="Imagen del producto"
-                                style="height: 220px; object-fit: contain; background-color: #f0f0f0;" />
+                                class="card-img-top card_style"
+                                alt="Imagen del producto" />
 
-                            <div class="card-body">
+                            <div class="card-body d-flex flex-column">
 
-                                <h4 class="card-title">
-                                    <%# Eval("Nombre") %>
-                                </h4>
+                                <h5 class="card-title">
+                                    <asp:LinkButton
+                                        ID="btnProducto"
+                                        runat="server"
+                                        CssClass="stretched-link text-decoration-none text-dark"
+                                        CommandArgument='<%# Eval("IdProducto") %>'
+                                        OnClick="btnProducto_Click">
+                                        <%# Eval("Nombre") %>
+                                    </asp:LinkButton>
+                                </h5>
 
                                 <p class="card-text">
                                     <%# Eval("Descripcion") %>
                                 </p>
 
-                                <p class="card-text">
-                                    <%#Eval("Precio") %>
-                                </p>
+                                <div class="mt-auto">
 
-                                <asp:LinkButton ID="btnCarrito" runat="server"
-                                CssClass="btn btn-primary" OnClick="btnCarrito_Click"
-                                CommandArgument='<%# Eval("IdProducto")%>'
-                                >Agregar al carrito</asp:LinkButton>
+                                    <h5 class="text-success fw-bold mb-3">$ <%# Eval("Precio", "{0:N2}") %>
+                                    </h5>
+                                    <asp:LinkButton ID="btnAgregarAlCarrito" runat="server"
+                                        CssClass="btn btn-primary btn-carrito" OnClick="btnAgregarAlCarrito_Click"
+                                        CommandArgument='<%# Eval("IdProducto")%>'>
+                                        Agregar al carrito</asp:LinkButton>
+                                </div>
 
                             </div>
 
@@ -42,27 +52,10 @@
 
                     </div>
 
-                </ItemTemplate>
+                </itemtemplate>
             </asp:Repeater>
+
         </div>
     </div>
 
 </asp:Content>
-
-
-<%--      <%--  <% foreach (dominio.Producto producto in ListaProducto)
-            {
-        %>
-        <div class="col">
-            <div class="card h-100">
-                <img src="<%: producto.Imagen.ImagenUrl %>" class="card-img-top" alt="<%: producto.Nombre%>">
-                <div class="card-body">
-                    <h5 class="card-title"><%: producto.Nombre%></h5>
-                    <p class="card-text"><%: producto.Descripcion %></p>
-                    <p class="card-text"><%: producto.Precio %></p>
-                </div>
-            </div>
-        </div>
-        <%
-            }
-        %>--%>
