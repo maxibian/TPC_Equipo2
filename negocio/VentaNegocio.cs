@@ -227,7 +227,7 @@ namespace negocio
 
                 try
                 {
-                    datosProducto.setearConsulta("SELECT Precio, Stock FROM PRODUCTO WHERE IdProducto = @IdProducto");
+                    datosProducto.setearConsulta("SELECT Precio, Stock FROM PRODUCTO WHERE IdProducto = @IdProducto AND Estado = 1");
 
                     datosProducto.setearParametro("@IdProducto", detalle.Producto.IdProducto);
 
@@ -236,7 +236,7 @@ namespace negocio
                     if (!datosProducto.Lector.Read())
                     {
                         throw new ArgumentException(
-                            "El producto seleccionado no existe."
+                            "El producto seleccionado no existe o está inactivo."
                         );
                     }
 
@@ -316,7 +316,7 @@ namespace negocio
 
                 try
                 {
-                    datosStock.setearConsulta("UPDATE PRODUCTO SET Stock = Stock - @Cantidad WHERE IdProducto = @IdProducto AND Stock >= @Cantidad; SELECT @@ROWCOUNT;");
+                    datosStock.setearConsulta("UPDATE PRODUCTO SET Stock = Stock - @Cantidad WHERE IdProducto = @IdProducto AND Stock >= @Cantidad AND Estado = 1; SELECT @@ROWCOUNT;");
 
                     datosStock.setearParametro("@Cantidad", detalle.Cantidad);
 
