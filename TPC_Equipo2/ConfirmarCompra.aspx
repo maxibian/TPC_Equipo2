@@ -16,7 +16,7 @@
         <div class="card-body">
 
             <h5 class="card-title mb-3">Resumen de compra
-        </h5>
+            </h5>
 
             <asp:GridView ID="gvResumen" runat="server" AutoGenerateColumns="false" CssClass="table table-striped">
 
@@ -51,7 +51,7 @@
         <div class="card-body">
 
             <h5 class="card-title mb-3">Datos de la compra
-        </h5>
+            </h5>
 
             <div class="mb-3">
                 <label class="form-label">
@@ -66,10 +66,18 @@
                     Forma de entrega
                 </label>
 
-                <asp:DropDownList ID="ddlFormaEntrega" runat="server" CssClass="form-select" />
+                <asp:DropDownList ID="ddlFormaEntrega" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlFormaEntrega_SelectedIndexChanged" />
+                <asp:Panel ID="pnlDireccion" runat="server" Visible="false" CssClass="border rounded p-3 mb-3">
+
+                    <h5>Dirección de entrega</h5>
+
+                    <p>Seleccioná una dirección guardada o ingresá una nueva.</p>
+
+                </asp:Panel>
+
             </div>
 
-            <asp:Button ID="btnConfirmarCompra" runat="server" Text="Confirmar compra" CssClass="btn btn-primary" Enabled="false" OnClick="btnConfirmarCompra_Click"/>
+            <asp:Button ID="btnConfirmarCompra" runat="server" Text="Confirmar compra" CssClass="btn btn-primary" Enabled="false" OnClick="btnConfirmarCompra_Click" />
 
             <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mt-3" />
 

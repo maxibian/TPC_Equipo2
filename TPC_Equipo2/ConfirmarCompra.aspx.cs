@@ -264,5 +264,24 @@ namespace TPC_Equipo2
 
             return negocioItems.listar(carritoDb.IdCarrito);
         }
+
+        protected void ddlFormaEntrega_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pnlDireccion.Visible = false;
+
+            if (!int.TryParse(ddlFormaEntrega.SelectedValue, out int idFormaEntrega))
+            {
+                return;
+            }
+
+            FormaEntregaNegocio negocioEntrega = new FormaEntregaNegocio();
+
+            FormaEntrega formaSeleccionada = negocioEntrega.buscarPorId(idFormaEntrega);
+
+            if (formaSeleccionada != null && formaSeleccionada.Estado && formaSeleccionada.RequiereDireccion)
+            {
+                pnlDireccion.Visible = true;
+            }
+        }
     }
 }
