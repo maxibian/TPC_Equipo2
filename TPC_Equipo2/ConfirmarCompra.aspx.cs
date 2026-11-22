@@ -280,8 +280,48 @@ namespace TPC_Equipo2
 
             if (formaSeleccionada != null && formaSeleccionada.Estado && formaSeleccionada.RequiereDireccion)
             {
+                Usuario usuario = Session["usuario"] as Usuario;
+
+                if (usuario == null)
+                {
+                    Response.Redirect("Login.aspx", false);
+                    return;
+                }
+
+                CarritoNegocio negocioCarrito = new CarritoNegocio();
+
+                int idCliente = negocioCarrito.obtenerIdCliente(usuario.IdUsuario);
+
+                if (idCliente <= 0)
+                {
+                    lblMensaje.Text = "No se encontró un cliente asociado al usuario.";
+                    return;
+                }
+
+                cargarDirecciones(idCliente);
+
                 pnlDireccion.Visible = true;
             }
+        }
+
+        private void cargarDirecciones(int idCliente)
+        {
+            DireccionNegocio negocioDireccion = new DireccionNegocio();
+
+            List<Direccion> direcciones = negocioDireccion.listarDireccionesPorCliente(idCliente);
+
+            ddlDireccion.Items.Clear();
+
+            ddlDireccion.Items.Add(new ListItem("Seleccione una dirección", ""));
+
+            foreach (Direccion direccion in direcciones)
+            {
+                string texto = direccion.Calle + " " + direccion.Numero + " - " + direccion.Localidad;
+
+                ddlDireccion.Items.Add(new ListItem(texto, direccion.IdDireccion.ToString()));
+            }
+
+            ddlDireccion.Items.Add(new ListItem("Ingresar una nueva dirección", "nueva"));
         }
     }
 }

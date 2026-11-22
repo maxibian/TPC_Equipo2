@@ -73,6 +73,12 @@
 
                     <p>Seleccioná una dirección guardada o ingresá una nueva.</p>
 
+                    <div class="mb-3">
+                        <asp:Label ID="lblDireccion" runat="server" Text="Dirección de entrega" AssociatedControlID="ddlDireccion" CssClass="form-label" />
+
+                        <asp:DropDownList ID="ddlDireccion" runat="server" CssClass="form-select" />
+                    </div>
+
                 </asp:Panel>
 
             </div>
