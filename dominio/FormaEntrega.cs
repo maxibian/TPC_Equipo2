@@ -11,5 +11,6 @@ namespace dominio
         public int IdFormaEntrega { get; set; }
         public string Nombre { get; set; }
         public bool Estado { get; set; }
+        public bool RequiereDireccion { get; set; }
     }
 }
