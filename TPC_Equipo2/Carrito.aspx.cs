@@ -32,11 +32,11 @@ namespace TPC_Equipo2
 
             ItemCarritoNegocio itemNegocio = new ItemCarritoNegocio();
 
-            if (Session["cliente"] != null)
+            if (Session["usuario"] != null)
             {
-                Cliente cliente = (Cliente)Session["cliente"];
+                Usuario usuario = (Usuario)Session["usuario"];
 
-                dominio.Carrito carritoDb = new CarritoNegocio().obtenerOCrearCarrito(cliente.IdCliente);
+                dominio.Carrito carritoDb = new CarritoNegocio().obtenerOCrearCarrito(usuario.IdUsuario);
 
                 if (item.Cantidad > 1)
                     itemNegocio.modificarItemCarrito(carritoDb.IdCarrito, idProducto, item.Cantidad - 1);
@@ -81,11 +81,14 @@ namespace TPC_Equipo2
 
         private List<ItemCarrito> ObtenerItems()
         {
-            if (Session["cliente"] != null)
+            if (Session["usuario"] != null)
             {
-                Cliente cliente = (Cliente)Session["cliente"];
+                Usuario usuario = (Usuario)Session["usuario"];
                 CarritoNegocio carritoNegocio = new CarritoNegocio();
-                dominio.Carrito carrito = carritoNegocio.obtenerOCrearCarrito(cliente.IdCliente);
+                dominio.Carrito carrito = carritoNegocio.obtenerOCrearCarrito(usuario.IdUsuario);
+
+                if (carrito == null)
+                    return new List<ItemCarrito>();
 
                 ItemCarritoNegocio itemNegocio = new ItemCarritoNegocio();
                 return itemNegocio.listar(carrito.IdCarrito);
@@ -108,7 +111,7 @@ namespace TPC_Equipo2
                 lblVacio.Text = "No hay productos en el carrito.";
                 return;
             }
-            if (Session["cliente"] == null)
+            if (Session["usuario"] == null)
             {
                 Response.Redirect("Login.aspx", false);
                 return;

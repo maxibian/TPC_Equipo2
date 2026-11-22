@@ -51,8 +51,11 @@ namespace negocio
             }   
         }
 
-        public Carrito obtenerOCrearCarrito(int idCliente)
+        public Carrito obtenerOCrearCarrito(int idUsuario)
         {
+            int idCliente = obtenerIdCliente(idUsuario);
+            if (idCliente == 0)
+                return null;
             Carrito carrito = obtenerCarrito(idCliente);
             if (carrito == null)
             {
@@ -83,6 +86,26 @@ namespace negocio
                     throw;
                 }
                 
+            }
+        }
+
+
+        public int obtenerIdCliente(int idUsuario)
+        {
+            try
+            {
+                datos.setearConsulta("SELECT IdCliente FROM CLIENTE WHERE IdUsuario = @IdUsuario");
+                datos.setearParametro("@IdUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    return (int)datos.Lector["IdCliente"];
+
+                return 0;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
         }
     }

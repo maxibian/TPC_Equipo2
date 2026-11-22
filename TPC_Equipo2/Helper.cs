@@ -18,12 +18,15 @@ public static class Helper
             ItemCarritoNegocio itemNegocio = new ItemCarritoNegocio();
 
 
-            if (session["cliente"] != null)
+            if (session["usuario"] != null)
             {
                 // El cliente está logueado, se puede agregar al carrito
-                Cliente cliente = (Cliente)session["cliente"];
+                Usuario usuario = (Usuario)session["usuario"];
                 CarritoNegocio carritoNegocio = new CarritoNegocio();
-                dominio.Carrito carrito = carritoNegocio.obtenerOCrearCarrito(cliente.IdCliente);
+                dominio.Carrito carrito = carritoNegocio.obtenerOCrearCarrito(usuario.IdUsuario);
+
+                if (carrito == null)
+                    throw new Exception("Solo los clientes pueden comprar.");
 
                 Producto producto = new ProductoNegocio().obtenerProducto(idProducto);
                 itemNegocio.agregarItemCarrito(carrito.IdCarrito, idProducto, 1, producto.Precio);

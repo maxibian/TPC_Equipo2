@@ -140,8 +140,8 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("UPDATE ITEMCARRITO SET Cantidad = @Cantidad WHERE IdItemCarrito = @IdItemCarrito AND IdProducto = @IdProducto");
-                datos.setearParametro("@IdItemCarrito", IdCarrito);
+                datos.setearConsulta("UPDATE ITEMCARRITO SET Cantidad = @Cantidad WHERE IdCarrito = @IdCarrito AND IdProducto = @IdProducto");
+                datos.setearParametro("@IdCarrito", IdCarrito);
                 datos.setearParametro("@IdProducto", IdProducto);
                 datos.setearParametro("@Cantidad", Cantidad);
                 datos.ejecutarAccion();
@@ -160,8 +160,8 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("DELETE FROM ITEMCARRITO WHERE IdItemCarrito = @IdItemCarrito AND IdProducto = @IdProducto");
-                datos.setearParametro("@IdItemCarrito", IdCarrito);
+                datos.setearConsulta("DELETE FROM ITEMCARRITO WHERE IdCarrito = @IdCarrito AND IdProducto = @IdProducto");
+                datos.setearParametro("@IdCarrito", IdCarrito);
                 datos.setearParametro("@IdProducto", IdProducto);
                 datos.ejecutarAccion();
             }
