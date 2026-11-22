@@ -114,5 +114,55 @@ namespace negocio
             finally { datos.cerrarConexion(); }
         }
 
+        public List<Direccion> listarDireccionesPorCliente(int idCliente)
+        {
+            if (idCliente <= 0)
+            {
+                throw new ArgumentException(
+                    "El identificador del cliente no es válido."
+                );
+            }
+
+            List<Direccion> direcciones = new List<Direccion>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT IdDireccion, IdCliente, Calle, Numero, Localidad, Provincia, CodigoPostal, Observacion, Estado FROM DIRECCION WHERE IdCliente = @IdCliente AND Estado = 1");
+                datos.setearParametro("@IdCliente", idCliente);
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Direccion direccion = new Direccion();
+
+                    direccion.IdDireccion = (int)datos.Lector["IdDireccion"];
+                    direccion.IdCliente = (int)datos.Lector["IdCliente"];
+                    direccion.Calle = (string)datos.Lector["Calle"];
+                    direccion.Numero = (int)datos.Lector["Numero"];
+                    direccion.Localidad = (string)datos.Lector["Localidad"];
+                    direccion.Provincia = (string)datos.Lector["Provincia"];
+                    direccion.CodigoPostal = (string)datos.Lector["CodigoPostal"];
+
+                    if (datos.Lector["Observacion"] != DBNull.Value)
+                    {
+                        direccion.Observacion = (string)datos.Lector["Observacion"];
+                    }
+
+                    direccion.Estado = (bool)datos.Lector["Estado"];
+
+                    direcciones.Add(direccion);
+
+                }
+
+                return direcciones;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }
