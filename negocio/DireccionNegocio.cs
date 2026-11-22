@@ -164,5 +164,54 @@ namespace negocio
             }
         }
 
+        public int agregarDireccionYObtenerId(Direccion direccion)
+        {
+
+            if (direccion == null)
+            {
+                throw new ArgumentNullException(nameof(direccion));
+            }
+
+            if (direccion.IdCliente <= 0)
+            {
+                throw new ArgumentException(
+                    "El identificador del cliente no es válido."
+                );
+            }
+
+            if (string.IsNullOrWhiteSpace(direccion.Calle))
+            {
+                throw new ArgumentException("La calle es obligatoria.");
+            }
+
+            if (direccion.Numero <= 0)
+            {
+                throw new ArgumentException("El número de la dirección debe ser positivo.");
+            }
+
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("INSERT INTO DIRECCION(IdCliente, Calle, Numero, Localidad, Provincia, CodigoPostal, Observacion)values(@IdCliente, @Calle, @Numero, @Localidad, @Provincia, @CodigoPostal, @Observacion); SELECT CAST(SCOPE_IDENTITY() AS INT)");
+                datos.setearParametro("@IdCliente", direccion.IdCliente);
+                datos.setearParametro("@Calle", direccion.Calle);
+                datos.setearParametro("@Numero", direccion.Numero);
+                datos.setearParametro("@Localidad", direccion.Localidad);
+                datos.setearParametro("@Provincia", direccion.Provincia);
+                datos.setearParametro("@CodigoPostal", direccion.CodigoPostal);
+                datos.setearParametro("@Observacion", (object)direccion.Observacion ?? DBNull.Value);
+
+                int idDireccion = (int)datos.ejecutarEscalar();
+
+                return idDireccion;
+
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }
