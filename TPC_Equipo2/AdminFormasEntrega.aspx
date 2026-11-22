@@ -17,6 +17,9 @@
                 <asp:Label ID="lblNombreFormaEntrega" runat="server" Text="Nombre" AssociatedControlID="txtNombreFormaEntrega" CssClass="form-label" />
                 <asp:TextBox ID="txtNombreFormaEntrega" runat="server" CssClass="form-control" MaxLength="50"></asp:TextBox>
             </div>
+            <div class="form-check mb-3">
+                <asp:CheckBox ID="chkRequiereDireccion" runat="server" Text="Requiere dirección de entrega" CssClass="form-check-input" />
+            </div>
             <asp:Button ID="btnAgregarFormaEntrega" runat="server" Text="Agregar" OnClick="btnAgregarFormaEntrega_Click" CssClass="btn btn-primary" />
             <a href="HerramientasAdmin.aspx" class="btn btn-outline-secondary">Volver a herramientas Admin</a>
             <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mt-2"></asp:Label>
