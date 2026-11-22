@@ -13,17 +13,16 @@ namespace TPC_Equipo2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario usuario = Session["usuario"] as Usuario;
+
+            if (usuario == null)
+            {
+                Response.Redirect("Login.aspx", false);
+                return;
+            }
+
             if (!IsPostBack)
             {
-
-                Usuario usuario = Session["usuario"] as Usuario;
-
-                if (usuario == null)
-                {
-                    Response.Redirect("Login.aspx", false);
-                    return;
-                }
-
                 List<ItemCarrito> carrito = obtenerItemsCarrito(usuario);
 
                 if (carrito == null || carrito.Count == 0)
@@ -33,66 +32,11 @@ namespace TPC_Equipo2
                     return;
                 }
 
-                List<DetalleVenta> detallesCarrito = new List<DetalleVenta>();
-
-                foreach (ItemCarrito item in carrito)
+                if (!prepararDetallesCarrito(carrito, out List<DetalleVenta> detallesCarrito, out string mensaje))
                 {
-
-                    if (item == null || item.Producto == null || item.Producto.IdProducto <= 0 || item.Cantidad <= 0)
-                    {
-                        lblCarrito.Text = "El carrito contiene productos inválidos.";
-                        btnConfirmarCompra.Enabled = false;
-                        return;
-                    }
-
-                    DetalleVenta detalle = new DetalleVenta();
-
-                    detalle.Producto = item.Producto;
-                    detalle.Cantidad = item.Cantidad;
-                    detalle.PrecioUnitario = item.PrecioUnitario;
-
-                    detallesCarrito.Add(detalle);
-                }
-
-                ProductoNegocio negocioProductos = new ProductoNegocio();
-
-                List<Producto> productos = negocioProductos.listarProductos();
-
-
-                foreach (DetalleVenta detalle in detallesCarrito)
-                {
-
-                    if (detalle.Producto == null || detalle.Cantidad <= 0)
-                    {
-                        lblCarrito.Text = "Hay un producto inválido en el carrito.";
-                        return;
-                    }
-
-                    bool encontrado = false;
-
-                    foreach (Producto producto in productos)
-                    {
-                        if (detalle.Producto.IdProducto == producto.IdProducto)
-                        {
-                            encontrado = true;
-
-                            if (detalle.Cantidad > producto.Stock)
-                            {
-                                lblCarrito.Text = "No hay stock suficiente para " + producto.Nombre + ". Cantidad solicitada: " + detalle.Cantidad + ". Stock disponible: " + producto.Stock;
-                                return;
-                            }
-
-                            detalle.Producto = producto;
-                            detalle.PrecioUnitario = producto.Precio;
-                            break;
-                        }
-                    }
-
-                    if (!encontrado)
-                    {
-                        lblCarrito.Text = "Uno de los productos del carrito ya no está disponible.";
-                        return;
-                    }
+                    lblCarrito.Text = mensaje;
+                    btnConfirmarCompra.Enabled = false;
+                    return;
                 }
 
                 gvResumen.DataSource = detallesCarrito;
@@ -196,36 +140,121 @@ namespace TPC_Equipo2
                 return;
             }
 
-            int idFormaPago = int.Parse(ddlFormaPago.SelectedValue);
-            int idFormaEntrega = int.Parse(ddlFormaEntrega.SelectedValue);
+            if (!int.TryParse(ddlFormaPago.SelectedValue, out int idFormaPago) || !int.TryParse(ddlFormaEntrega.SelectedValue, out int idFormaEntrega))
+            {
+                lblMensaje.Text = "Seleccioná una forma de pago y una forma de entrega válidas.";
+                return;
+            }
+
+            FormaEntregaNegocio negocioEntrega = new FormaEntregaNegocio();
+
+            FormaEntrega formaEntrega = negocioEntrega.buscarPorId(idFormaEntrega);
+
+            if (formaEntrega == null || !formaEntrega.Estado)
+            {
+                lblMensaje.Text = "La forma de entrega seleccionada ya no está disponible.";
+                return;
+            }
+
+            FormaPagoNegocio negocioPago = new FormaPagoNegocio();
+
+            FormaPago formaPago = negocioPago.buscarPorId(idFormaPago);
+
+            if (formaPago == null || !formaPago.Estado)
+            {
+                lblMensaje.Text = "La forma de pago seleccionada ya no está disponible.";
+                return;
+            }
 
             Venta venta = new Venta();
 
             venta.Cliente = new Cliente();
             venta.Cliente.IdCliente = idCliente;
 
-            venta.FormaPago = new FormaPago();
-            venta.FormaPago.IdFormaPago = idFormaPago;
+            venta.FormaPago = formaPago;
+            venta.FormaEntrega = formaEntrega;
 
-            venta.FormaEntrega = new FormaEntrega();
-            venta.FormaEntrega.IdFormaEntrega = idFormaEntrega;
-
-            foreach (ItemCarrito item in carrito)
+            if (formaEntrega.RequiereDireccion)
             {
-                if (item == null || item.Producto == null || item.Producto.IdProducto <= 0 || item.Cantidad <= 0)
+                if (string.IsNullOrEmpty(ddlDireccion.SelectedValue))
                 {
-                    lblMensaje.Text = "El carrito contiene productos inválidos.";
+                    lblMensaje.Text = "Debés seleccionar una dirección de entrega.";
                     return;
                 }
 
-                DetalleVenta detalle = new DetalleVenta();
+                if (ddlDireccion.SelectedValue == "nueva")
+                {
+                    string calle = txtCalle.Text.Trim();
+                    string localidad = txtLocalidad.Text.Trim();
+                    string provincia = txtProvincia.Text.Trim();
+                    string codigoPostal = txtCodigoPostal.Text.Trim();
+                    string observacion = txtObservacion.Text.Trim();
 
-                detalle.Producto = new Producto();
+                    if (!int.TryParse(txtNumero.Text, out int numero) || numero <= 0)
+                    {
+                        lblMensaje.Text = "Ingresá un número de dirección válido.";
+                        return;
+                    }
 
-                detalle.Producto.IdProducto = item.Producto.IdProducto;
+                    Direccion nuevaDireccion = new Direccion();
 
-                detalle.Cantidad = item.Cantidad;
+                    nuevaDireccion.IdCliente = idCliente;
+                    nuevaDireccion.Calle = calle;
+                    nuevaDireccion.Numero = numero;
+                    nuevaDireccion.Localidad = localidad;
+                    nuevaDireccion.Provincia = provincia;
+                    nuevaDireccion.CodigoPostal = codigoPostal;
+                    nuevaDireccion.Observacion = observacion;
 
+                    if (!validarDireccion(nuevaDireccion, out string mensaje))
+                    {
+                        lblMensaje.Text = mensaje;
+                        return;
+                    }
+
+                    venta.Direccion = nuevaDireccion;
+                }
+                else
+                {
+                    if (!int.TryParse(ddlDireccion.SelectedValue, out int idDireccion))
+                    {
+                        lblMensaje.Text = "La dirección seleccionada no es válida.";
+                        return;
+                    }
+
+                    DireccionNegocio negocioDireccion = new DireccionNegocio();
+
+                    List<Direccion> direcciones = negocioDireccion.listarDireccionesPorCliente(idCliente);
+
+                    Direccion direccionSeleccionada = null;
+
+                    foreach (Direccion direccion in direcciones)
+                    {
+                        if (direccion.IdDireccion == idDireccion)
+                        {
+                            direccionSeleccionada = direccion;
+                            break;
+                        }
+                    }
+
+                    if (direccionSeleccionada == null)
+                    {
+                        lblMensaje.Text = "La dirección seleccionada no pertenece al cliente o está inactiva.";
+                        return;
+                    }
+
+                    venta.Direccion = direccionSeleccionada;
+                }
+            }
+
+            if (!prepararDetallesCarrito(carrito, out List<DetalleVenta> detallesCarrito, out string mensajeCarrito))
+            {
+                lblMensaje.Text = mensajeCarrito;
+                return;
+            }
+
+            foreach (DetalleVenta detalle in detallesCarrito)
+            {
                 venta.Detalles.Add(detalle);
             }
 
@@ -252,7 +281,46 @@ namespace TPC_Equipo2
 
             venta.EstadoVenta = estadoInicial;
 
-            lblMensaje.Text = "Venta preparada correctamente.";
+            bool ventaRegistrada = false;
+
+            try
+            {
+                if (formaEntrega.RequiereDireccion && ddlDireccion.SelectedValue == "nueva")
+                {
+                    DireccionNegocio negocioDireccion = new DireccionNegocio();
+
+                    venta.Direccion.IdDireccion =
+                        negocioDireccion.agregarDireccionYObtenerId(venta.Direccion);
+                }
+
+                VentaNegocio negocioVenta = new VentaNegocio();
+                negocioVenta.agregar(venta);
+
+                ventaRegistrada = true;
+
+                dominio.Carrito carritoDb = negocioCarrito.obtenerCarrito(idCliente);
+
+                if (carritoDb != null)
+                {
+                    ItemCarritoNegocio negocioItems = new ItemCarritoNegocio();
+                    negocioItems.vaciarCarrito(carritoDb.IdCarrito);
+                }
+
+                lblMensaje.Text = "Compra registrada correctamente. Pedido N° " + venta.IdVenta;
+            }
+            catch (Exception)
+            {
+                if (ventaRegistrada)
+                {
+                    lblMensaje.Text = "La compra se registró, pero no se pudo vaciar el carrito.";
+                }
+                else
+                {
+                    lblMensaje.Text = "Ocurrió un error al registrar la compra. Verificá el pedido antes de volver a intentarlo.";
+                }
+            }
+
+            btnConfirmarCompra.Enabled = false;
         }
 
         private List<ItemCarrito> obtenerItemsCarrito(Usuario usuario)
@@ -347,6 +415,107 @@ namespace TPC_Equipo2
         protected void ddlDireccion_SelectedIndexChanged(object sender, EventArgs e)
         {
             pnlNuevaDireccion.Visible = pnlDireccion.Visible && ddlDireccion.SelectedValue == "nueva";
+        }
+
+        private bool validarDireccion(Direccion direccion, out string mensaje)
+        {
+            mensaje = "";
+
+            if (string.IsNullOrWhiteSpace(direccion.Calle))
+            {
+                mensaje = "La calle es obligatoria.";
+                return false;
+            }
+
+            if (direccion.Numero <= 0)
+            {
+                mensaje = "El número debe ser mayor a cero.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(direccion.Localidad))
+            {
+                mensaje = "La localidad es obligatoria.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(direccion.Provincia))
+            {
+                mensaje = "La provincia es obligatoria.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(direccion.CodigoPostal))
+            {
+                mensaje = "El código postal es obligatorio.";
+                return false;
+            }
+
+            if (direccion.Calle.Length > 100 || direccion.Localidad.Length > 50 || direccion.Provincia.Length > 50 || direccion.CodigoPostal.Length > 10 || (direccion.Observacion != null && direccion.Observacion.Length > 200))
+            {
+                mensaje = "Uno de los campos supera la longitud permitida.";
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool prepararDetallesCarrito(List<ItemCarrito> carrito, out List<DetalleVenta> detalles, out string mensaje)
+        {
+            detalles = new List<DetalleVenta>();
+            mensaje = "";
+
+            if (carrito == null || carrito.Count == 0)
+            {
+                mensaje = "El carrito está vacío.";
+                return false;
+            }
+
+            ProductoNegocio negocioProductos = new ProductoNegocio();
+
+            List<Producto> productos = negocioProductos.listarProductos();
+
+            foreach (ItemCarrito item in carrito)
+            {
+                if (item == null || item.Producto == null || item.Producto.IdProducto <= 0 || item.Cantidad <= 0)
+                {
+                    mensaje = "El carrito contiene productos inválidos.";
+                    return false;
+                }
+
+                Producto productoEncontrado = null;
+
+                foreach (Producto producto in productos)
+                {
+                    if (producto.IdProducto == item.Producto.IdProducto)
+                    {
+                        productoEncontrado = producto;
+                        break;
+                    }
+                }
+
+                if (productoEncontrado == null)
+                {
+                    mensaje = "Uno de los productos del carrito ya no está disponible.";
+                    return false;
+                }
+
+                if (item.Cantidad > productoEncontrado.Stock)
+                {
+                    mensaje = "No hay stock suficiente para " + productoEncontrado.Nombre + ". Cantidad solicitada: " + item.Cantidad + ". Stock disponible: " + productoEncontrado.Stock;
+                    return false;
+                }
+
+                DetalleVenta detalle = new DetalleVenta();
+
+                detalle.Producto = productoEncontrado;
+                detalle.Cantidad = item.Cantidad;
+                detalle.PrecioUnitario = productoEncontrado.Precio;
+
+                detalles.Add(detalle);
+            }
+
+            return true;
         }
     }
 }

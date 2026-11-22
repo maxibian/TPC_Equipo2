@@ -79,10 +79,7 @@
                         <asp:DropDownList ID="ddlDireccion" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlDireccion_SelectedIndexChanged" />
 
 
-                        <asp:Panel ID="pnlNuevaDireccion"
-                            runat="server"
-                            Visible="false"
-                            CssClass="mt-3">
+                        <asp:Panel ID="pnlNuevaDireccion" runat="server" Visible="false" CssClass="mt-3">
 
                             <h6>Nueva dirección</h6>
                             <p>Completá los datos de tu domicilio.</p>
