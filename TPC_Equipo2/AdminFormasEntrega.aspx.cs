@@ -57,6 +57,7 @@ namespace TPC_Equipo2
             FormaEntrega nuevaFormaEntrega = new FormaEntrega();
 
             nuevaFormaEntrega.Nombre = nombre;
+            nuevaFormaEntrega.RequiereDireccion = chkRequiereDireccion.Checked;
 
             FormaEntregaNegocio negocio = new FormaEntregaNegocio();
 
@@ -69,6 +70,7 @@ namespace TPC_Equipo2
                     lblMensaje.CssClass = "d-block mt-2 text-success";
                     lblMensaje.Text = "Forma de entrega agregada correctamente";
                     txtNombreFormaEntrega.Text = "";
+                    chkRequiereDireccion.Checked = false;
                     cargarFormasEntrega();
                 }
                 else

@@ -15,8 +15,7 @@
             <h5 class="card-title mb-3">Agregar forma de pago</h5>
             <div class="mb-3">
                 <asp:Label ID="lblNombreFormaPago" runat="server" Text="Nombre" AssociatedControlID="txtNombreFormaPago" CssClass="form-label" />
-
-                <asp:TextBox ID="txtNombreFormaPago" runat="server" CssClass="form-control"  MaxLength="50" />
+                <asp:TextBox ID="txtNombreFormaPago" runat="server" CssClass="form-control" MaxLength="50" />
             </div>
             <asp:Button ID="btnAgregarFormaPago" runat="server" Text="Agregar" CssClass="btn btn-primary" OnClick="btnAgregarFormaPago_Click" />
             <a href="HerramientasAdmin.aspx" class="btn btn-outline-secondary">Volver a Herramientas Admin</a>
