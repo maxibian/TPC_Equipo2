@@ -58,6 +58,7 @@ namespace negocio
             try
             {
                 datos.setearConsulta("UPDATE USUARIO SET Contrasena = @Contrasena WHERE IdUsuario = @IdUsuario");
+                datos.setearParametro("@IdUsuario", aux.IdUsuario);
                 datos.setearParametro("@Contrasena", aux.Contrasena);
                 datos.ejecutarAccion();
             }
