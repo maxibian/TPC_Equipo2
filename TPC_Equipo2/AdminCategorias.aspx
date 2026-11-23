@@ -10,6 +10,24 @@
         </p>
     </div>
 
+    <div class="card mb-4">
+        <div class="card-body">
+
+            <h5 class="card-title">Agregar categoría</h5>
+
+            <div class="mb-3">
+                <asp:Label ID="lblNombreCategoria" runat="server" Text="Nombre de la categoría" AssociatedControlID="txtNombreCategoria" CssClass="form-label" />
+
+                <asp:TextBox ID="txtNombreCategoria" runat="server" CssClass="form-control" MaxLength="50" />
+            </div>
+
+            <asp:Button ID="btnAgregarCategoria" runat="server" Text="Agregar categoría" CssClass="btn btn-primary" OnClick="btnAgregarCategoria_Click"/>
+
+            <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mt-2" />
+
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Categorías registradas

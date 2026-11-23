@@ -13,7 +13,10 @@ namespace TPC_Equipo2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            cargarCategorias();
+            if (!IsPostBack)
+            {
+                cargarCategorias();
+            }
         }
 
         private void cargarCategorias()
@@ -34,6 +37,38 @@ namespace TPC_Equipo2
             }
 
             return usuario.Rol.IdRol == 1 && usuario.Estado;
+        }
+
+        protected void btnAgregarCategoria_Click(object sender, EventArgs e)
+        {
+            string nombre = txtNombreCategoria.Text.Trim();
+
+            dominio.Categoria nueva = new dominio.Categoria();
+
+            nueva.Nombre = nombre;
+
+            CategoriaNegocio negocio = new CategoriaNegocio();
+
+            try
+            {
+                bool agregada = negocio.agregar(nueva);
+
+                if (agregada)
+                {
+                    lblMensaje.Text = "Categoría agregada correctamente.";
+                    txtNombreCategoria.Text = "";
+                    cargarCategorias();
+                }
+                else
+                {
+                    lblMensaje.Text = "Ya existe una categoría con ese nombre.";
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                lblMensaje.Text = ex.Message;
+            }
+
         }
     }
 }
