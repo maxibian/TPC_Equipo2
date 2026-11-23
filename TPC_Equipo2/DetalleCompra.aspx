@@ -27,11 +27,13 @@
     <Columns>
             <asp:BoundField
             DataField="IdDetalleVenta"
-            HeaderText="DetalleVenta" />
+            HeaderText="DetalleVenta"
+            Visible="false"/>
             
             <asp:BoundField
             DataField="IdVenta"
-            HeaderText="Venta" />
+            HeaderText="Venta"
+            Visible="false"/>
 
             <asp:TemplateField HeaderText="Producto">
              <ItemTemplate>
