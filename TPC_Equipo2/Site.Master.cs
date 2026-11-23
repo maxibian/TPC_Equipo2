@@ -44,5 +44,12 @@ namespace TPC_Equipo2
             Session.Abandon();
             Response.Redirect("~/Inicio.aspx", false);
         }
+
+        protected void btnBuscarProducto_Click(object sender, EventArgs e)
+        {
+            Session["busquedaProducto"] = txtBuscarProducto.Text.Trim();
+
+            Response.Redirect("~/Inicio.aspx");
+        }
     }
 }

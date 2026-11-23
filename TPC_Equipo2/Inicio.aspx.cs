@@ -15,16 +15,38 @@ namespace TPC_Equipo2
         public List<Producto> listaProducto {  get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            ProductoNegocio negocio = new ProductoNegocio();
+            if (!IsPostBack)
+            {
+                ProductoNegocio negocio = new ProductoNegocio();
 
-            listaProducto = negocio.listarProductos();
+                listaProducto = negocio.listarProductos();
 
-            foreach (dominio.Producto producto in listaProducto)
-                if (producto.Imagen == null || string.IsNullOrWhiteSpace(producto.Imagen.ImagenUrl))
-                    producto.Imagen = new Imagen() { ImagenUrl = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg" };
+                string busqueda = (string)Session["busquedaProducto"];
 
-            repRepeater.DataSource = listaProducto;
-            repRepeater.DataBind();
+                Session.Remove("busquedaProducto");
+
+                if (!string.IsNullOrWhiteSpace(busqueda))
+                {
+                    List<Producto> productosFiltrados = new List<Producto>();
+
+                    foreach (Producto producto in listaProducto)
+                    {
+                        if (producto.Nombre.ToLower().Contains(busqueda.ToLower()))
+                        {
+                            productosFiltrados.Add(producto);
+                        }
+                    }
+
+                    listaProducto = productosFiltrados;
+                }
+
+                foreach (dominio.Producto producto in listaProducto)
+                    if (producto.Imagen == null || string.IsNullOrWhiteSpace(producto.Imagen.ImagenUrl))
+                        producto.Imagen = new Imagen() { ImagenUrl = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg" };
+
+                repRepeater.DataSource = listaProducto;
+                repRepeater.DataBind();
+            }
 
         }
         protected void btnProducto_Click(object sender, EventArgs e)

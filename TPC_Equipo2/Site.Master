@@ -43,7 +43,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav me-lg-3">
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Inicio">Home</a></li>
                         <li class="nav-item">
                             <asp:DropDownList runat="server" ID="ddlCategoria" CssClass="form-select navbar-categorias" AutoPostBack="true" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged"></asp:DropDownList>
@@ -60,7 +60,7 @@
 
                         <asp:TextBox ID="txtBuscarProducto" runat="server" CssClass="form-control" placeholder="¿Qué estás buscando?" />
 
-                        <asp:Button ID="btnBuscarProducto" runat="server" Text="Buscar" CssClass="btn btn-outline-light ms-2" />
+                        <asp:Button ID="btnBuscarProducto" runat="server" Text="Buscar" CssClass="btn btn-outline-light ms-2" OnClick="btnBuscarProducto_Click" />
 
                     </div>
 
