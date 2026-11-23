@@ -18,43 +18,50 @@
 
         <div class="table-responsive">
 
-            <asp:GridView ID="dgvHistorial"
-                runat="server"
-                CssClass="table table-hover table-bordered align-middle"
-                AutoGenerateColumns="false"
-                EmptyDataText="Todavía no realizaste ninguna compra."
-                GridLines="None">
+    <asp:GridView ID="dgvHistorial"
+    runat="server"
+    CssClass="table table-hover table-bordered align-middle"
+    AutoGenerateColumns="false"
+    EmptyDataText="Todavía no realizaste ninguna compra."
+    GridLines="None">
 
-                <Columns>
+    <Columns>
 
-                    <asp:BoundField
-                        DataField="Producto"
-                        HeaderText="Producto" />
+        <asp:BoundField
+            DataField="IdVenta"
+            HeaderText="Pedido" />
 
-                    <asp:BoundField
-                        DataField="Cantidad"
-                        HeaderText="Cantidad" />
+        <asp:BoundField
+            DataField="Fecha"
+            HeaderText="Fecha"
+            DataFormatString="{0:dd/MM/yyyy}" />
 
-                    <asp:BoundField
-                        DataField="Fecha"
-                        HeaderText="Fecha de compra"
-                        DataFormatString="{0:dd/MM/yyyy}" />
+        <asp:BoundField
+            DataField="VentaTotal"
+            HeaderText="Total"
+            DataFormatString="{0:C}" />
 
-                    <asp:BoundField
-                        DataField="Precio"
-                        HeaderText="Precio"
-                        DataFormatString="{0:C}" />
+        <asp:BoundField
+            DataField="EstadoVenta.Nombre"
+            HeaderText="Estado" />
 
-                    <asp:BoundField
-                        DataField="Estado"
-                        HeaderText="Estado" />
+        <asp:TemplateField HeaderText="Acciones">
+            <ItemTemplate>
+                <asp:LinkButton
+                    ID="btnDetalle"
+                    runat="server"
+                    Text="Ver detalle"
+                    CssClass="btn btn-outline-primary btn-sm"
+                    CommandArgument='<%# Eval("IdVenta") %>'
+                    OnClick="btnDetalle_Click" />
+            </ItemTemplate>
+        </asp:TemplateField>
 
-                </Columns>
+    </Columns>
 
-            </asp:GridView>
+</asp:GridView>
 
         </div>
-
     </div>
 
 </div>
