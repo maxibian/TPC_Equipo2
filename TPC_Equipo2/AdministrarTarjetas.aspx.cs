@@ -11,10 +11,9 @@ namespace TPC_Equipo2
 {
     public partial class AdministrarTarjetas : System.Web.UI.Page
     {
-        List<Tarjeta> listaTarjetas = new List<Tarjeta>();
         protected void Page_Load(object sender, EventArgs e)
         {
-            TarjetaNegocio negocio = new TarjetaNegocio();
+
             try
             {
                 if (Session["usuario"] == null)
@@ -24,12 +23,11 @@ namespace TPC_Equipo2
                 }
 
                 else
-                {
-                
-                int usuario = ((Usuario)Session["usuario"]).IdUsuario;
-                listaTarjetas = negocio.listarTarjetas(usuario);      
-                rptTarjetas.DataSource = listaTarjetas;
-                rptTarjetas.DataBind();
+                {             
+                    if (!IsPostBack)
+                    {
+                        cargarTarjetas();
+                    }
 
                 }
             }
@@ -38,6 +36,40 @@ namespace TPC_Equipo2
 
                 throw ex;
             }
+
+        }
+
+        void cargarTarjetas()
+        {
+            int usuario = ((Usuario)Session["usuario"]).IdUsuario;
+            TarjetaNegocio negocio = new TarjetaNegocio();
+            dgvTarjetas.DataSource = negocio.listarTarjetas(usuario);
+            dgvTarjetas.DataBind();
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int idTarjeta = int.Parse(btn.CommandArgument);
+
+            TarjetaNegocio negocio = new TarjetaNegocio();
+
+            negocio.BajaLogicaTarjeta(idTarjeta);
+
+            if (!(negocio.isExist(idTarjeta))){
+
+                lblRespuesta.Text = "Se elimino correctamente la tarjeta!";
+                cargarTarjetas();
+            }
+            else
+            {
+                lblRespuesta.Text = "No se pudo eliminar la tarjeta";
+            }
+
+        }
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
 
         }
     }

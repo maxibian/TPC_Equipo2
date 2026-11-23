@@ -2,70 +2,44 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+ <div class="table-responsive">
+    <asp:GridView ID="dgvTarjetas" runat="server"
+        AutoGenerateColumns="False"
+        CssClass="table table-hover align-middle"
+        GridLines="None"
+        EmptyDataText="No tenés tarjetas registradas.">
 
-    <div class="container mt-4">
+        <Columns>
 
-        <h3 class="mb-2">Mis tarjetas</h3>
+            <asp:BoundField DataField="TipoTarjeta.NombreTipoTarjeta"
+                HeaderText="Tipo" />
 
-        <p class="text-muted mb-4">
-            Administrá los medios de pago asociados a tu cuenta.
-   
-        </p>
+            <asp:BoundField DataField="NombreYApellidoTitular"
+                HeaderText="Titular" />
 
-        <hr />
+            <asp:BoundField DataField="NumeroTarjeta"
+                HeaderText="Número"
+                DataFormatString="{0}" />
 
-        <div class="row mt-4">
+            <asp:BoundField DataField="FechaVencimiento"
+                HeaderText="Vencimiento"
+                DataFormatString="{0:MM/yyyy}" />
 
-            <asp:Repeater ID="rptTarjetas" runat="server">
-
+            <asp:TemplateField HeaderText="Acciones">
                 <ItemTemplate>
-
-                    <div class="col-md-5 col-lg-4 mb-4">
-
-                        <div class="card text-white shadow"
-                            style="background-color: #233B67; border-radius: 12px;">
-
-                            <div class="card-body p-4">
-
-                                <div class="d-flex justify-content-between mb-4">
-                                    <i class="bi bi-credit-card"
-                                        style="font-size: 28px;"></i>
-
-                                    <strong>
-                                        <%# Eval("MarcaTarjeta.Nombre") %>
-                                </strong>
-                                </div>
-
-                                <h5 class="mb-4">
-                                    <%# Eval("NumeroTarjeta") %>
-                            </h5>
-
-                                <p class="small mb-1">
-                                    TITULAR
-                           
-                                </p>
-
-                                <strong>
-                                    <%# Eval("NombreYApellidoTitular") %>
-                            </strong>
-
-                                <div class="mt-3 small">
-                                    Vencimiento:
-                               
-                                    <%# Eval("FechaVencimiento", "{0:MM/yy}") %>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
+                    <asp:Button ID="btnEliminar" runat="server"
+                        Text="Eliminar"
+                        CssClass="btn btn-outline-danger btn-sm"
+                        CommandName="EliminarTarjeta"
+                        CommandArgument='<%# Eval("IdTarjeta") %>'
+                        OnClick="btnEliminar_Click" />
                 </ItemTemplate>
+            </asp:TemplateField>
 
-            </asp:Repeater>
+        </Columns>
+    </asp:GridView>
 
-        </div>
-
-    </div>
+    <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" CssClass="btn btn-primary" />
+    <asp:HyperLink ID="lnkVolver" runat="server" Text="Volver" NavigateUrl="~/MiCuenta.aspx" CssClass="btn btn-outline-secondary" />
+</div>
 </asp:Content>
