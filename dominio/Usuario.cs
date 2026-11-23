@@ -13,6 +13,7 @@ namespace dominio
         public string Contrasena { get; set; }
         public Rol Rol { get; set; }
         public bool Estado { get; set; }
+        public string Token { get; set; }
 
     }
 }

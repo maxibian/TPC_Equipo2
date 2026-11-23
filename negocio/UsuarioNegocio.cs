@@ -75,11 +75,14 @@ namespace negocio
         {
             try
             {
+                usuario.Token = Guid.NewGuid().ToString();
+
                 datos.setearConsulta("INSERT INTO USUARIO (NombreUsuario, Contrasena, IdRol, Estado)VALUES(@NombreUsuario, @Contrasena, @IdRol, @Estado) SELECT CAST(SCOPE_IDENTITY() AS INT)");
                 datos.setearParametro("@NombreUsuario", usuario.NombreUsuario);
                 datos.setearParametro("@Contrasena", usuario.Contrasena);
                 datos.setearParametro("@IdRol", 2);
-                datos.setearParametro("@Estado", 1);
+                datos.setearParametro("@Estado", 0);
+                datos.setearParametro("@Token", usuario.Token);
                 //datos.ejecutarAccion();
 
 
@@ -207,6 +210,26 @@ namespace negocio
                 throw ex;
             }
 
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public bool activarCuenta(string token)
+        {
+            try
+            {
+                datos.setearConsulta("UPDATE USUARIO SET Estado = 1, Token = NULL WHERE Token = @Token SELECT @@ROWCOUNT");
+                datos.setearParametro("@Token", token);
+
+                int filasActualizadas = datos.ejecutarEscalar();
+                return filasActualizadas > 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             finally
             {
                 datos.cerrarConexion();
