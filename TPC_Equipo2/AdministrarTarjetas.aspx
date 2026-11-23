@@ -41,5 +41,6 @@
 
     <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" CssClass="btn btn-primary" />
     <asp:HyperLink ID="lnkVolver" runat="server" Text="Volver" NavigateUrl="~/MiCuenta.aspx" CssClass="btn btn-outline-secondary" />
+    <asp:Label ID="lblRespuesta" runat="server" Text=""></asp:Label>
 </div>
 </asp:Content>
