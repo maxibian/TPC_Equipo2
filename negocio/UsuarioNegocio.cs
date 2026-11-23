@@ -77,7 +77,7 @@ namespace negocio
             {
                 usuario.Token = Guid.NewGuid().ToString();
 
-                datos.setearConsulta("INSERT INTO USUARIO (NombreUsuario, Contrasena, IdRol, Estado)VALUES(@NombreUsuario, @Contrasena, @IdRol, @Estado) SELECT CAST(SCOPE_IDENTITY() AS INT)");
+                datos.setearConsulta("INSERT INTO USUARIO (NombreUsuario, Contrasena, IdRol, Estado, Token)VALUES(@NombreUsuario, @Contrasena, @IdRol, @Estado, @Token) SELECT CAST(SCOPE_IDENTITY() AS INT)");
                 datos.setearParametro("@NombreUsuario", usuario.NombreUsuario);
                 datos.setearParametro("@Contrasena", usuario.Contrasena);
                 datos.setearParametro("@IdRol", 2);
