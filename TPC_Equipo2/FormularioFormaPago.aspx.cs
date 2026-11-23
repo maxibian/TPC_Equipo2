@@ -13,6 +13,12 @@ namespace TPC_Equipo2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                Response.Redirect("Inicio.aspx");
+                return;
+            }
+
             if (!IsPostBack)
             {
                 string id = Request.QueryString["id"];
@@ -60,6 +66,12 @@ namespace TPC_Equipo2
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                Response.Redirect("Inicio.aspx");
+                return;
+            }
+
             string id = Request.QueryString["id"];
 
             bool valido = int.TryParse(id, out int numero);
@@ -108,6 +120,12 @@ namespace TPC_Equipo2
 
         protected void btnCambiarEstado_Click(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                Response.Redirect("Inicio.aspx");
+                return;
+            }
+
             string id = Request.QueryString["id"];
 
             bool valido = int.TryParse(id, out int numero);
@@ -157,6 +175,17 @@ namespace TPC_Equipo2
                 lblMensaje.Text = "Ocurrió un error al cambiar el estado.";
             }
 
+        }
+        private bool esAdministrador()
+        {
+            Usuario usuario = Session["usuario"] as Usuario;
+
+            if (usuario == null || usuario.Rol == null)
+            {
+                return false;
+            }
+
+            return usuario.Rol.IdRol == 1 && usuario.Estado;
         }
     }
 }

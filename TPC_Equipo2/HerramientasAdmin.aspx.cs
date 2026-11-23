@@ -12,20 +12,23 @@ namespace TPC_Equipo2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
+            if (!esAdministrador())
             {
-            if (Session["usuario"] == null)
+                Response.Redirect("Inicio.aspx");
+                return;
+            }
+        }
+
+        private bool esAdministrador()
+        {
+            Usuario usuario = Session["usuario"] as Usuario;
+
+            if (usuario == null || usuario.Rol == null)
             {
-                Session.Add("error", "Inicia sesión como administrador");
-                Response.Redirect("Error.aspx", false);
+                return false;
             }
 
-
-            }
-            catch (Exception ex)
-            {
-                Session.Add("error", ex.ToString());
-            }
+            return usuario.Rol.IdRol == 1 && usuario.Estado;
         }
     }
 }
