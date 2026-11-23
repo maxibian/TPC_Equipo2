@@ -13,6 +13,12 @@ namespace TPC_Equipo2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                Response.Redirect("Inicio.aspx");
+                return;
+            }
+
             if (!IsPostBack)
             {
                 cargarCategorias();
@@ -41,6 +47,11 @@ namespace TPC_Equipo2
 
         protected void btnAgregarCategoria_Click(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             string nombre = txtNombreCategoria.Text.Trim();
 
             dominio.Categoria nueva = new dominio.Categoria();
@@ -73,6 +84,11 @@ namespace TPC_Equipo2
 
         protected void gvCategorias_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             string id = gvCategorias.SelectedDataKey.Value.ToString();
 
             Response.Redirect("FormularioCategoria.aspx?id=" + id);

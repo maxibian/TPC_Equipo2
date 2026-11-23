@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using dominio;
 
 namespace TPC_Equipo2
 {
@@ -12,6 +13,11 @@ namespace TPC_Equipo2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             if (!IsPostBack)
             {
                 string idTexto = Request.QueryString["id"];
@@ -54,6 +60,11 @@ namespace TPC_Equipo2
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             string idTexto = Request.QueryString["id"];
 
             if (!int.TryParse(idTexto, out int idCategoria) || idCategoria <= 0)
@@ -92,6 +103,11 @@ namespace TPC_Equipo2
 
         protected void btnCambiarEstado_Click(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             string idTexto = Request.QueryString["id"];
 
             if (!int.TryParse(idTexto, out int idCategoria) || idCategoria <= 0)
@@ -137,6 +153,18 @@ namespace TPC_Equipo2
                 lblMensaje.Text = ex.Message;
             }
 
+        }
+
+        private bool esAdministrador()
+        {
+            Usuario usuario = Session["usuario"] as Usuario;
+
+            if (usuario == null || usuario.Rol == null)
+            {
+                return false;
+            }
+
+            return usuario.Rol.IdRol == 1 && usuario.Estado;
         }
     }
 }
