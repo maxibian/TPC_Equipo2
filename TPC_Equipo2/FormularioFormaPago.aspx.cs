@@ -156,15 +156,15 @@ namespace TPC_Equipo2
 
                 if (nuevoEstado)
                 {
+                    btnCambiarEstado.Text = "Desactivar categoría";
+                    btnCambiarEstado.CssClass = "btn btn-danger";
                     lblMensaje.Text = "Forma de pago activada correctamente.";
-                    btnCambiarEstado.Text = "Desactivar";
-
                 }
                 else
                 {
+                    btnCambiarEstado.Text = "Activar categoría";
+                    btnCambiarEstado.CssClass = "btn btn-success";
                     lblMensaje.Text = "Forma de pago desactivada correctamente.";
-                    btnCambiarEstado.Text = "Activar";
-
                 }
             }
             catch (Exception)

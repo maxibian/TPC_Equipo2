@@ -200,6 +200,77 @@ namespace negocio
             }
         }
 
+        public bool tieneProductosAsociados(int idCategoria)
+        {
+            if (idCategoria <= 0)
+            {
+                throw new ArgumentException(
+                    "El identificador de la categoría no es válido.");
+            }
+
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(
+                    "SELECT 1 FROM PRODUCTO WHERE IdCategoria = @IdCategoria"
+                );
+
+                datos.setearParametro("@IdCategoria", idCategoria);
+
+                datos.ejecutarLectura();
+
+                return datos.Lector.Read();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void cambiarEstado(int idCategoria, bool nuevoEstado)
+        {
+            if (idCategoria <= 0)
+            {
+                throw new ArgumentException(
+                    "El identificador de la categoría no es válido.");
+            }
+
+            Categoria categoria = buscarPorId(idCategoria);
+
+            if (categoria == null)
+            {
+                throw new ArgumentException("La categoría no existe.");
+            }
+
+            if (categoria.Estado == nuevoEstado)
+            {
+                return;
+            }
+
+            if (!nuevoEstado && tieneProductosAsociados(idCategoria))
+            {
+                throw new ArgumentException("No se puede desactivar una categoría que tiene productos asociados.");
+            }
+
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE CATEGORIA SET Estado = @Estado WHERE IdCategoria = @IdCategoria");
+                datos.setearParametro("@Estado", nuevoEstado);
+                datos.setearParametro("@IdCategoria", idCategoria);
+
+                datos.ejecutarAccion();
+
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
 
     }
 }

@@ -27,7 +27,7 @@
 
             <div class="d-flex flex-wrap gap-2 mt-3">
                 <asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios" OnClick="btnGuardar_Click" CssClass="btn btn-primary" />
-                <asp:Button ID="btnCambiarEstado" runat="server" Text="Cambiar estado" OnClick="btnCambiarEstado_Click" CssClass="btn btn-outline-secondary" />
+                <asp:Button ID="btnCambiarEstado" runat="server" Text="Cambiar estado" OnClick="btnCambiarEstado_Click" CssClass="btn btn-danger" />
                 <a href="AdminFormasEntrega.aspx" class="btn btn-outline-secondary">Volver al listado
                 </a>
             </div>

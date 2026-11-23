@@ -13,10 +13,12 @@
         </div>
 
         <div class="mb-3">
-            <asp:CheckBox ID="chkEstado" runat="server" Text="Categoría activa" />
+            <asp:CheckBox ID="chkEstado" runat="server" Text="Categoría activa" Enabled="false" />
         </div>
 
         <asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios" CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
+
+        <asp:Button ID="btnCambiarEstado" runat="server" Text="Desactivar categoría" CssClass="btn btn-danger" OnClick="btnCambiarEstado_Click"/>
 
         <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mt-3" />
 

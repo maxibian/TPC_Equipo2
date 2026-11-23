@@ -19,6 +19,7 @@ namespace TPC_Equipo2
                 if (!int.TryParse(idTexto, out int idCategoria) || idCategoria <= 0)
                 {
                     lblMensaje.Text = "El identificador de la categoría no es válido.";
+                    btnCambiarEstado.Enabled = false;
                     btnGuardar.Enabled = false;
                     return;
                 }
@@ -30,12 +31,24 @@ namespace TPC_Equipo2
                 if (categoria == null)
                 {
                     lblMensaje.Text = "La categoría no existe.";
+                    btnCambiarEstado.Enabled = false;
                     btnGuardar.Enabled = false;
                     return;
                 }
 
                 txtNombre.Text = categoria.Nombre;
                 chkEstado.Checked = categoria.Estado;
+
+                if (categoria.Estado)
+                {
+                    btnCambiarEstado.Text = "Desactivar categoría";
+                    btnCambiarEstado.CssClass = "btn btn-danger";
+                }
+                else
+                {
+                    btnCambiarEstado.Text = "Activar categoría";
+                    btnCambiarEstado.CssClass = "btn btn-success";
+                }
             }
         }
 
@@ -75,6 +88,55 @@ namespace TPC_Equipo2
             {
                 lblMensaje.Text = ex.Message;
             }
+        }
+
+        protected void btnCambiarEstado_Click(object sender, EventArgs e)
+        {
+            string idTexto = Request.QueryString["id"];
+
+            if (!int.TryParse(idTexto, out int idCategoria) || idCategoria <= 0)
+            {
+                lblMensaje.Text = "El identificador de la categoría no es válido.";
+                return;
+            }
+
+            try
+            {
+                CategoriaNegocio negocio = new CategoriaNegocio();
+
+                dominio.Categoria categoria = negocio.buscarPorId(idCategoria);
+
+                if (categoria == null)
+                {
+                    lblMensaje.Text = "La categoría no existe.";
+                    return;
+                }
+
+                bool nuevoEstado = !categoria.Estado;
+
+                negocio.cambiarEstado(idCategoria, nuevoEstado);
+
+                chkEstado.Checked = nuevoEstado;
+
+                if (nuevoEstado)
+                {
+                    btnCambiarEstado.Text = "Desactivar categoría";
+                    btnCambiarEstado.CssClass = "btn btn-danger";
+                    lblMensaje.Text = "Categoría activada correctamente.";
+                }
+                else
+                {
+                    btnCambiarEstado.Text = "Activar categoría";
+                    btnCambiarEstado.CssClass = "btn btn-success";
+                    lblMensaje.Text = "Categoría desactivada correctamente.";
+                }
+
+            }
+            catch (ArgumentException ex)
+            {
+                lblMensaje.Text = ex.Message;
+            }
+
         }
     }
 }
