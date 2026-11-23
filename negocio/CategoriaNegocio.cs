@@ -12,12 +12,12 @@ namespace negocio
     {
         AccesoDatos datos = new AccesoDatos();
 
-        public List<Categoria> ListarCategorias()
+        public List<Categoria> Listar(string consulta)
         {
             List<Categoria> lista = new List<Categoria>();
             try
             {
-                datos.setearConsulta("SELECT IdCategoria, Nombre, Estado FROM CATEGORIA");
+                datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -25,20 +25,29 @@ namespace negocio
                     aux.IdCategoria = (int)datos.Lector["IdCategoria"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Estado = (bool)datos.Lector["Estado"];
-
                     lista.Add(aux);
                 }
                 return lista;
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-            finally{
-
+            finally
+            {
                 datos.cerrarConexion();
             }
+        }
+        
+        public List<Categoria> ListarCategorias()
+        {
+            return Listar("SELECT IdCategoria, Nombre, Estado FROM CATEGORIA");
+        }
+               
+
+        public List<Categoria> ListarCategoriasNuevoProducto()
+        {
+            return Listar("SELECT IdCategoria, Nombre, Estado FROM CATEGORIA WHERE Estado = 1");
         }
 
         public bool agregar(Categoria nueva)

@@ -23,7 +23,7 @@ namespace TPC_Equipo2
 
             if (!IsPostBack)
             {
-                ddlCategoria.DataSource = new CategoriaNegocio().ListarCategorias();
+                ddlCategoria.DataSource = new CategoriaNegocio().ListarCategoriasNuevoProducto();
                 ddlCategoria.DataValueField = "IdCategoria";
                 ddlCategoria.DataTextField = "Nombre";
                 ddlCategoria.DataBind();
