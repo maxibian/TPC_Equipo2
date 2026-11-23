@@ -34,9 +34,9 @@ namespace TPC_Equipo2
         protected void btnDetalle_Click(object sender, EventArgs e)
         {
             LinkButton btn = (LinkButton)sender;
-            int id = Convert.ToInt32(btn.CommandArgument);
+            int IdVenta = Convert.ToInt32(btn.CommandArgument);
 
-            Response.Redirect("DetalleVenta.aspx?idVenta" + id);
+            Response.Redirect("DetalleCompra.aspx?IdVenta=" + IdVenta);
         }
     }
 }
