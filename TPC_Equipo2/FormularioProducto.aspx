@@ -4,7 +4,9 @@
 
     <asp:Panel ID="pnlFormulario" runat="server" CssClass="container py-4">
 
-        <asp:Label ID="lblTitulo" runat="server" Text="Agregar producto" CssClass="h4 d-block mb-4" />
+        <div class="formulario-centrado">
+
+        <asp:Label ID="lblTitulo" runat="server" Text="Agregar producto" CssClass="h4 d-block mb-4 text-center" />
 
         <asp:Panel ID="pnlNombre" runat="server" CssClass="mb-3">
             <asp:Label ID="lblNombre" runat="server" Text="Nombre" AssociatedControlID="txtNombre" CssClass="form-label" />
@@ -49,17 +51,19 @@
             <asp:TextBox ID="txtImagenUrl" runat="server" CssClass="form-control" MaxLength="255" />
         </asp:Panel>
 
+        <div class="d-flex justify-content-center gap-2 flex-wrap">
+
         <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
         <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn btn-primary" OnClick="btnModificar_Click" />
         <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-primary" OnClick="btnEliminar_Click" />
         <asp:HyperLink ID="lnkCancelar" runat="server" Text="Cancelar" NavigateUrl="~/Inicio.aspx" CssClass="btn btn-outline-secondary" />
+        
+        </div>
 
+        <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mt-3 text-center" />
 
-
-
-        <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mt-3" />
+        </div>
 
     </asp:Panel>
-
 
 </asp:Content>

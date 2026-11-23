@@ -48,7 +48,9 @@
                         <li class="nav-item">
                             <asp:DropDownList runat="server" ID="ddlCategoria" CssClass="form-select navbar-categorias" AutoPostBack="true" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged"></asp:DropDownList>
                         </li>
+                        <% if (Session["usuario"] != null) { %>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/MiCuenta">Mi Cuenta</a></li>
+                        <% } %>
                         <%if (Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).Rol.IdRol == 1)
                             { %>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/HerramientasAdmin">Admin</a></li>
