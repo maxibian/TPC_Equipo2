@@ -12,22 +12,23 @@ namespace negocio
         AccesoDatos datos = new AccesoDatos();
         public List<Tarjeta> listarTarjetas(int idUsuario)
         {
-            Tarjeta tarjeta = new Tarjeta();
             List<Tarjeta> historialTarjetas = new List<Tarjeta>();
             try
             {
-                datos.setearConsulta("SELECT T.NumeroTarjeta, MT.NombreMarcaTarjeta as Tarjeta, TT.NombreTipoTarjeta as TipoTarjeta, T.FechaVencimiento as FechaVencimiento FROM TARJETA T INNER JOIN MARCATARJETA MT ON MT.IdMarcaTarjeta = T.IdMarcaTarjeta INNER JOIN TIPOTARJETA TT ON TT.IdTipoTarjeta = T.IdTipoTarjeta INNER JOIN CLIENTE C ON C.IdCliente = T.IdCliente INNER JOIN USUARIO U ON U.IdUsuario = C.IdUsuario WHERE U.IdUsuario = @IdUsuario ORDER BY T.FechaVencimiento ASC");
+                datos.setearConsulta("SELECT T.NumeroTarjeta, MT.NombreMarcaTarjeta, TT.NombreTipoTarjeta, T.FechaVencimiento as FechaVencimiento, T.NombreYApellidoTitular FROM TARJETA T INNER JOIN MARCATARJETA MT ON MT.IdMarcaTarjeta = T.IdMarcaTarjeta INNER JOIN TIPOTARJETA TT ON TT.IdTipoTarjeta = T.IdTipoTarjeta INNER JOIN CLIENTE C ON C.IdCliente = T.IdCliente INNER JOIN USUARIO U ON U.IdUsuario = C.IdUsuario WHERE U.IdUsuario = @IdUsuario ORDER BY T.FechaVencimiento ASC");
                 datos.setearParametro("@IdUsuario", idUsuario);
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
+                    Tarjeta tarjeta = new Tarjeta();
                     tarjeta.NumeroTarjeta = (string)datos.Lector["NumeroTarjeta"];
                     tarjeta.MarcaTarjeta = new MarcaTarjeta();
                     tarjeta.MarcaTarjeta.Nombre = (string)datos.Lector["NombreMarcaTarjeta"];
                     tarjeta.TipoTarjeta = new TipoTarjeta();
                     tarjeta.TipoTarjeta.NombreTipoTarjeta = (string)datos.Lector["NombreTipoTarjeta"];
                     tarjeta.FechaVencimiento = (DateTime)datos.Lector["FechaVencimiento"];
+                    tarjeta.NombreYApellidoTitular = (string)datos.Lector["NombreYApellidoTitular"];
 
                     historialTarjetas.Add(tarjeta);
                 }
