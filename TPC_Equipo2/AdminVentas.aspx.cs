@@ -13,11 +13,10 @@ namespace TPC_Equipo2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (!(Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).Rol.IdRol == 1))
+            if (!esAdministrador())
             {
-                Session.Add("error", "No tenes permisos para entrar a esta pantalla. Necesitas ser Administrador.");
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("Inicio.aspx");
+                return;
             }
 
             if (!IsPostBack)
@@ -50,12 +49,22 @@ namespace TPC_Equipo2
 
         protected void gvVentas_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             int idVenta = Convert.ToInt32(gvVentas.SelectedDataKey.Value);
             Response.Redirect("DetallePedido.aspx?id=" + idVenta);
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             txtBuscarVenta.Text = "";
             lblMensaje.Text = "";
             txtBuscarCliente.Text = "";
@@ -69,6 +78,11 @@ namespace TPC_Equipo2
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             lblMensaje.Text = "";
             string textoNumero = txtBuscarVenta.Text.Trim();
             string textoCliente = txtBuscarCliente.Text.Trim().ToLower();
@@ -158,6 +172,18 @@ namespace TPC_Equipo2
             gvVentas.DataSource = ventasFiltradas;
             gvVentas.DataBind();
 
+        }
+
+        private bool esAdministrador()
+        {
+            Usuario usuario = Session["usuario"] as Usuario;
+
+            if (usuario == null || usuario.Rol == null)
+            {
+                return false;
+            }
+
+            return usuario.Rol.IdRol == 1 && usuario.Estado;
         }
     }
 }

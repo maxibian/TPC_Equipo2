@@ -70,7 +70,6 @@ namespace TPC_Equipo2
         {
             if (!esAdministrador())
             {
-                Response.Redirect("Inicio.aspx");
                 return;
             }
 
@@ -124,7 +123,6 @@ namespace TPC_Equipo2
         {
             if (!esAdministrador())
             {
-                Response.Redirect("Inicio.aspx");
                 return;
             }
 

@@ -15,11 +15,10 @@ namespace TPC_Equipo2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (!(Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).Rol.IdRol == 1))
+            if (!esAdministrador())
             {
-                Session.Add("error", "No tenes permisos para entrar a esta pantalla. Necesitas ser Administrador.");
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("Inicio.aspx");
+                return;
             }
 
             if (!IsPostBack)
@@ -74,7 +73,11 @@ namespace TPC_Equipo2
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             // Validaciones
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
@@ -142,6 +145,11 @@ namespace TPC_Equipo2
         }
         protected void btnModificar_Click(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             // Validaciones
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
@@ -202,6 +210,11 @@ namespace TPC_Equipo2
         }
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             try
             {
                 int idProducto = int.Parse(Request.QueryString["id"]);
@@ -219,6 +232,18 @@ namespace TPC_Equipo2
             {
                 MostrarMensaje("No se pudo dar de baja el producto.", true);
             }
+        }
+
+        private bool esAdministrador()
+        {
+            Usuario usuario = Session["usuario"] as Usuario;
+
+            if (usuario == null || usuario.Rol == null)
+            {
+                return false;
+            }
+
+            return usuario.Rol.IdRol == 1 && usuario.Estado;
         }
 
 

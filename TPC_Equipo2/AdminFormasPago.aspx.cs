@@ -13,22 +13,30 @@ namespace TPC_Equipo2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (!(Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).Rol.IdRol == 1))
+            if (!esAdministrador())
             {
-                Session.Add("error", "No tenes permisos para entrar a esta pantalla. Necesitas ser Administrador.");
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("Inicio.aspx");
+                return;
             }
 
             if (!IsPostBack)
             {
                 cargarFormasPago();
             }
-            
         }
 
         protected void btnAgregarFormaPago_Click(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
+            if (!IsPostBack)
+            {
+                cargarFormasPago();
+            }
+
             string nombre = txtNombreFormaPago.Text.Trim();
 
             if (nombre == "")
@@ -87,8 +95,29 @@ namespace TPC_Equipo2
 
         protected void gvFormasPago_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
+            if (!IsPostBack)
+            {
+                cargarFormasPago();
+            }
+
             string id = gvFormasPago.SelectedDataKey.Value.ToString();
             Response.Redirect("FormularioFormaPago.aspx?id=" + id);
+        }
+        private bool esAdministrador()
+        {
+            Usuario usuario = Session["usuario"] as Usuario;
+
+            if (usuario == null || usuario.Rol == null)
+            {
+                return false;
+            }
+
+            return usuario.Rol.IdRol == 1 && usuario.Estado;
         }
     }
 }
