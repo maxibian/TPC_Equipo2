@@ -142,8 +142,7 @@ GO
 CREATE TABLE FORMAPAGO (
         IdFormaPago INT IDENTITY(1,1) PRIMARY KEY,
         Nombre VARCHAR(50) NOT NULL UNIQUE,
-        Estado BIT NOT NULL DEFAULT 1,
-        RequiereDireccion BIT NOT NULL DEFAULT 0
+        Estado BIT NOT NULL DEFAULT 1
 );
 GO
 
