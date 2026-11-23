@@ -33,12 +33,14 @@
             <h5 class="card-title">Categorías registradas
         </h5>
 
-            <asp:GridView ID="gvCategorias" runat="server" AutoGenerateColumns="false" DataKeyNames="IdCategoria" CssClass="table table-striped table-hover">
+            <asp:GridView ID="gvCategorias" runat="server" AutoGenerateColumns="false" DataKeyNames="IdCategoria" CssClass="table table-striped table-hover" OnSelectedIndexChanged="gvCategorias_SelectedIndexChanged">
 
                 <Columns>
                     <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
 
                     <asp:CheckBoxField DataField="Estado" HeaderText="Activo" />
+
+                    <asp:CommandField ShowSelectButton="true" SelectText="Modificar" HeaderText="Acción" />
                 </Columns>
 
             </asp:GridView>

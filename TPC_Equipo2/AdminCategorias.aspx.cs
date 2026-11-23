@@ -70,5 +70,12 @@ namespace TPC_Equipo2
             }
 
         }
+
+        protected void gvCategorias_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string id = gvCategorias.SelectedDataKey.Value.ToString();
+
+            Response.Redirect("FormularioCategoria.aspx?id=" + id);
+        }
     }
 }
