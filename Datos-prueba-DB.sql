@@ -107,3 +107,14 @@ VALUES
     ('Entregado'),
     ('Cancelado');
 GO
+
+INSERT INTO FORMAENTREGA (Nombre, Estado, RequiereDireccion)
+VALUES ('Retiro en el local', 1, 0),
+('Envio', 1, 1),
+('Punto de encuentro', 1, 1)
+GO
+
+INSERT INTO FORMAPAGO (Nombre, Estado)
+VALUES ('Efectivo', 1),
+('Debito', 1)
+GO
