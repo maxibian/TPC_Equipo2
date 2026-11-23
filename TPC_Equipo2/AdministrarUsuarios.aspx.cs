@@ -14,14 +14,19 @@ namespace TPC_Equipo2
         List<Usuario> listaUsuarios = new List<Usuario>();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!(Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).Rol.IdRol == 1))
+            if (!esAdministrador())
             {
-                Session.Add("error", "No tenes permisos para entrar a esta pantalla. Necesitas ser Administrador.");
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("Inicio.aspx");
+                return;
             }
         }
         protected void btnAlta_Click(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             UsuarioNegocio negocio = new UsuarioNegocio();
 
             string email = txtEmailUsuario.Text;
@@ -66,6 +71,11 @@ namespace TPC_Equipo2
 
         protected void btnBaja_Click(object sender, EventArgs e)
         {
+            if (!esAdministrador())
+            {
+                return;
+            }
+
             UsuarioNegocio negocio = new UsuarioNegocio();
 
             string email = txtEmailUsuario.Text;
@@ -84,6 +94,17 @@ namespace TPC_Equipo2
             {
                 lblRespuesta.Text = "EL USUARIO NO EXISTE";
             }
+        }
+        private bool esAdministrador()
+        {
+            Usuario usuario = Session["usuario"] as Usuario;
+
+            if (usuario == null || usuario.Rol == null)
+            {
+                return false;
+            }
+
+            return usuario.Rol.IdRol == 1 && usuario.Estado;
         }
     }
 }
