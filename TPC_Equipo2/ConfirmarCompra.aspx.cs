@@ -306,8 +306,21 @@ namespace TPC_Equipo2
                     negocioItems.vaciarCarrito(carritoDb.IdCarrito);
                 }
 
+                try
+                {
+                    Venta ventaGuardada = negocioVenta.obtenerVenta(venta.IdVenta);
+
+                    NotificacionNegocio notificacion = new NotificacionNegocio();
+                    notificacion.enviarCorreoConfirmacion(ventaGuardada);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
                 Response.Redirect("~/CompraExitosa.aspx?id=" + venta.IdVenta, false);
                 return;
+
             }
             catch (Exception)
             {
