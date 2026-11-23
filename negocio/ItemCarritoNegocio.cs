@@ -19,49 +19,16 @@ namespace negocio
                 //Si existe el item en el carrito suma 1 en vez de agregar un nuevo item
                 //Comprueba q sea stock suficiente para agregar la cantidad deseada
                 datos.setearConsulta(@"
-                IF @Cantidad <= 0
-                    THROW 50001, 'La cantidad debe ser mayor a cero.', 1;
+            DECLARE @EnCarrito INT = ISNULL((SELECT Cantidad FROM ITEMCARRITO WHERE IdCarrito = @IdCarrito AND IdProducto = @IdProducto), 0);
 
-                IF EXISTS (
-                    SELECT 1 FROM ITEMCARRITO
-                    WHERE IdCarrito = @IdCarrito
-                    AND IdProducto = @IdProducto
-                 )
-                BEGIN
-                    IF EXISTS(
-                        SELECT 1 FROM PRODUCTO P
-                        INNER JOIN ITEMCARRITO IC ON IC.IdProducto = P.IdProducto
-                        WHERE IC.IdCarrito = @IdCarrito
-                        AND IC.IdProducto = @IdProducto
-                        AND P.Stock >= IC.Cantidad + @Cantidad
-                    )
-                    BEGIN
-                        UPDATE ITEMCARRITO
-                        SET Cantidad = Cantidad + @Cantidad
-                        WHERE IdCarrito = @IdCarrito
-                        AND IdProducto = @IdProducto;
-                    END
-                    ELSE
-                        THROW 50002, 'No hay stock suficiente.', 1;
-                END
-                ELSE
-                BEGIN
-                    IF EXISTS(
-                        SELECT 1 FROM PRODUCTO
-                        WHERE IdProducto = @IdProducto
-                        AND Stock >= @Cantidad
-                    )
-                BEGIN
-                    INSERT INTO ITEMCARRITO
-                    (IdCarrito, IdProducto, Cantidad, PrecioUnitario)
-                    VALUES
-                    (@IdCarrito, @IdProducto, @Cantidad, @PrecioUnitario);
-                END
-                ELSE
-                    THROW 50002, 'No hay stock suficiente.', 1;
-                END
-                ");
-                //datos.setearConsulta("INSERT INTO ITEMCARRITO (IdCarrito, IdProducto, Cantidad, PrecioUnitario) VALUES (@IdCarrito, @IdProducto, @Cantidad, @PrecioUnitario)");
+            IF (SELECT Stock FROM PRODUCTO WHERE IdProducto = @IdProducto) < @EnCarrito + @Cantidad
+                THROW 50002, 'No hay stock suficiente.', 1;
+
+            IF @EnCarrito > 0
+                UPDATE ITEMCARRITO SET Cantidad = Cantidad + @Cantidad WHERE IdCarrito = @IdCarrito AND IdProducto = @IdProducto;
+            ELSE
+                INSERT INTO ITEMCARRITO (IdCarrito, IdProducto, Cantidad, PrecioUnitario) VALUES (@IdCarrito, @IdProducto, @Cantidad, @PrecioUnitario);
+        ");
                 datos.setearParametro("@IdCarrito", IdCarrito);
                 datos.setearParametro("@IdProducto", IdProducto);
                 datos.setearParametro("@Cantidad", Cantidad);
