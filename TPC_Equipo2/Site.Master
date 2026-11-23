@@ -1,4 +1,4 @@
-﻿<%@ master language="C#" autoeventwireup="true" codebehind="Site.master.cs" inherits="TPC_Equipo2.SiteMaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="TPC_Equipo2.SiteMaster" %>
 
 <!DOCTYPE html>
 
@@ -10,14 +10,14 @@
 
 
 
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 </head>
 <body>
     <form runat="server">
         <asp:ScriptManager runat="server">
-            <scripts>
+            <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
                 <asp:ScriptReference Name="MsAjaxBundle" />
@@ -32,7 +32,7 @@
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
                 <%--Site Scripts--%>
-            </scripts>
+            </Scripts>
         </asp:ScriptManager>
 
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
@@ -54,18 +54,28 @@
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/HerramientasAdmin">Admin</a></li>
                         <% }%>
 
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/ConfirmarCompra">Confirmar compra</a></li>
-
                     </ul>
+
+                    <div class="d-flex mx-lg-3 my-2 my-lg-0 flex-grow-1" style="max-width: 450px;">
+
+                        <asp:TextBox ID="txtBuscarProducto" runat="server" CssClass="form-control" placeholder="¿Qué estás buscando?" />
+
+                        <asp:Button ID="btnBuscarProducto" runat="server" Text="Buscar" CssClass="btn btn-outline-light ms-2" />
+
+                    </div>
+
                     <ul class="navbar-nav ms-auto">
-                        <% if (Session["usuario"] != null) { %>
+                        <% if (Session["usuario"] != null)
+                            { %>
                         <li class="nav-item">
                             <span class="nav-link">Hola, <%: ((dominio.Usuario)Session["usuario"]).NombreUsuario %></span>
                         </li>
                         <li class="nav-item">
                             <asp:LinkButton ID="btnCerrarSesion" runat="server" CssClass="nav-link" OnClick="btnCerrarSesion_Click">Cerrar sesión</asp:LinkButton>
                         </li>
-                        <% } else { %>
+                        <% }
+                        else
+                        { %>
 
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Login">Iniciar Sesion</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/FormularioAgregarCliente">Registro</a></li>
