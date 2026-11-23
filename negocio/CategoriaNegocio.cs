@@ -96,5 +96,110 @@ namespace negocio
 
             return false;
         }
+
+        public Categoria buscarPorId(int idCategoria)
+        {
+            if (idCategoria <= 0)
+            {
+                throw new ArgumentException("El identificador de la categoría no es válido.");
+            }
+
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT IdCategoria, Nombre, Estado FROM CATEGORIA WHERE IdCategoria = @IdCategoria");
+                datos.setearParametro("@IdCategoria", idCategoria);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Categoria categoria = new Categoria();
+
+                    categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
+                    categoria.Nombre = (string)datos.Lector["Nombre"];
+                    categoria.Estado = (bool)datos.Lector["Estado"];
+
+                    return categoria;
+
+                }
+
+                return null;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public bool existeNombreEnOtraCategoria(string nombre, int idCategoria)
+        {
+            List<Categoria> categorias = ListarCategorias();
+
+            foreach (Categoria categoria in categorias)
+            {
+                if (categoria.IdCategoria != idCategoria && categoria.Nombre.Trim().ToUpper() == nombre.Trim().ToUpper())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool modificar(Categoria categoria)
+        {
+            if (categoria == null)
+            {
+                throw new ArgumentNullException(nameof(categoria));
+            }
+
+            if (categoria.IdCategoria <= 0)
+            {
+                throw new ArgumentException("El identificador no es válido.");
+            }
+
+            if (buscarPorId(categoria.IdCategoria) == null)
+            {
+                throw new ArgumentException("La categoría no existe.");
+            }
+
+            if (string.IsNullOrWhiteSpace(categoria.Nombre))
+            {
+                throw new ArgumentException("El nombre es obligatorio.");
+            }
+
+            string nombre = categoria.Nombre.Trim();
+
+            if (nombre.Length > 50)
+            {
+                throw new ArgumentException("El nombre no puede superar los 50 caracteres.");
+            }
+
+            if (existeNombreEnOtraCategoria(nombre, categoria.IdCategoria))
+            {
+                return false;
+            }
+
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE CATEGORIA SET Nombre = @Nombre WHERE IdCategoria = @IdCategoria");
+
+                datos.setearParametro("@Nombre", nombre);
+                datos.setearParametro("@IdCategoria", categoria.IdCategoria);
+
+                datos.ejecutarAccion();
+
+                return true;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
     }
 }
