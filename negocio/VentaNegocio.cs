@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -474,12 +476,12 @@ namespace negocio
             return disponibles;
         }
 
-        public List<Venta> listarVentasPorCliente(int idCliente)
+        public List<Venta> listarVentasPorCliente(int usuario)
         {
             List<Venta> ventas = new List<Venta>();
-            
 
-            if (idCliente <= 0)
+
+            if (usuario <= 0)
             {
                 throw new ArgumentException("El identificador del cliente no es válido.");
             }
@@ -488,8 +490,8 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("SELECT V.IdVenta, V.IdCliente, C.Nombre AS NombreCliente, C.Apellido AS ApellidoCliente, V.Fecha, V.VentaTotal, V.IdFormaPago, FP.Nombre AS NombreFormaPago, V.IdFormaEntrega, FE.Nombre AS NombreFormaEntrega, V.IdDireccion, V.IdEstadoVenta, EV.Nombre AS NombreEstado, V.Observaciones FROM VENTA V INNER JOIN CLIENTE C ON V.IdCliente = C.IdCliente INNER JOIN FORMAPAGO FP ON V.IdFormaPago = FP.IdFormaPago INNER JOIN FORMAENTREGA FE ON V.IdFormaEntrega = FE.IdFormaEntrega INNER JOIN ESTADOVENTA EV  ON V.IdEstadoVenta = EV.IdEstadoVenta WHERE V.IdCliente = @IdCliente ORDER BY V.Fecha DESC, V.IdVenta DESC");
-                datos.setearParametro("@IdCliente", idCliente);
+                datos.setearConsulta("SELECT V.IdVenta, V.IdCliente, C.Nombre AS NombreCliente, C.Apellido AS ApellidoCliente, V.Fecha, V.VentaTotal, V.IdFormaPago, FP.Nombre AS NombreFormaPago, V.IdFormaEntrega, FE.Nombre AS NombreFormaEntrega, V.IdDireccion, V.IdEstadoVenta, EV.Nombre AS NombreEstado, V.Observaciones FROM VENTA V INNER JOIN CLIENTE C ON V.IdCliente = C.IdCliente INNER JOIN USUARIO U ON U.IdUsuario = C.IdCliente INNER JOIN FORMAPAGO FP ON V.IdFormaPago = FP.IdFormaPago INNER JOIN FORMAENTREGA FE ON V.IdFormaEntrega = FE.IdFormaEntrega INNER JOIN ESTADOVENTA EV  ON V.IdEstadoVenta = EV.IdEstadoVenta WHERE C.IdUsuario = @IdUsuario ORDER BY V.Fecha DESC, V.IdVenta DESC");
+                datos.setearParametro("@IdUsuario", usuario);
 
                 datos.ejecutarLectura();
 
