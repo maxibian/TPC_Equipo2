@@ -19,7 +19,10 @@ namespace negocio
 
             //Cambiar credenciales
 
-            servidor.Credentials = new NetworkCredential("USUARIO_MAILTRAP", "CONTRASENA_MAILTRAP");
+            string usuarioMailtrap = "USUARIO_MAILTRAP"; // Reemplazar con tu usuario de Mailtrap
+            string contrasenaMailtrap = "CONTRASENA_MAILTRAP"; // Reemplazar con tu contraseña de Mailtrap
+
+            servidor.Credentials = new NetworkCredential(usuarioMailtrap, contrasenaMailtrap);
 
             servidor.EnableSsl = true;
             servidor.Port = 2525;
