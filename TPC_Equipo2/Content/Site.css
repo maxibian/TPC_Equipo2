@@ -65,3 +65,14 @@ textarea {
     position: relative;
     z-index: 2;
 }
+
+/* Formulario centrado */
+.formulario-centrado {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+    .formulario-centrado .form-control,
+    .formulario-centrado .form-select {
+        max-width: none;
+    }
