@@ -27,7 +27,7 @@
 
                     <a href="AdminFormasEntrega.aspx"
                         class="btn btn-outline-primary mt-auto">Administrar entregas
-                </a>
+                    </a>
 
                 </div>
             </div>
@@ -47,7 +47,7 @@
 
                     <a href="AdminFormasPago.aspx"
                         class="btn btn-outline-primary mt-auto">Administrar pagos
-                </a>
+                    </a>
 
                 </div>
             </div>
@@ -67,7 +67,7 @@
 
                     <a href="AdminVentas.aspx"
                         class="btn btn-outline-primary mt-auto">Administrar ventas
-                </a>
+                    </a>
 
                 </div>
             </div>
@@ -83,9 +83,9 @@
                         Administrá los productos de la tienda     
                     </p>
 
-                     <a href="FormularioProducto.aspx"
+                    <a href="FormularioProducto.aspx"
                         class="btn btn-outline-primary mt-auto">Administrar Productos
-                </a>
+                    </a>
                 </div>
             </div>
         </div>
@@ -100,9 +100,26 @@
                         Administrá los usuarios de la tienda     
                     </p>
 
-                     <a href="AdministrarUsuarios.aspx"
+                    <a href="AdministrarUsuarios.aspx"
                         class="btn btn-outline-primary mt-auto">Administrar Usuarios
-                </a>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Administrar Categorias</h5>
+
+                    <p class="card-text text-muted">
+                        Administrá las categorias de los productos de la tienda     
+                    </p>
+
+                    <a href="AdminCategorias.aspx"
+                        class="btn btn-outline-primary mt-auto">Administrar Categorias
+                    </a>
                 </div>
             </div>
         </div>

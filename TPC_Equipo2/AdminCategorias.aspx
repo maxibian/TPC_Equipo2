@@ -21,8 +21,10 @@
                 <asp:TextBox ID="txtNombreCategoria" runat="server" CssClass="form-control" MaxLength="50" />
             </div>
 
-            <asp:Button ID="btnAgregarCategoria" runat="server" Text="Agregar categoría" CssClass="btn btn-primary" OnClick="btnAgregarCategoria_Click"/>
-
+            <div class="d-flex flex-wrap gap-2">
+                <asp:Button ID="btnAgregarCategoria" runat="server" Text="Agregar categoría" CssClass="btn btn-primary" OnClick="btnAgregarCategoria_Click" />
+                <a href="HerramientasAdmin.aspx" class="btn btn-outline-secondary">Volver a herramientas Admin</a>
+            </div>
             <asp:Label ID="lblMensaje" runat="server" CssClass="d-block mt-2" />
 
         </div>
@@ -31,7 +33,7 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Categorías registradas
-        </h5>
+            </h5>
 
             <asp:GridView ID="gvCategorias" runat="server" AutoGenerateColumns="false" DataKeyNames="IdCategoria" CssClass="table table-striped table-hover" OnSelectedIndexChanged="gvCategorias_SelectedIndexChanged">
 

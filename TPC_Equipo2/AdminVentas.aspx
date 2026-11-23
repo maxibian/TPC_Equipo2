@@ -45,6 +45,8 @@
             <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar"  CssClass="btn btn-primary" OnClick="btnFiltrar_Click" />
 
             <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-outline-secondary" OnClick="btnLimpiar_Click" />
+
+            <a href="HerramientasAdmin.aspx" class="btn btn-outline-secondary">Volver a herramientas Admin</a>
         </div>
 
     </div>
