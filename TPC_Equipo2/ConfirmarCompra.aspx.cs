@@ -306,7 +306,8 @@ namespace TPC_Equipo2
                     negocioItems.vaciarCarrito(carritoDb.IdCarrito);
                 }
 
-                lblMensaje.Text = "Compra registrada correctamente. Pedido N° " + venta.IdVenta;
+                Response.Redirect("~/CompraExitosa.aspx?id=" + venta.IdVenta, false);
+                return;
             }
             catch (Exception)
             {
