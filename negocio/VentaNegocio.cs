@@ -72,7 +72,7 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("SELECT V.IdVenta, V.IdCliente, C.Nombre AS NombreCliente, C.Apellido AS ApellidoCliente, V.Fecha, V.VentaTotal, V.IdFormaPago, FP.Nombre AS NombreFormaPago, V.IdFormaEntrega, FE.Nombre AS NombreFormaEntrega, V.IdDireccion, V.IdEstadoVenta, EV.Nombre AS NombreEstado, V.Observaciones FROM VENTA V INNER JOIN CLIENTE C ON V.IdCliente = C.IdCliente INNER JOIN FORMAPAGO FP ON V.IdFormaPago = FP.IdFormaPago INNER JOIN FORMAENTREGA FE ON V.IdFormaEntrega = FE.IdFormaEntrega INNER JOIN ESTADOVENTA EV  ON V.IdEstadoVenta = EV.IdEstadoVenta WHERE V.IdVenta = @id");
+                datos.setearConsulta("SELECT V.IdVenta, V.IdCliente, C.Nombre AS NombreCliente, C.Apellido AS ApellidoCliente, C.Email AS EmailCliente, V.Fecha, V.VentaTotal, V.IdFormaPago, FP.Nombre AS NombreFormaPago, V.IdFormaEntrega, FE.Nombre AS NombreFormaEntrega, V.IdDireccion, V.IdEstadoVenta, EV.Nombre AS NombreEstado, V.Observaciones FROM VENTA V INNER JOIN CLIENTE C ON V.IdCliente = C.IdCliente INNER JOIN FORMAPAGO FP ON V.IdFormaPago = FP.IdFormaPago INNER JOIN FORMAENTREGA FE ON V.IdFormaEntrega = FE.IdFormaEntrega INNER JOIN ESTADOVENTA EV  ON V.IdEstadoVenta = EV.IdEstadoVenta WHERE V.IdVenta = @id");
                 datos.setearParametro("@id", idVenta);
                 datos.ejecutarLectura();
 
@@ -85,6 +85,7 @@ namespace negocio
                     venta.Cliente.IdCliente = (int)datos.Lector["IdCliente"];
                     venta.Cliente.Nombre = (string)datos.Lector["NombreCliente"];
                     venta.Cliente.Apellido = (string)datos.Lector["ApellidoCliente"];
+                    venta.Cliente.Email = (string)datos.Lector["EmailCliente"];
                     venta.Fecha = (DateTime)datos.Lector["Fecha"];
                     venta.VentaTotal = (decimal)datos.Lector["VentaTotal"];
                     venta.FormaPago = new FormaPago();
