@@ -66,5 +66,21 @@ namespace negocio
             return correo;
         }
 
+        public void enviarCorreoVerificacion(string email, string nombre, string link)
+        {
+            MailMessage correo = new MailMessage();
+
+            correo.From = new MailAddress("notificaciones@ejemplo.com");
+            correo.To.Add(email);
+            correo.Subject = "Activá tu cuenta";
+
+            correo.IsBodyHtml = true;
+            correo.Body =
+                "<h2>¡Hola " + nombre + "!</h2>" +
+                "<p>Gracias por registrarte. Para activar tu cuenta hacé clic en el siguiente enlace:</p>" +
+                "<p><a href='" + link + "'>Activar mi cuenta</a></p>";
+
+            servidor.Send(correo);
+        }
     }
 }

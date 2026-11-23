@@ -61,7 +61,20 @@ namespace TPC_Equipo2
 
                     negocio.agregarCliente(cliente);
 
-                    lblRespuesta.Text = "Te registraste con exito!";
+                    //lblRespuesta.Text = "Te registraste con exito!";
+                    string link = Request.Url.GetLeftPart(UriPartial.Authority) + "/VerificarEmail.aspx?token=" + usuario.Token;
+
+                    try
+                    {
+                        NotificacionNegocio notificacion = new NotificacionNegocio();
+                        notificacion.enviarCorreoVerificacion(cliente.Email, cliente.Nombre, link);
+
+                        lblRespuesta.Text = "Te registraste con éxito! Revisá tu mail para activar tu cuenta.";
+                    }
+                    catch (Exception)
+                    {
+                        lblRespuesta.Text = "Te registraste, pero no pudimos enviar el mail de activación.";
+                    }
                 }
                 else
                 {
