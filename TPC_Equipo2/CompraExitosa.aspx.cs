@@ -62,6 +62,16 @@ namespace TPC_Equipo2
             lblFormaEntrega.Text = venta.FormaEntrega.Nombre;
             lblTotal.Text = venta.VentaTotal.ToString("N2");
 
+            if (!string.IsNullOrWhiteSpace(venta.CodigoSeguimiento))
+            {
+                lblCodigoSeguimiento.Text = venta.CodigoSeguimiento;
+                pnlSeguimiento.Visible = true;
+            }
+            else
+            {
+                pnlSeguimiento.Visible = false;
+            }
+
             List<DetalleVenta> detalles = negocio.listarDetallesPorVenta(idVenta);
 
             gvDetalles.DataSource = detalles;

@@ -78,6 +78,24 @@ namespace TPC_Equipo2
         protected global::System.Web.UI.WebControls.Label lblFormaEntrega;
 
         /// <summary>
+        /// Control pnlSeguimiento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlSeguimiento;
+
+        /// <summary>
+        /// Control lblCodigoSeguimiento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCodigoSeguimiento;
+
+        /// <summary>
         /// Control gvDetalles.
         /// </summary>
         /// <remarks>

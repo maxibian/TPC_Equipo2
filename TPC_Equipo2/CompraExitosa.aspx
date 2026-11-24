@@ -86,6 +86,29 @@
                 </div>
             </div>
 
+            <asp:Panel ID="pnlSeguimiento" runat="server" Visible="false" CssClass="card border-0 shadow-sm rounded-3 mb-4">
+
+                <div class="card-body p-4">
+
+                    <h5 class="fw-semibold mb-3">Seguimiento del pedido
+                    </h5>
+
+                    <p class="text-muted mb-2">
+                        Tu pedido tiene un código de seguimiento asignado.       
+                    </p>
+
+                    <div class="alert alert-info mb-0">
+
+                        <strong>Código de seguimiento:</strong>
+
+                        <asp:Label ID="lblCodigoSeguimiento" runat="server" />
+
+                    </div>
+                </div>
+
+            </asp:Panel>
+
+
             <div class="card border-0 shadow-sm rounded-3 mb-4">
                 <div class="card-body p-4">
 
