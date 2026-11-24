@@ -57,15 +57,12 @@
                         OnClick="btnEliminar_Click" />
                 </ItemTemplate>
             </asp:TemplateField>
-
-
         </Columns>
 
     </asp:GridView>
 
     <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary" OnClick="btnAgregar_Click" />
-    <asp:HyperLink ID="lnkCancelar" runat="server" Text="Cancelar" NavigateUrl="~/MiCuenta.aspx" CssClass="btn btn-outline-secondary" />
-    <asp:Label ID="lblRespuesta" runat="server" Text="" CssClass="form-label" Style="color: red" />
+    <asp:HyperLink ID="lnkCancelar" runat="server" Text="Volver" NavigateUrl="~/MiCuenta.aspx" CssClass="btn btn-outline-secondary" />
 
 
 </asp:Content>
