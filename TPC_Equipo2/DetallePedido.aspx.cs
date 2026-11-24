@@ -124,19 +124,35 @@ namespace TPC_Equipo2
                 return;
             }
 
+            bool pasaAEnviado = ventaActual.EstadoVenta.Nombre == "En preparación" && ddlEstado.SelectedItem.Text == "Enviado";
+
+            string codigoFinal = codigoSeguimiento;
+
+            if (string.IsNullOrWhiteSpace(codigoFinal))
+            {
+                codigoFinal = ventaActual.CodigoSeguimiento;
+            }
+
+            if (pasaAEnviado && string.IsNullOrWhiteSpace(codigoFinal))
+            {
+                lblMensaje.CssClass = "text-danger";
+                lblMensaje.Text = "Debés ingresar un código de seguimiento antes de enviar el pedido.";
+                return;
+            }
+
             try
             {
+                if (!string.IsNullOrWhiteSpace(codigoSeguimiento) && codigoSeguimiento != ventaActual.CodigoSeguimiento)
+                {
+                    negocio.actualizarCodigoSeguimiento(numero, codigoSeguimiento);
+                }
+
                 if (ventaActual.EstadoVenta.IdEstadoVenta != idEstadoSeleccionado)
                 {
                     negocio.cambiarEstado(numero, idEstadoSeleccionado);
                 }
 
                 negocio.actualizarObservaciones(numero, observaciones);
-
-                if (!string.IsNullOrWhiteSpace(codigoSeguimiento) && codigoSeguimiento != ventaActual.CodigoSeguimiento)
-                {
-                    negocio.actualizarCodigoSeguimiento(numero, codigoSeguimiento);
-                }
 
                 Venta ventaActualizada = negocio.obtenerVenta(numero);
 
@@ -148,17 +164,32 @@ namespace TPC_Equipo2
                 }
 
                 lblEstado.Text = ventaActualizada.EstadoVenta.Nombre;
+
                 txtCodigoSeguimiento.Text = ventaActualizada.CodigoSeguimiento ?? "";
 
                 cargarEstadosDisponibles(ventaActualizada);
 
                 lblMensaje.CssClass = "text-success";
                 lblMensaje.Text = "Cambios guardados correctamente.";
+
+                if (pasaAEnviado)
+                {
+                    try
+                    {
+                        NotificacionNegocio notificacion = new NotificacionNegocio();
+                        notificacion.enviarCorreoSeguimiento(ventaActualizada);
+                    }
+                    catch (Exception)
+                    {
+                        lblMensaje.CssClass = "text-warning";
+                        lblMensaje.Text = "Los cambios se guardaron, pero no se pudo enviar el correo.";
+                    }
+                }
             }
-            catch (InvalidOperationException ex)
+            catch (Exception)
             {
                 lblMensaje.CssClass = "text-danger";
-                lblMensaje.Text = ex.Message;
+                lblMensaje.Text = "No se pudieron guardar todos los cambios del pedido. Verificá los datos antes de volver a intentarlo.";
             }
 
         }
