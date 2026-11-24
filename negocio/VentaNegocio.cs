@@ -556,5 +556,52 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+
+        public void actualizarCodigoSeguimiento(int idVenta, string codigoSeguimiento)
+        {
+            if (idVenta <= 0)
+            {
+                throw new ArgumentException(
+                    "El identificador de la venta no es válido.");
+            }
+
+            if (string.IsNullOrWhiteSpace(codigoSeguimiento))
+            {
+                throw new ArgumentException(
+                    "El código de seguimiento es obligatorio.");
+            }
+
+            codigoSeguimiento = codigoSeguimiento.Trim();
+
+            if (codigoSeguimiento.Length > 100)
+            {
+                throw new ArgumentException(
+                    "El código de seguimiento no puede superar los 100 caracteres.");
+            }
+
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE VENTA SET CodigoSeguimiento = @CodigoSeguimiento WHERE IdVenta = @IdVenta; SELECT @@ROWCOUNT");
+
+                datos.setearParametro("@CodigoSeguimiento", codigoSeguimiento);
+                datos.setearParametro("@IdVenta", idVenta);
+
+                int filasActualizadas = datos.ejecutarEscalar();
+
+                if (filasActualizadas == 0)
+                {
+                    throw new ArgumentException(
+                        "No se encontró la venta seleccionada.");
+                }
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }
