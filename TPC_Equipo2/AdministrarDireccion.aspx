@@ -64,5 +64,4 @@
     <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary" OnClick="btnAgregar_Click" />
     <asp:HyperLink ID="lnkCancelar" runat="server" Text="Volver" NavigateUrl="~/MiCuenta.aspx" CssClass="btn btn-outline-secondary" />
 
-
 </asp:Content>

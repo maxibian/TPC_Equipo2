@@ -37,7 +37,7 @@
 
         <asp:Button ID="btnGuardar" Text="Guardar" runat="server" CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
         <asp:HyperLink ID="lnkCancelar" runat="server" Text="Volver" NavigateUrl="~/AdministrarDireccion.aspx" CssClass="btn btn-outline-secondary" />
-
+        <asp:Label ID="lblRespuesta" runat="server" Text=""></asp:Label>
     </asp:Panel>
 
 </asp:Content>

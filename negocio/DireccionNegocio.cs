@@ -49,11 +49,11 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public void agregarDireccion(Direccion direccion)
+        public int agregarDireccion(Direccion direccion)
         {
             try
             {
-                datos.setearConsulta("INSERT INTO DIRECCION(IdCliente, Calle, Numero, Localidad, Provincia, CodigoPostal, Observacion)values(@IdCliente, @Calle, @Numero, @Localidad, @Provincia, @CodigoPostal, @Observacion)");
+                datos.setearConsulta("INSERT INTO DIRECCION(IdCliente, Calle, Numero, Localidad, Provincia, CodigoPostal,Observacion, Estado)values(@IdCliente, @Calle, @Numero, @Localidad, @Provincia, @CodigoPostal, @Observacion, @Estado) SELECT CAST(SCOPE_IDENTITY() AS INT)");
                 datos.setearParametro("@IdCliente", direccion.IdCliente);
                 datos.setearParametro("@Calle", direccion.Calle);
                 datos.setearParametro("@Numero", direccion.Numero);
@@ -61,7 +61,10 @@ namespace negocio
                 datos.setearParametro("@Provincia", direccion.Provincia);
                 datos.setearParametro("@CodigoPostal", direccion.CodigoPostal);
                 datos.setearParametro("@Observacion", direccion.Observacion);
-                datos.ejecutarAccion();
+                datos.setearParametro("@Estado", 1);
+
+                return datos.ejecutarEscalar();
+
             }
             catch (Exception ex)
             {
@@ -100,7 +103,7 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("UPDATE DIRECCION SET Estado = 0 WHERE IdDireccion = @IdDireccion"); 
+                datos.setearConsulta("UPDATE DIRECCION SET Estado = 0 WHERE IdDireccion = @IdDireccion");
                 datos.setearParametro("@IdDireccion", id);
                 datos.ejecutarAccion();
 
@@ -213,7 +216,26 @@ namespace negocio
             }
         }
 
+        public int isExistCliente(int idusuario)
+        {
+            try
+            {
+                datos.setearConsulta("SELECT I.IdCliente FROM CLIENTE I WHERE I.IdUsuario = @IdUsuario");
+                datos.setearParametro("@IdUsuario", idusuario);
 
+                return datos.ejecutarEscalar();
 
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
