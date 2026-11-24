@@ -93,7 +93,6 @@ namespace TPC_Equipo2
             }
 
             ClienteNegocio clienteNegocio = new ClienteNegocio();
-            Cliente cliente = new Cliente();
             listaCliente = clienteNegocio.listarClientes();
             foreach (Cliente item in listaCliente)
             {

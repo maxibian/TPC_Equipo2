@@ -39,11 +39,13 @@
 
                             <asp:Label ID="lblEmailUsuario" runat="server"
                                 Text="Correo electrónico"
-                                AssociatedControlID="txtEmailUsuario"
+                                AssociatedControlID="txtEmailUsuario" 
                                 CssClass="form-label fw-medium" />
 
                             <asp:TextBox ID="txtEmailUsuario" runat="server"
                                 CssClass="form-control"
+                                TextMode="Email"
+                                MinLength="4"
                                 MaxLength="50"
                                 placeholder="correo@ejemplo.com" />
 
@@ -59,6 +61,7 @@
 
                             <asp:TextBox ID="txtPassword" runat="server"
                                 CssClass="form-control"
+                                MinLength="4"
                                 MaxLength="50"
                                 TextMode="Password" />
 
