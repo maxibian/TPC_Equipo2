@@ -35,7 +35,7 @@ namespace TPC_Equipo2
                 return;
             }
 
-            if (txtEmail.Text == txtEmailUsuario.Text)
+            if (txtEmail.Text == txtEmailUsuario.Text && txtPassword.Text == txtPasswordConfirmacion.Text)
             {
                 string email = txtEmailUsuario.Text;
 
@@ -84,7 +84,7 @@ namespace TPC_Equipo2
             }
             else
             {
-                lblRespuesta.Text = "Los emails son distintos";
+                lblRespuesta.Text = "Los emails y/o contraseña son distintos";
             }
 
         }
