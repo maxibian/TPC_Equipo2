@@ -48,6 +48,8 @@ namespace TPC_Equipo2
 
                         txtObservaciones.Text = venta.Observaciones ?? "";
 
+                        txtCodigoSeguimiento.Text = venta.CodigoSeguimiento ?? "";
+
                         cargarEstadosDisponibles(venta);
                     }
 
@@ -85,6 +87,14 @@ namespace TPC_Equipo2
             }
 
             string observaciones = txtObservaciones.Text.Trim();
+            string codigoSeguimiento = txtCodigoSeguimiento.Text.Trim();
+
+            if (codigoSeguimiento.Length > 100)
+            {
+                lblMensaje.CssClass = "text-danger";
+                lblMensaje.Text = "El código de seguimiento no puede superar los 100 caracteres.";
+                return;
+            }
 
             if (observaciones.Length > 500)
             {
@@ -123,6 +133,11 @@ namespace TPC_Equipo2
 
                 negocio.actualizarObservaciones(numero, observaciones);
 
+                if (!string.IsNullOrWhiteSpace(codigoSeguimiento) && codigoSeguimiento != ventaActual.CodigoSeguimiento)
+                {
+                    negocio.actualizarCodigoSeguimiento(numero, codigoSeguimiento);
+                }
+
                 Venta ventaActualizada = negocio.obtenerVenta(numero);
 
                 if (ventaActualizada == null)
@@ -133,6 +148,7 @@ namespace TPC_Equipo2
                 }
 
                 lblEstado.Text = ventaActualizada.EstadoVenta.Nombre;
+                txtCodigoSeguimiento.Text = ventaActualizada.CodigoSeguimiento ?? "";
 
                 cargarEstadosDisponibles(ventaActualizada);
 
