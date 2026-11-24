@@ -32,8 +32,9 @@ namespace TPC_Equipo2
             DireccionNegocio negocio = new DireccionNegocio();
 
             int usuario = ((Usuario)Session["usuario"]).IdUsuario;
+            int idCliente = negocio.isExistCliente(usuario);
 
-            direccionList = negocio.listarDireccionesPorCliente(usuario);
+            direccionList = negocio.listarDireccionesPorCliente(idCliente);
             dgvDireccion.DataSource = direccionList;
             dgvDireccion.DataBind();
         }
