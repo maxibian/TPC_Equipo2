@@ -17,6 +17,7 @@ namespace TPC_Equipo2
             if (Session["usuario"] == null)
             {
                 Response.Redirect("Inicio.aspx", false);
+                return;
             }
 
             Venta venta = new Venta();
@@ -37,6 +38,7 @@ namespace TPC_Equipo2
             int IdVenta = Convert.ToInt32(btn.CommandArgument);
 
             Response.Redirect("DetalleCompra.aspx?IdVenta=" + IdVenta);
+
         }
     }
 }
