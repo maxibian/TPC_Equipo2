@@ -62,7 +62,7 @@
 
                 </asp:GridView>
 
-                <asp:HyperLink ID="lnkAgregar" runat="server" Text="Comprar" NavigateUrl="~/Inicio.aspx" CssClass="btn btn-primary" />
+                <%--<asp:HyperLink ID="lnkAgregar" runat="server" Text="Comprar" NavigateUrl="~/Inicio.aspx" CssClass="btn btn-primary" />--%>
                 <asp:HyperLink ID="lnkCancelar" runat="server" Text="Volver" NavigateUrl="~/MiCuenta.aspx" CssClass="btn btn-outline-secondary" />
 
             </div>
