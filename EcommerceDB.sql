@@ -172,6 +172,7 @@ CREATE TABLE VENTA (
         IdTarjeta INT NULL,
         IdEstadoVenta INT NOT NULL,
         Observaciones VARCHAR(500) NULL,
+        CodigoSeguimiento VARCHAR(100) NULL,
         
         CONSTRAINT CK_VENTA_Total CHECK (VentaTotal >= 0),
         

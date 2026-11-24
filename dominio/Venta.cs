@@ -20,6 +20,8 @@ namespace dominio
         public EstadoVenta EstadoVenta { get; set; }
         public string Observaciones { get; set; }
 
+        public string CodigoSeguimiento { get; set; }
+
         public Venta()
         {
             Detalles = new List<DetalleVenta>();
