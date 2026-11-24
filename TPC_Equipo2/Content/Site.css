@@ -79,3 +79,14 @@ textarea {
 .formulario-chico {
     max-width: 400px;
 }
+
+.lbl-subtotal {
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.pnl-totales {
+    text-align: right;
+    margin-top: 20px;
+}

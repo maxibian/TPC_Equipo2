@@ -15,7 +15,6 @@ namespace negocio
             try
             {
                 datos.setearConsulta("IF NOT EXISTS (SELECT 1 FROM CARRITO WHERE IdCliente = @IdCliente) INSERT INTO CARRITO (IdCliente) VALUES (@IdCliente)");
-                //datos.setearConsulta("INSERT INTO CARRITO (IdCliente) VALUES (@IdCliente)");
                 datos.setearParametro("@IdCliente", idCliente);
                 datos.ejecutarAccion();
             }
@@ -86,13 +85,10 @@ namespace negocio
                 }
                 catch (Exception)
                 {
-
                     throw;
-                }
-                
+                }               
             }
         }
-
 
         public int obtenerIdCliente(int idUsuario)
         {

@@ -15,17 +15,9 @@
 
     </asp:GridView>
 
-    <asp:Panel ID="pnlTotales" runat="server"
-        style="text-align: right; margin-top: 20px;">
+    <asp:Panel ID="pnlTotales" runat="server" CssClass="pnl-totales">
 
-        <asp:Label ID="lblSubtotal" runat="server"
-            style="display: block;" />
-
-        <asp:Label ID="lblEnvio" runat="server"
-            style="display: block;" />
-
-        <asp:Label ID="lblTotal" runat="server"
-            style="display: block; font-weight: bold; font-size: 20px;" />
+        <asp:Label ID="lblSubtotal" runat="server" CssClass="lbl-subtotal"/>
 
         <asp:Button runat="server" ID="btnRealizarCompra" Text="Realizar compra" OnClick="btnRealizarCompra_Click" />
 
