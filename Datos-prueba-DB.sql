@@ -118,3 +118,6 @@ INSERT INTO FORMAPAGO (Nombre, Estado)
 VALUES ('Efectivo', 1),
 ('Debito', 1)
 GO
+
+ALTER TABLE VENTA
+ADD CodigoSeguimiento VARCHAR(100) NULL;
