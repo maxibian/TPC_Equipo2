@@ -78,7 +78,7 @@ Incluidos en `Datos-prueba-DB.sql`:
 | Rol | Usuario | Contraseña |
 |---|---|---|
 | Administrador | `luucasarieel@hotmail.com` | `asd123` |
-| Cliente | `pepeargento@gmail.com` | `asd123` |
+| Cliente | `florenciagutierrez@gmail.com` | `abc123` |
 
 También se puede registrar un usuario nuevo para probar el circuito completo, incluida la activación por mail.
 
