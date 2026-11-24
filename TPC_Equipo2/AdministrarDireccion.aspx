@@ -63,7 +63,7 @@
 
     </asp:GridView>
 
-    <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
+    <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary" OnClick="btnAgregar_Click" />
     <asp:HyperLink ID="lnkCancelar" runat="server" Text="Cancelar" NavigateUrl="~/MiCuenta.aspx" CssClass="btn btn-outline-secondary" />
     <asp:Label ID="lblRespuesta" runat="server" Text="" CssClass="form-label" Style="color: red" />
 

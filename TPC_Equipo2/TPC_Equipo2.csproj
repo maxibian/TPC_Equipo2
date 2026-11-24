@@ -142,6 +142,7 @@
     <Content Include="HistorialPedidos.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="MiCuenta.aspx" />
+    <Content Include="NuevaDireccion.aspx" />
     <Content Include="ProductoDetalle.aspx" />
     <Content Include="Prueba.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -400,6 +401,13 @@
     </Compile>
     <Compile Include="MiCuenta.aspx.designer.cs">
       <DependentUpon>MiCuenta.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NuevaDireccion.aspx.cs">
+      <DependentUpon>NuevaDireccion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NuevaDireccion.aspx.designer.cs">
+      <DependentUpon>NuevaDireccion.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProductoDetalle.aspx.cs">
       <DependentUpon>ProductoDetalle.aspx</DependentUpon>
