@@ -19,8 +19,8 @@ namespace negocio
 
             //Cambiar credenciales
 
-            string usuarioMailtrap = Credenciales.UsuarioMailtrap; 
-            string contrasenaMailtrap = Credenciales.ContrasenaMailtrap; 
+            string usuarioMailtrap = Credenciales.UsuarioMailtrap;
+            string contrasenaMailtrap = Credenciales.ContrasenaMailtrap;
 
             servidor.Credentials = new NetworkCredential(usuarioMailtrap, contrasenaMailtrap);
 
