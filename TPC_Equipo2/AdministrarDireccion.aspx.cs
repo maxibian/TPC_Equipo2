@@ -54,7 +54,7 @@ namespace TPC_Equipo2
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("NuevaDireccion.Aspx");
+            Response.Redirect("NuevaDireccion.Aspx", false);
         }
     }
 }

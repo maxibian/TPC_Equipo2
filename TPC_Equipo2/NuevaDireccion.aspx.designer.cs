@@ -78,6 +78,33 @@ namespace TPC_Equipo2
         protected global::System.Web.UI.WebControls.TextBox txtNumero;
 
         /// <summary>
+        /// pnlCodigoPostal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlCodigoPostal;
+
+        /// <summary>
+        /// lblCodigoPostal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCodigoPostal;
+
+        /// <summary>
+        /// txtCodigoPostal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCodigoPostal;
+
+        /// <summary>
         /// pnlLocalidad control.
         /// </summary>
         /// <remarks>
@@ -130,33 +157,6 @@ namespace TPC_Equipo2
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtProvincia;
-
-        /// <summary>
-        /// pnlCodigoPostal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlCodigoPostal;
-
-        /// <summary>
-        /// lblCodigoPostal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCodigoPostal;
-
-        /// <summary>
-        /// txtCodigoPostal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCodigoPostal;
 
         /// <summary>
         /// pnlObservacion control.
