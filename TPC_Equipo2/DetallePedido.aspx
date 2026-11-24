@@ -107,6 +107,22 @@
 
             <div class="mb-3">
                 <label class="form-label">
+                    Código de seguimiento
+                </label>
+
+                <asp:TextBox ID="txtCodigoSeguimiento" runat="server" CssClass="form-control" MaxLength="100" placeholder="Ej.: AR123456789" />
+
+                <div class="form-text">
+                    Completá este campo cuando el pedido tenga
+        un código de seguimiento del transporte.
+        No es obligatorio para retiro en local.
+   
+                </div>
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">
                     Observaciones internas
                 </label>
 
