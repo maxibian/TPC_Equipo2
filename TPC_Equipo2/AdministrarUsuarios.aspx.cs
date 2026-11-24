@@ -1,4 +1,5 @@
 ﻿using dominio;
+using Microsoft.Ajax.Utilities;
 using negocio;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace TPC_Equipo2
     public partial class AdministrarUsuarios : System.Web.UI.Page
     {
         List<Usuario> listaUsuarios = new List<Usuario>();
+        List<Cliente> listaCliente = new List<Cliente>();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!esAdministrador())
@@ -30,6 +33,19 @@ namespace TPC_Equipo2
             UsuarioNegocio negocio = new UsuarioNegocio();
 
             string email = txtEmailUsuario.Text;
+            string contrasena = txtPassword.Text;
+
+            if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(contrasena))
+            {
+                lblRespuesta.Text = "Tenes que llenar los campos!";
+                return;
+            }
+
+            if (negocio.isExist(email))
+            {
+                lblRespuesta.Text = "Estas queriendo eliminar tu usuario!";
+                return;
+            }
 
             listaUsuarios = negocio.listarUsuarios(email);
 
@@ -75,6 +91,19 @@ namespace TPC_Equipo2
             {
                 return;
             }
+
+            ClienteNegocio clienteNegocio = new ClienteNegocio();
+            Cliente cliente = new Cliente();
+            listaCliente = clienteNegocio.listarClientes();
+            foreach (Cliente item in listaCliente)
+            {
+                if(item.Email == txtEmailUsuario.Text)
+                {
+                    lblRespuesta.Text = "No podes eliminar un cliente!";
+                    return;
+                }
+            }
+
 
             UsuarioNegocio negocio = new UsuarioNegocio();
 
