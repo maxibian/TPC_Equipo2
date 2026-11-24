@@ -2,82 +2,157 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-        <div class="container mt-4">
-            <h2>¡Pedido registrado correctamente!</h2>
-            <p class="text-muted">
-                Recibimos tu pedido. Podés consultar los datos de tu compra a continuación.
-            </p>
+    <div class="container py-5" style="max-width: 960px;">
 
-            <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger" />
+        <asp:Label ID="lblMensaje" runat="server"
+            CssClass="d-block text-danger mb-3" />
 
-            <asp:Panel ID="pnlComprobante" runat="server" Visible="false">
+        <asp:Panel ID="pnlComprobante" runat="server" Visible="false">
 
-                <div class="card mt-4">
-                    <div class="card-body">
+            <div class="text-center mb-4">
 
-                        <h5>Resumen del pedido</h5>
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success mb-3" style="width: 72px; height: 72px; font-size: 2.25rem;">
+                    ✓              
+                </div>
 
-                        <p>
-                            Número de pedido:
+                <h2 class="fw-bold">¡Tu pedido fue registrado!</h2>
+
+                <p class="text-muted">
+                    Recibimos tu pedido correctamente.
+                A continuación podés consultar sus datos.
+           
+                </p>
+
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-body p-4">
+
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+
+                        <div>
+                            <p class="text-muted small mb-1">
+                                NÚMERO DE PEDIDO
                        
-                            <asp:Label ID="lblIdVenta" runat="server" />
-                        </p>
+                            </p>
 
-                        <p>
-                            Fecha:
+                            <h3 class="fw-bold mb-0">#<asp:Label ID="lblIdVenta" runat="server" />
+                            </h3>
+                        </div>
+
+                        <span class="badge bg-secondary rounded-pill px-3 py-2">Estado:
                        
-                            <asp:Label ID="lblFecha" runat="server" />
-                        </p>
+                        <asp:Label ID="lblEstado" runat="server" />
+                        </span>
 
-                        <p>
-                            Estado:
+                    </div>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <p class="text-muted small mb-1">
+                                Fecha de compra
                        
-                            <asp:Label ID="lblEstado" runat="server" />
-                        </p>
+                            </p>
 
-                        <p>
-                            Forma de pago:
+                            <span class="fw-semibold">
+                                <asp:Label ID="lblFecha" runat="server" />
+                            </span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <p class="text-muted small mb-1">
+                                Forma de pago
                        
-                            <asp:Label ID="lblFormaPago" runat="server" />
-                        </p>
+                            </p>
 
-                        <p>
-                            Forma de entrega:
+                            <span class="fw-semibold">
+                                <asp:Label ID="lblFormaPago" runat="server" />
+                            </span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <p class="text-muted small mb-1">
+                                Forma de entrega
                        
-                            <asp:Label ID="lblFormaEntrega" runat="server" />
-                        </p>
+                            </p>
 
-                        <asp:GridView ID="gvDetalles" runat="server" AutoGenerateColumns="false" CssClass="table table-striped mt-3">
+                            <span class="fw-semibold">
+                                <asp:Label ID="lblFormaEntrega" runat="server" />
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-body p-4">
+
+                    <h4 class="fw-semibold mb-3">Productos del pedido
+                    </h4>
+
+                    <div class="table-responsive">
+
+                        <asp:GridView ID="gvDetalles" runat="server" AutoGenerateColumns="false" GridLines="None" CssClass="table table-striped table-hover align-middle">
+
                             <Columns>
+
                                 <asp:TemplateField HeaderText="Producto">
                                     <ItemTemplate>
-                                        <%# Eval("Producto.Nombre") %>
+                                        <%#: Eval("Producto.Nombre") %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
                                 <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
 
-                                <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio unitario" DataFormatString="{0:N2}" />
+                                <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio unitario" DataFormatString="${0:N2}" HeaderStyle-CssClass="text-end" ItemStyle-CssClass="text-end" />
 
-                                <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:N2}" />
+                                <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="${0:N2}" HeaderStyle-CssClass="text-end" ItemStyle-CssClass="text-end" />
+
                             </Columns>
+
                         </asp:GridView>
 
-                        <h5 class="text-end">Total: $
-                       
-                            <asp:Label ID="lblTotal" runat="server" />
-                        </h5>
+                    </div>
 
-                        <p class="text-muted">  El pedido fue registrado. Su estado se actualizará a medida que avance el proceso de compra.
+                    <div class="border-top pt-3 mt-3 text-end">
+
+                        <p class="text-muted small mb-1">
+                            Total del pedido
+                   
                         </p>
 
+                        <h3 class="fw-bold text-primary">$<asp:Label ID="lblTotal" runat="server" />
+                        </h3>
+
                     </div>
+
                 </div>
+            </div>
 
-            </asp:Panel>
+            <div class="alert alert-light border mb-4">
 
-            <a href="Inicio.aspx" class="btn btn-primary mt-3">Volver al catálogo
-        </a>
+                <strong>¿Qué sigue?</strong>
+
+                <p class="mb-0 mt-2">
+                    Tu pedido fue registrado correctamente.
+                Podrás consultar su estado a medida que
+                avance el proceso de preparación y entrega.
+           
+                </p>
+
+            </div>
+
+        </asp:Panel>
+
+        <div class="text-center">
+
+            <a href="Inicio.aspx" class="btn btn-primary px-4 py-2">Volver al catálogo
+            </a>
+
         </div>
+
+    </div>
 
 </asp:Content>
