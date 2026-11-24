@@ -85,5 +85,41 @@ namespace negocio
 
             servidor.Send(correo);
         }
+
+
+        public void enviarCorreoSeguimiento(Venta venta)
+        {
+            if (venta == null || venta.Cliente == null ||
+                string.IsNullOrWhiteSpace(venta.Cliente.Email))
+            {
+                throw new ArgumentException("La venta no tiene un correo de cliente válido.");
+            }
+
+            if (string.IsNullOrWhiteSpace(venta.CodigoSeguimiento))
+            {
+                throw new ArgumentException("La venta no tiene un código de seguimiento.");
+            }
+
+            MailMessage correo = new MailMessage();
+
+            correo.From = new MailAddress("notificaciones@ejemplo.com");
+            correo.To.Add(venta.Cliente.Email);
+
+            correo.Subject = "Tu pedido N° " + venta.IdVenta + " fue enviado";
+
+            correo.Body =
+                "Hola " + venta.Cliente.Nombre + ",\n\n" +
+                "¡Tu pedido fue despachado!\n\n" +
+                "Número de pedido: " + venta.IdVenta + "\n" +
+                "Estado: " + venta.EstadoVenta.Nombre + "\n" +
+                "Código de seguimiento: " + venta.CodigoSeguimiento + "\n\n" +
+                "Podés consultar el estado de tu compra " +
+                "desde tu cuenta en nuestra tienda.";
+
+            correo.IsBodyHtml = false;
+
+            servidor.Send(correo);
+        }
+
     }
 }
