@@ -100,7 +100,7 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("DELETE FROM DIRECCION WHERE IdDireccion = @IdDireccion"); 
+                datos.setearConsulta("UPDATE DIRECCION SET Estado = 0 WHERE IdDireccion = @IdDireccion"); 
                 datos.setearParametro("@IdDireccion", id);
                 datos.ejecutarAccion();
 
