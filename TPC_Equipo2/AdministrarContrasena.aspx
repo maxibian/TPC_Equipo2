@@ -20,7 +20,7 @@
 
                 <asp:Panel ID="pnlPassword" runat="server" CssClass="mb-3">
                     <asp:Label ID="lblPassword" runat="server" Text="Contraseña actual" AssociatedControlID="txtPassword" CssClass="form-label" />
-                    <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" MaxLength="50" TextMode="Password" />
+                    <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" MaxLength="50" MinLength="4" TextMode="Password" />
                 </asp:Panel>
             </div>
             <hr />
@@ -30,12 +30,12 @@
 
                 <asp:Panel ID="pnlPasswordNuevo" runat="server" CssClass="mb-3">
                     <asp:Label ID="lblPasswordNuevo" runat="server" Text="Contraseña nueva" AssociatedControlID="txtPassword" CssClass="form-label" />
-                    <asp:TextBox ID="txtPasswordNuevo" runat="server" CssClass="form-control" MaxLength="50" TextMode="Password" />
+                    <asp:TextBox ID="txtPasswordNuevo" runat="server" CssClass="form-control" MaxLength="50" MinLength="4" TextMode="Password" />
                 </asp:Panel>
 
                 <asp:Panel ID="pnlConfirmacionPassword" runat="server" CssClass="mb-3">
                     <asp:Label ID="lblConfirmacionPassword" runat="server" Text="Confirmar contraseña" AssociatedControlID="txtPassword" CssClass="form-label" />
-                    <asp:TextBox ID="txtConfirmacionPassword" runat="server" CssClass="form-control" MaxLength="50" TextMode="Password" />
+                    <asp:TextBox ID="txtConfirmacionPassword" runat="server" CssClass="form-control" MaxLength="50" MinLength="4" TextMode="Password" />
                 </asp:Panel>
 
             </div>
