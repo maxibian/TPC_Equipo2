@@ -313,9 +313,9 @@ namespace TPC_Equipo2
                     NotificacionNegocio notificacion = new NotificacionNegocio();
                     notificacion.enviarCorreoConfirmacion(ventaGuardada);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    throw ex;
+                    
                 }
 
                 Response.Redirect("~/CompraExitosa.aspx?id=" + venta.IdVenta, false);

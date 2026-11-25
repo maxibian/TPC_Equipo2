@@ -16,12 +16,18 @@ namespace TPC_Equipo2
             if (Session["usuario"] == null)
             {
                 Response.Redirect("Inicio.aspx", false);
+                return;
             }
 
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            if (Session["usuario"] == null)
+            {
+                Response.Redirect("Inicio.aspx", false);
+                return;
+            }
             if (string.IsNullOrWhiteSpace(txtCalle.Text) ||
                 string.IsNullOrWhiteSpace(txtNumero.Text) ||
                 string.IsNullOrWhiteSpace(txtLocalidad.Text) ||
@@ -35,6 +41,11 @@ namespace TPC_Equipo2
             if (!int.TryParse(txtNumero.Text, out int numero) || numero <= 0)
             {
                 lblRespuesta.Text = "Ingresa un numero de domicilio válido.";
+                return;
+            }
+            if (txtCodigoPostal.Text.Trim().Length > 10)
+            {
+                lblRespuesta.Text = "El código postal no puede tener más de 10 caracteres.";
                 return;
             }
 
@@ -58,6 +69,7 @@ namespace TPC_Equipo2
 
                 if (idDireccion > 0)
                 {
+                    lblRespuesta.CssClass = "text-success";
                     lblRespuesta.Text = "Se agrego direccion con exito!";
                 }
                 else

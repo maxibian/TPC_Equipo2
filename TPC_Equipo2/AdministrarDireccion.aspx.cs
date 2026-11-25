@@ -18,7 +18,7 @@ namespace TPC_Equipo2
             if (Session["usuario"] == null)
             {
                 Response.Redirect("Inicio.aspx", false);
-
+                return;
             }
 
             if (!IsPostBack)

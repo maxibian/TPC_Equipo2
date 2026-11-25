@@ -159,14 +159,14 @@ namespace TPC_Equipo2
             }
 
             decimal precio;
-            if (!decimal.TryParse(txtPrecio.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out precio) || precio < 0)
+            if (!decimal.TryParse(txtPrecio.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out precio) || precio <= 0)
             {
                 MostrarMensaje("El precio no es válido.", true);
                 return;
             }
             
             int stock;
-            if (!int.TryParse(txtStock.Text, out stock) || stock < 0)
+            if (!int.TryParse(txtStock.Text, out stock) || stock <= 0)
             {
                 MostrarMensaje("El stock no es válido.", true);
                 return;
