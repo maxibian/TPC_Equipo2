@@ -33,6 +33,7 @@ namespace TPC_Equipo2
                     btnCambiarEstado.Enabled = false;
                     txtNombreFormaEntrega.Enabled = false;
                     chkRequiereDireccion.Enabled = false;
+                    txtCostoEntrega.Enabled = false;
                     return;
                 }
 
@@ -47,12 +48,14 @@ namespace TPC_Equipo2
                     btnCambiarEstado.Enabled = false;
                     txtNombreFormaEntrega.Enabled = false;
                     chkRequiereDireccion.Enabled = false;
+                    txtCostoEntrega.Enabled = false;
                     return;
                 }
 
                 txtNombreFormaEntrega.Text = forma.Nombre;
                 chkEstado.Checked = forma.Estado;
                 chkRequiereDireccion.Checked = forma.RequiereDireccion;
+                txtCostoEntrega.Text = forma.CostoEntrega.ToString("0.00");
 
                 if (forma.Estado)
                 {
@@ -84,11 +87,35 @@ namespace TPC_Equipo2
                 return;
             }
 
+            decimal costoEntrega;
+
+            if (!decimal.TryParse(txtCostoEntrega.Text.Trim(), out costoEntrega))
+            {
+                lblMensaje.CssClass = "d-block mt-2 text-danger";
+                lblMensaje.Text = "Ingresá un costo de entrega válido.";
+                return;
+            }
+
+            if (costoEntrega < 0)
+            {
+                lblMensaje.CssClass = "d-block mt-2 text-danger";
+                lblMensaje.Text = "El costo de entrega no puede ser negativo.";
+                return;
+            }
+
+            if (decimal.Round(costoEntrega, 2) != costoEntrega)
+            {
+                lblMensaje.CssClass = "d-block mt-2 text-danger";
+                lblMensaje.Text = "El costo no puede tener más de dos decimales.";
+                return;
+            }
+
             FormaEntrega forma = new FormaEntrega();
 
             forma.IdFormaEntrega = numero;
             forma.Nombre = txtNombreFormaEntrega.Text;
             forma.RequiereDireccion = chkRequiereDireccion.Checked;
+            forma.CostoEntrega = costoEntrega;
 
             FormaEntregaNegocio negocio = new FormaEntregaNegocio();
 

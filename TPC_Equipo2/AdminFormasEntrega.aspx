@@ -14,12 +14,23 @@
 
             <h5 class="card-title mb-3">Agregar forma de entrega</h5>
 
+
             <div class="row">
+
                 <div class="col-md-6 mb-3">
                     <asp:Label ID="lblNombreFormaEntrega" runat="server" Text="Nombre" AssociatedControlID="txtNombreFormaEntrega" CssClass="form-label" />
-                    <asp:TextBox ID="txtNombreFormaEntrega" runat="server" CssClass="form-control" MaxLength="50"></asp:TextBox>
+
+                    <asp:TextBox ID="txtNombreFormaEntrega" runat="server" CssClass="form-control" MaxLength="50" />
                 </div>
+
+                <div class="col-md-4 mb-3">
+                    <asp:Label ID="lblCostoEntrega" runat="server" Text="Costo de entrega ($)" AssociatedControlID="txtCostoEntrega" CssClass="form-label" />
+
+                    <asp:TextBox ID="txtCostoEntrega" runat="server" CssClass="form-control" MaxLength="11" placeholder="Ej.: 5000,00" />
+                </div>
+
             </div>
+
 
             <div class="mb-3">
                 <asp:CheckBox ID="chkRequiereDireccion" runat="server" Text="Requiere dirección de entrega" />
@@ -41,9 +52,10 @@
                 <asp:GridView ID="gvFormasEntrega" runat="server" DataKeyNames="IdFormaEntrega" AutoGenerateColumns="false" CssClass="table table-striped table-hover align-middle" OnSelectedIndexChanged="gvFormasEntrega_SelectedIndexChanged" EmptyDataText="No hay formas de entrega registradas.">
                     <Columns>
                         <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
+                        <asp:BoundField HeaderText="Costo de entrega" DataField="CostoEntrega" DataFormatString="${0:N2}" />
                         <asp:CheckBoxField HeaderText="Activo" DataField="Estado" />
                         <asp:CheckBoxField HeaderText="Requiere dirección" DataField="RequiereDireccion" />
-                        <asp:CommandField HeaderText="Acción" ShowSelectButton="true" SelectText="Seleccionar" />
+                        <asp:CommandField HeaderText="Acción" ShowSelectButton="true" SelectText="Seleccionar" />                    
                     </Columns>
                 </asp:GridView>
             </div>
