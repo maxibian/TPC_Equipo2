@@ -69,12 +69,22 @@ namespace TPC_Equipo2
             lblSubtotal.Text = "Subtotal: $" + subtotal.ToString("N2");
             //lblTotal.Text = "Total: $" + total.ToString("N2");
 
-            if(carrito.Count == 0)
+            if (carrito.Count == 0)
             {
-                lblVacio.Text = "Carrito vacío";
-                btnRealizarCompra.Visible = false;
-                lblSubtotal.Visible = false;
+                lblVacio.Text = "Tu carrito está vacío.";
+
+                pnlCarritoVacio.Visible = true;
+                pnlCarritoConProductos.Visible = false;
             }
+            else
+            {
+                lblVacio.Text = "";
+
+                pnlCarritoVacio.Visible = false;
+                pnlCarritoConProductos.Visible = true;
+            }
+
+
         }
 
         private List<ItemCarrito> ObtenerItems()
