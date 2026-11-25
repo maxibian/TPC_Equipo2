@@ -124,6 +124,15 @@ namespace TPC_Equipo2
                 return;
             }
 
+            bool esEnviado = ddlEstado.SelectedItem != null && ddlEstado.SelectedItem.Text == "Enviado";
+
+            if (!esEnviado && !string.IsNullOrWhiteSpace(codigoSeguimiento) && codigoSeguimiento != (ventaActual.CodigoSeguimiento ?? ""))
+            {
+                lblMensaje.CssClass = "text-danger";
+                lblMensaje.Text = "Solo podés modificar el código de seguimiento cuando el estado seleccionado es Enviado.";
+                return;
+            }
+
             bool pasaAEnviado = ventaActual.EstadoVenta.Nombre == "En preparación" && ddlEstado.SelectedItem.Text == "Enviado";
 
             string codigoFinal = codigoSeguimiento;
@@ -142,7 +151,7 @@ namespace TPC_Equipo2
 
             try
             {
-                if (!string.IsNullOrWhiteSpace(codigoSeguimiento) && codigoSeguimiento != ventaActual.CodigoSeguimiento)
+                if (esEnviado &&!string.IsNullOrWhiteSpace(codigoSeguimiento) && codigoSeguimiento != ventaActual.CodigoSeguimiento)
                 {
                     negocio.actualizarCodigoSeguimiento(numero, codigoSeguimiento);
                 }
@@ -203,10 +212,11 @@ namespace TPC_Equipo2
             ddlEstado.DataValueField = "IdEstadoVenta";
             ddlEstado.DataBind();
 
-            ddlEstado.SelectedValue =
-                venta.EstadoVenta.IdEstadoVenta.ToString();
+            ddlEstado.SelectedValue = venta.EstadoVenta.IdEstadoVenta.ToString();
 
             ddlEstado.Enabled = ddlEstado.Items.Count > 1;
+
+            actualizarDisponibilidadSeguimiento();
         }
 
         private bool esAdministrador()
@@ -220,5 +230,17 @@ namespace TPC_Equipo2
 
             return usuario.Rol.IdRol == 1 && usuario.Estado;
         }
+
+        protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            actualizarDisponibilidadSeguimiento();
+        }
+        private void actualizarDisponibilidadSeguimiento()
+        {
+            bool esEnviado = ddlEstado.SelectedItem != null && ddlEstado.SelectedItem.Text == "Enviado";
+
+            txtCodigoSeguimiento.Enabled = esEnviado;
+        }
+
     }
 }

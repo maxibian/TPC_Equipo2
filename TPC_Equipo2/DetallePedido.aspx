@@ -102,7 +102,7 @@
                     Estado del pedido
                 </label>
 
-                <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select" />
+                <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlEstado_SelectedIndexChanged" />
             </div>
 
             <div class="mb-3">
@@ -113,10 +113,8 @@
                 <asp:TextBox ID="txtCodigoSeguimiento" runat="server" CssClass="form-control" MaxLength="100" placeholder="Ej.: AR123456789" />
 
                 <div class="form-text">
-                    Completá este campo cuando el pedido tenga
-        un código de seguimiento del transporte.
-        No es obligatorio para retiro en local.
-   
+                    El código de seguimiento se habilita al seleccionar
+                    el estado "Enviado".
                 </div>
             </div>
 
