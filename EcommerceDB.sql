@@ -151,7 +151,10 @@ CREATE TABLE FORMAENTREGA (
         IdFormaEntrega INT IDENTITY(1,1) PRIMARY KEY,
         Nombre VARCHAR(50) NOT NULL UNIQUE,
         Estado BIT NOT NULL DEFAULT 1,
-        RequiereDireccion BIT NOT NULL DEFAULT 0
+        RequiereDireccion BIT NOT NULL DEFAULT 0,
+        CostoEntrega DECIMAL(10,2) NOT NULL DEFAULT (0),
+
+    CONSTRAINT CK_FORMAENTREGA_CostoEntrega CHECK (CostoEntrega >= 0)
 );
 GO
 
@@ -173,6 +176,9 @@ CREATE TABLE VENTA (
         IdEstadoVenta INT NOT NULL,
         Observaciones VARCHAR(500) NULL,
         CodigoSeguimiento VARCHAR(100) NULL,
+        CostoEntrega DECIMAL(10,2) NOT NULL DEFAULT (0),
+
+        CONSTRAINT CK_VENTA_CostoEntrega CHECK (CostoEntrega >= 0)
         
         CONSTRAINT CK_VENTA_Total CHECK (VentaTotal >= 0),
         
