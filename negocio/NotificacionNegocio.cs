@@ -56,12 +56,22 @@ namespace negocio
                 "¡Gracias por tu compra!\n\n" +
                 "Hola " + venta.Cliente.Nombre + ",\n\n" +
                 "Tu pedido fue registrado correctamente.\n\n" +
+
                 "Número de pedido: " + venta.IdVenta + "\n" +
-                "Fecha: " + venta.Fecha.ToString("dd/MM/yyyy HH:mm") + "\n" +
-                "Total: $" + venta.VentaTotal.ToString("N2") + "\n" +
+                "Fecha: " + venta.Fecha.ToString("dd/MM/yyyy HH:mm") + "\n\n" +
+
+                "RESUMEN DE LA COMPRA\n" +
+                "--------------------------------\n" +
+                "Subtotal de productos: $" + (venta.VentaTotal - venta.CostoEntrega).ToString("N2") + "\n" +
+
+                "Costo de entrega: $" + venta.CostoEntrega.ToString("N2") + "\n" +
+
+                "Total de la compra: $" + venta.VentaTotal.ToString("N2") + "\n\n" +
+
                 "Forma de pago: " + venta.FormaPago.Nombre + "\n" +
                 "Forma de entrega: " + venta.FormaEntrega.Nombre + "\n" +
                 "Estado: " + venta.EstadoVenta.Nombre + "\n\n" +
+
                 "Te notificaremos cuando haya novedades sobre tu pedido.";
 
             correo.IsBodyHtml = false;
@@ -107,10 +117,11 @@ namespace negocio
 
             correo.Subject = "Tu pedido N° " + venta.IdVenta + " fue enviado";
 
+
             correo.Body =
                 "Hola " + venta.Cliente.Nombre + ",\n\n" +
                 "¡Tu pedido fue despachado!\n\n" +
-                "Número de pedido: " + venta.IdVenta + "\n" +
+                 "Número de pedido: " + venta.IdVenta + "\n" +
                 "Estado: " + venta.EstadoVenta.Nombre + "\n" +
                 "Código de seguimiento: " + venta.CodigoSeguimiento + "\n\n" +
                 "Podés consultar el estado de tu compra " +
