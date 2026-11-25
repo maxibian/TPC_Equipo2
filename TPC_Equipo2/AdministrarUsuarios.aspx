@@ -17,7 +17,7 @@
                        style="font-size: 2.5rem;"></i>
 
                     <h3 class="fw-bold mt-2 mb-1">
-                        Administrar administradores
+                        Administrar Usuarios
                     </h3>
 
                     <p class="text-muted mb-0">
