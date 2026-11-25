@@ -56,10 +56,28 @@ namespace TPC_Equipo2
                 return;
             }
 
+            decimal costoEntrega;
+
+            if (!decimal.TryParse(txtCostoEntrega.Text.Trim(), out costoEntrega))
+            {
+                lblMensaje.CssClass = "d-block mt-2 text-danger";
+                lblMensaje.Text = "Ingresá un costo de entrega válido.";
+                return;
+            }
+
+            if (costoEntrega < 0)
+            {
+                lblMensaje.CssClass = "d-block mt-2 text-danger";
+                lblMensaje.Text = "El costo de entrega no puede ser negativo.";
+                return;
+            }
+
+
             FormaEntrega nuevaFormaEntrega = new FormaEntrega();
 
             nuevaFormaEntrega.Nombre = nombre;
             nuevaFormaEntrega.RequiereDireccion = chkRequiereDireccion.Checked;
+            nuevaFormaEntrega.CostoEntrega = costoEntrega;
 
             FormaEntregaNegocio negocio = new FormaEntregaNegocio();
 
@@ -73,6 +91,7 @@ namespace TPC_Equipo2
                     lblMensaje.Text = "Forma de entrega agregada correctamente";
                     txtNombreFormaEntrega.Text = "";
                     chkRequiereDireccion.Checked = false;
+                    txtCostoEntrega.Text = "";
                     cargarFormasEntrega();
                 }
                 else

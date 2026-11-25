@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -41,15 +41,6 @@ namespace TPC_Equipo2
 
                 gvResumen.DataSource = detallesCarrito;
                 gvResumen.DataBind();
-
-                decimal total = 0;
-
-                foreach (DetalleVenta detalle in detallesCarrito)
-                {
-                    total += detalle.Subtotal;
-                }
-
-                lblTotal.Text = total.ToString("N2");
 
                 FormaPagoNegocio negocioPago = new FormaPagoNegocio();
 
@@ -94,6 +85,8 @@ namespace TPC_Equipo2
                 ddlFormaEntrega.Items.Insert(0, new ListItem("Seleccione una forma de entrega", ""));
 
                 btnConfirmarCompra.Enabled = true;
+
+                actualizarResumenCompra();
 
             }
 
@@ -315,7 +308,7 @@ namespace TPC_Equipo2
                 }
                 catch (Exception)
                 {
-                    
+
                 }
 
                 Response.Redirect("~/CompraExitosa.aspx?id=" + venta.IdVenta, false);
@@ -355,6 +348,8 @@ namespace TPC_Equipo2
 
         protected void ddlFormaEntrega_SelectedIndexChanged(object sender, EventArgs e)
         {
+            actualizarResumenCompra();
+
             pnlDireccion.Visible = false;
 
             if (!int.TryParse(ddlFormaEntrega.SelectedValue, out int idFormaEntrega))
@@ -531,5 +526,55 @@ namespace TPC_Equipo2
 
             return true;
         }
+
+        private void actualizarResumenCompra()
+        {
+            Usuario usuario = Session["usuario"] as Usuario;
+
+            if (usuario == null) return;
+
+            List<ItemCarrito> carrito = obtenerItemsCarrito(usuario);
+
+            if (!prepararDetallesCarrito(carrito, out List<DetalleVenta> detalles, out string mensaje))
+            {
+                lblMensaje.Text = mensaje;
+                btnConfirmarCompra.Enabled = false;
+                return;
+            }
+
+            decimal subtotal = 0;
+
+            foreach (DetalleVenta detalle in detalles)
+            {
+                subtotal += detalle.Subtotal;
+            }
+
+            lblSubtotal.Text = subtotal.ToString("N2");
+
+            if (!int.TryParse(ddlFormaEntrega.SelectedValue, out int idFormaEntrega))
+            {
+                lblCostoEntrega.Text = "A definir";
+                lblTotal.Text = "—";
+                return;
+            }
+
+            FormaEntregaNegocio negocio = new FormaEntregaNegocio();
+            FormaEntrega forma = negocio.buscarPorId(idFormaEntrega);
+
+            if (forma == null || !forma.Estado)
+            {
+                lblCostoEntrega.Text = "No disponible";
+                lblTotal.Text = "—";
+                return;
+            }
+
+            decimal costoEntrega = forma.CostoEntrega;
+            decimal total = subtotal + costoEntrega;
+
+            lblCostoEntrega.Text = costoEntrega == 0 ? "Gratis" : "$" + costoEntrega.ToString("N2");
+
+            lblTotal.Text = "$" + total.ToString("N2");
+        }
+
     }
 }

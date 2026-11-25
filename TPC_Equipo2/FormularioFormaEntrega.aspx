@@ -12,10 +12,26 @@
     <div class="card mb-4">
         <div class="card-body">
 
-            <div class="col-md-6 mb-3">
-                <asp:Label ID="lblNombre" runat="server" Text="Nombre:" CssClass="form-label" AssociatedControlID="txtNombreFormaEntrega"></asp:Label>
-                <asp:TextBox ID="txtNombreFormaEntrega" runat="server" CssClass="form-control" MaxLength="50"></asp:TextBox>
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <asp:Label ID="lblNombre" runat="server" Text="Nombre:" CssClass="form-label" AssociatedControlID="txtNombreFormaEntrega" />
+
+                    <asp:TextBox ID="txtNombreFormaEntrega" runat="server" CssClass="form-control" MaxLength="50" />
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <asp:Label ID="lblCostoEntrega" runat="server" Text="Costo de entrega $" CssClass="form-label" AssociatedControlID="txtCostoEntrega" />
+
+                    <asp:TextBox ID="txtCostoEntrega" runat="server" CssClass="form-control" MaxLength="11" placeholder="Ej.: 5000,00" />
+
+                </div>
+
             </div>
+
 
             <div class="mb-3">
                 <asp:CheckBox ID="chkRequiereDireccion" runat="server" Text="Requiere dirección de entrega" />
