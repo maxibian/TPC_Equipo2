@@ -85,5 +85,71 @@ namespace negocio
             finally { datos.cerrarConexion(); }
             
         }
+        public void agregarTarjeta(Tarjeta tarjeta)
+        {
+            try
+            {
+                datos.setearConsulta("INSERT INTO TARJETA (IdCliente, NumeroTarjeta, FechaVencimiento, NombreYApellidoTitular, IdTipoTarjeta, IdMarcaTarjeta, Estado) VALUES (@IdCliente, @Numero, @Vencimiento, @Titular, @IdTipo, @IdMarca, 1)");
+                datos.setearParametro("@IdCliente", tarjeta.IdCliente);
+                datos.setearParametro("@Numero", tarjeta.NumeroTarjeta);
+                datos.setearParametro("@Vencimiento", tarjeta.FechaVencimiento);
+                datos.setearParametro("@Titular", tarjeta.NombreYApellidoTitular);
+                datos.setearParametro("@IdTipo", tarjeta.TipoTarjeta.IdTipoTarjeta);
+                datos.setearParametro("@IdMarca", tarjeta.MarcaTarjeta.IdMarcaTarjeta);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<TipoTarjeta> listarTiposTarjeta()
+        {
+            List<TipoTarjeta> lista = new List<TipoTarjeta>();
+            try
+            {
+                datos.setearConsulta("SELECT IdTipoTarjeta, NombreTipoTarjeta FROM TIPOTARJETA");
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    TipoTarjeta tipo = new TipoTarjeta();
+                    tipo.IdTipoTarjeta = (int)datos.Lector["IdTipoTarjeta"];
+                    tipo.NombreTipoTarjeta = (string)datos.Lector["NombreTipoTarjeta"];
+                    lista.Add(tipo);
+                }
+                return lista;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<MarcaTarjeta> listarMarcasTarjeta()
+        {
+            List<MarcaTarjeta> lista = new List<MarcaTarjeta>();
+            try
+            {
+                datos.setearConsulta("SELECT IdMarcaTarjeta, NombreMarcaTarjeta FROM MARCATARJETA WHERE Estado = 1");
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    MarcaTarjeta marca = new MarcaTarjeta();
+                    marca.IdMarcaTarjeta = (int)datos.Lector["IdMarcaTarjeta"];
+                    marca.Nombre = (string)datos.Lector["NombreMarcaTarjeta"];
+                    lista.Add(marca);
+                }
+                return lista;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
