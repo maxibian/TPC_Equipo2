@@ -10,12 +10,12 @@
 
             <asp:Panel ID="pnlNombre" runat="server" CssClass="mb-3">
                 <asp:Label ID="lblNombre" runat="server" Text="Nombre" AssociatedControlID="txtNombre" CssClass="form-label" />
-                <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" MaxLength="50" MinLength="4" />
+                <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" MaxLength="50" MinLength="2" />
             </asp:Panel>
 
             <asp:Panel ID="pnlApellido" runat="server" CssClass="mb-3">
                 <asp:Label ID="lblApellido" runat="server" Text="Apellido" AssociatedControlID="txtApellido" CssClass="form-label" />
-                <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control" MaxLength="50" MinLength="4" />
+                <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control" MaxLength="50" MinLength="2" />
             </asp:Panel>
 
 

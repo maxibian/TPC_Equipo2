@@ -51,7 +51,7 @@
                             <div class="col-md-6">
                                 <asp:Panel ID="pnlCodigoPostal" runat="server" CssClass="mb-3">
                                     <asp:Label ID="lblCodigoPostal" runat="server" Text="Código Postal" CssClass="form-label" />
-                                    <asp:TextBox ID="txtCodigoPostal" runat="server" CssClass="form-control" MaxLength="50" />
+                                    <asp:TextBox ID="txtCodigoPostal" runat="server" CssClass="form-control" MaxLength="10" />
                                 </asp:Panel>
                             </div>
 
@@ -95,7 +95,7 @@
                         </div>
 
                         <div class="mt-3">
-                            <asp:Label ID="lblRespuesta" runat="server" Style="color: red"/>
+                            <asp:Label ID="lblRespuesta" runat="server" CssClass="text-danger"/>
                         </div>
 
                     </asp:Panel>
