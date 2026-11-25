@@ -17,7 +17,8 @@
 
                             <img src="<%# Eval("Imagen.ImagenUrl") %>"
                                 class="card-img-top card_style"
-                                alt="Imagen del producto" />
+                                alt="Imagen del producto" 
+                                onerror="this.onerror=null; this.src='https://www.svgrepo.com/show/508699/landscape-placeholder.svg';"/>
 
                             <div class="card-body d-flex flex-column">
 

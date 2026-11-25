@@ -73,7 +73,8 @@ namespace TPC_Equipo2
                     }
                     catch (Exception)
                     {
-                        lblRespuesta.Text = "Te registraste, pero no pudimos enviar el mail de activación.";
+                        unegocio.eliminarUsuarioYCliente(id);
+                        lblRespuesta.Text = "No pudimos enviar el mail de activación. Intentá registrarte de nuevo más tarde.";
                     }
                 }
                 else

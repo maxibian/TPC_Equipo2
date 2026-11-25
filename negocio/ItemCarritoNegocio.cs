@@ -14,6 +14,8 @@ namespace negocio
 
         public void agregarItemCarrito(int IdCarrito, int IdProducto, int Cantidad, decimal PrecioUnitario)
         {
+            if (Cantidad <= 0)
+                throw new Exception("La cantidad debe ser mayor a cero.");
             try
             {
                 //Si existe el item en el carrito suma 1 en vez de agregar un nuevo item

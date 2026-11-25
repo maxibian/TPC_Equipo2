@@ -11,7 +11,10 @@ namespace TPC_Equipo2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            lblTitulo.Text = Session["error"].ToString();
+            if (Session["error"] != null)
+                lblTitulo.Text = Session["error"].ToString();
+            else
+                lblTitulo.Text = "Ocurrió un error inesperado.";
         }
     }
 }

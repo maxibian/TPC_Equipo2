@@ -19,7 +19,7 @@ namespace TPC_Equipo2
             {
                 ProductoNegocio negocio = new ProductoNegocio();
 
-                string id = Request.QueryString["id"].ToString();
+                string id = Request.QueryString["id"];
                 if (int.TryParse(id, out int idresultado))
                 {
                     productosLista = negocio.listarCategoria(idresultado);
@@ -28,6 +28,10 @@ namespace TPC_Equipo2
                             producto.Imagen = new Imagen() { ImagenUrl = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg" };
                     repRepeater.DataSource = productosLista;
                     repRepeater.DataBind();
+                }
+                else
+                {
+                    Response.Redirect("Inicio.aspx", false);
                 }
             }
         }
