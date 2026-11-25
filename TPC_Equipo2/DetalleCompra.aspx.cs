@@ -21,6 +21,7 @@ namespace TPC_Equipo2
             }
 
 
+
             VentaNegocio negocio = new VentaNegocio();
 
             int idventa = Convert.ToInt32(Request.QueryString["IdVenta"]);
@@ -31,6 +32,7 @@ namespace TPC_Equipo2
 
             dgvDetalle.DataBind();
 
+            hlComprobante.NavigateUrl = "~/Comprobante.aspx?id=" + idventa;
         }
     }
 }
