@@ -18,23 +18,30 @@ namespace negocio
                 throw new Exception("La cantidad debe ser mayor a cero.");
             try
             {
-                //Si existe el item en el carrito suma 1 en vez de agregar un nuevo item
-                //Comprueba q sea stock suficiente para agregar la cantidad deseada
-                datos.setearConsulta(@"
-            DECLARE @EnCarrito INT = ISNULL((SELECT Cantidad FROM ITEMCARRITO WHERE IdCarrito = @IdCarrito AND IdProducto = @IdProducto), 0);
+                datos.setearConsulta("SELECT Cantidad FROM ITEMCARRITO WHERE IdCarrito = @IdCarrito AND IdProducto = @IdProducto");
+                datos.setearParametro("@IdCarrito", IdCarrito);
+                datos.setearParametro("@IdProducto", IdProducto);
+                int enCarrito = datos.ejecutarEscalar();      
 
-            IF (SELECT Stock FROM PRODUCTO WHERE IdProducto = @IdProducto) < @EnCarrito + @Cantidad
-                THROW 50002, 'No hay stock suficiente.', 1;
+                datos.setearConsulta("SELECT Stock FROM PRODUCTO WHERE IdProducto = @IdProducto");
+                datos.setearParametro("@IdProducto", IdProducto);
+                int stock = datos.ejecutarEscalar();
 
-            IF @EnCarrito > 0
-                UPDATE ITEMCARRITO SET Cantidad = Cantidad + @Cantidad WHERE IdCarrito = @IdCarrito AND IdProducto = @IdProducto;
-            ELSE
-                INSERT INTO ITEMCARRITO (IdCarrito, IdProducto, Cantidad, PrecioUnitario) VALUES (@IdCarrito, @IdProducto, @Cantidad, @PrecioUnitario);
-        ");
+                if (enCarrito + Cantidad > stock)
+                    throw new Exception("No hay stock suficiente.");
+
+                if (enCarrito > 0)
+                {
+                    datos.setearConsulta("UPDATE ITEMCARRITO SET Cantidad = Cantidad + @Cantidad WHERE IdCarrito = @IdCarrito AND IdProducto = @IdProducto");
+                }
+                else
+                {
+                    datos.setearConsulta("INSERT INTO ITEMCARRITO (IdCarrito, IdProducto, Cantidad, PrecioUnitario) VALUES (@IdCarrito, @IdProducto, @Cantidad, @PrecioUnitario)");
+                    datos.setearParametro("@PrecioUnitario", PrecioUnitario);
+                }
                 datos.setearParametro("@IdCarrito", IdCarrito);
                 datos.setearParametro("@IdProducto", IdProducto);
                 datos.setearParametro("@Cantidad", Cantidad);
-                datos.setearParametro("@PrecioUnitario", PrecioUnitario);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
