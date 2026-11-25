@@ -38,10 +38,28 @@
 
             </asp:GridView>
 
-            <h5 class="text-end">Total: $
-           
-                <asp:Label ID="lblTotal" runat="server" />
-            </h5>
+            <div class="border-top pt-3 mt-3">
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal de productos:</span>
+                    <span>$<asp:Label ID="lblSubtotal" runat="server" />
+                    </span>
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Costo de entrega:</span>
+                    <asp:Label ID="lblCostoEntrega" runat="server" />
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <strong>Total a pagar:</strong>
+                    <strong class="text-primary">
+                        <asp:Label ID="lblTotal" runat="server" />
+                    </strong>
+                </div>
+
+            </div>
+
 
         </div>
     </div>
@@ -112,7 +130,8 @@
                                 </div>
 
                                 <div class="col-12 mb-3">
-                                    <label class="form-label"> Observaciones (opcional)
+                                    <label class="form-label">
+                                        Observaciones (opcional)
            
                                     </label>
                                     <asp:TextBox ID="txtObservacion" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" MaxLength="200" />

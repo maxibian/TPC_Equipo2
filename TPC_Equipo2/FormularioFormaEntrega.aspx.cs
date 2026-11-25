@@ -185,13 +185,13 @@ namespace TPC_Equipo2
 
                 if (nuevoEstado)
                 {
-                    btnCambiarEstado.Text = "Desactivar categoría";
+                    btnCambiarEstado.Text = "Desactivar";
                     btnCambiarEstado.CssClass = "btn btn-danger";
                     lblMensaje.Text = "Forma de entrega activada correctamente.";
                 }
                 else
                 {
-                    btnCambiarEstado.Text = "Activar categoría";
+                    btnCambiarEstado.Text = "Activar";
                     btnCambiarEstado.CssClass = "btn btn-success";
                     lblMensaje.Text = "Forma de entrega desactivada correctamente.";
                 }
