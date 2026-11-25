@@ -28,6 +28,7 @@ namespace negocio
                 int stock = datos.ejecutarEscalar();
 
                 if (enCarrito + Cantidad > stock)
+
                     throw new Exception("No hay stock suficiente.");
 
                 if (enCarrito > 0)

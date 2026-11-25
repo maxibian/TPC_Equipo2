@@ -79,14 +79,20 @@ namespace negocio
 
             foreach (ItemCarrito item in listaSession)
             {
-                try
+                int cantidad = item.Cantidad;
+                while (cantidad > 0)
                 {
-                    itemNegocio.agregarItemCarrito(carrito.IdCarrito, item.Producto.IdProducto, item.Cantidad, item.PrecioUnitario);
+                    try
+                    {
+                        itemNegocio.agregarItemCarrito(carrito.IdCarrito, item.Producto.IdProducto, item.Cantidad, item.PrecioUnitario);
+                        break;
+                    }
+                    catch (Exception)
+                    {
+                        cantidad--;
+                    }               
+
                 }
-                catch (Exception)
-                {
-                    throw;
-                }               
             }
         }
 
