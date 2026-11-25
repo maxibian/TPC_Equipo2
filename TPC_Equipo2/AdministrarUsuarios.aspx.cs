@@ -91,7 +91,12 @@ namespace TPC_Equipo2
             {
                 return;
             }
-
+            Usuario usuarioLogueado = (Usuario)Session["usuario"];
+            if (txtEmailUsuario.Text.Trim().Equals(usuarioLogueado.NombreUsuario, StringComparison.OrdinalIgnoreCase))
+            {
+                lblRespuesta.Text = "No podés darte de baja a vos mismo.";
+                return;
+            }
             ClienteNegocio clienteNegocio = new ClienteNegocio();
             listaCliente = clienteNegocio.listarClientes();
             foreach (Cliente item in listaCliente)
