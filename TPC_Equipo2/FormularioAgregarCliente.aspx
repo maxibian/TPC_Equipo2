@@ -26,7 +26,10 @@
 
             <asp:Panel ID="pnlTelefono" runat="server" CssClass="mb-3">
                 <asp:Label ID="lblTelefono" runat="server" Text="Telefono" AssociatedControlID="txtTelefono" CssClass="form-label" />
-                <asp:TextBox ID="txtTelefono" runat="server" TextMode="Phone" CssClass="form-control" MaxLength="18" placeholder="Ej: 11 1234-5678" />
+                <asp:TextBox ID="txtTelefono" runat="server" TextMode="Phone" CssClass="form-control" MaxLength="18" placeholder="Ej: 1112345678" />
+                <asp:RegularExpressionValidator ID="revTelefono" runat="server" ControlToValidate="txtTelefono"
+                    ValidationExpression="^[0-9]{8,15}$" ErrorMessage="Ingresá solo números (entre 8 y 15)."
+                    CssClass="text-danger small" Display="Dynamic" />
             </asp:Panel>
 
             <asp:Label ID="Label1" runat="server" Text="Datos de acceso" CssClass="h4 d-block mb-3" />

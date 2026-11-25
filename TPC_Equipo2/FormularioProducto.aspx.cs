@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+
 namespace TPC_Equipo2
 {
     public partial class FormularioProducto : System.Web.UI.Page
@@ -130,7 +131,7 @@ namespace TPC_Equipo2
             }
             catch (Exception)
             {
-                MostrarMensaje("No se pudo guardar. Producto con nombre duplicado",true);
+                MostrarMensaje("Ya existe un producto con ese nombre.", true);
             }
         }
 
@@ -163,7 +164,7 @@ namespace TPC_Equipo2
                 MostrarMensaje("El precio no es válido.", true);
                 return;
             }
-            MostrarMensaje("Stock ingresado: " + txtStock.Text, false);
+            
             int stock;
             if (!int.TryParse(txtStock.Text, out stock) || stock < 0)
             {
