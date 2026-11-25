@@ -81,11 +81,29 @@
                 </asp:GridView>
             </div>
 
-            <div class="d-flex justify-content-end mt-3">
-                <h5>Total de la venta: $
-                    <asp:Label ID="lblTotal" runat="server" />
-                </h5>
+
+            <div class="border-top pt-3 mt-3">
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal de productos:</span>
+                    <span>$<asp:Label ID="lblSubtotal" runat="server" />
+                    </span>
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Costo de entrega:</span>
+                    <span>$<asp:Label ID="lblCostoEntrega" runat="server" />
+                    </span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center border-top pt-3 mt-3">
+                    <strong>Total de la venta:</strong>
+                    <h4 class="fw-bold text-primary mb-0">$<asp:Label ID="lblTotal" runat="server" />
+                    </h4>
+                </div>
+
             </div>
+
 
         </div>
     </div>
