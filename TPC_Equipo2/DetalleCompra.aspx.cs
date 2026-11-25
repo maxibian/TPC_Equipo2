@@ -14,8 +14,7 @@ namespace TPC_Equipo2
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (Session["usuario"] == null || !int.TryParse(Request.QueryString["id"], out int idVenta)
-                || idVenta <= 0)
+            if (Session["usuario"] == null)
             {
                 Response.Redirect("Inicio.aspx", false);
                 return;
