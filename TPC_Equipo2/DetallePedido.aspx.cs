@@ -46,6 +46,10 @@ namespace TPC_Equipo2
 
                         lblTotal.Text = venta.VentaTotal.ToString("N2");
 
+                        lblSubtotal.Text = (venta.VentaTotal - venta.CostoEntrega).ToString("N2");
+
+                        lblCostoEntrega.Text = venta.CostoEntrega.ToString("N2");
+
                         txtObservaciones.Text = venta.Observaciones ?? "";
 
                         txtCodigoSeguimiento.Text = venta.CodigoSeguimiento ?? "";

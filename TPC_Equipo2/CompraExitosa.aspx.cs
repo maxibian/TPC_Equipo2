@@ -61,6 +61,9 @@ namespace TPC_Equipo2
             lblFormaPago.Text = venta.FormaPago.Nombre;
             lblFormaEntrega.Text = venta.FormaEntrega.Nombre;
             lblTotal.Text = venta.VentaTotal.ToString("N2");
+            lblSubtotal.Text =(venta.VentaTotal - venta.CostoEntrega).ToString("N2");
+            lblCostoEntrega.Text =venta.CostoEntrega.ToString("N2");
+
 
             if (!string.IsNullOrWhiteSpace(venta.CodigoSeguimiento))
             {
