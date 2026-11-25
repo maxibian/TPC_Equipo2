@@ -12,5 +12,7 @@ namespace dominio
         public string Nombre { get; set; }
         public bool Estado { get; set; }
         public bool RequiereDireccion { get; set; }
+
+        public decimal CostoEntrega { get; set; }
     }
 }

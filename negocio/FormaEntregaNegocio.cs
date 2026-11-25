@@ -16,7 +16,7 @@ namespace negocio
             List<FormaEntrega> lista = new List<FormaEntrega>();
             try
             {
-                datos.setearConsulta("SELECT IdFormaEntrega, Nombre, Estado,  RequiereDireccion FROM FORMAENTREGA");
+                datos.setearConsulta("SELECT IdFormaEntrega, Nombre, Estado,  RequiereDireccion, CostoEntrega FROM FORMAENTREGA");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -25,6 +25,7 @@ namespace negocio
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Estado = (bool)datos.Lector["Estado"];
                     aux.RequiereDireccion = (bool)datos.Lector["RequiereDireccion"];
+                    aux.CostoEntrega = (decimal)datos.Lector["CostoEntrega"];
 
                     lista.Add(aux);
                 }
@@ -65,11 +66,18 @@ namespace negocio
                     throw new ArgumentException("El nombre no puede superar los 50 caracteres.");
                 }
 
+                if (nueva.CostoEntrega < 0)
+                {
+                    throw new ArgumentException(
+                        "El costo de entrega no puede ser negativo.");
+                }
+
                 if (!existeNombre(nueva.Nombre))
                 {
-                    datos.setearConsulta("INSERT INTO FORMAENTREGA (Nombre, RequiereDireccion) values (@nombre, @RequiereDireccion)");
+                    datos.setearConsulta("INSERT INTO FORMAENTREGA (Nombre, RequiereDireccion, CostoEntrega) values (@nombre, @RequiereDireccion, @CostoEntrega)");
                     datos.setearParametro("@nombre", nueva.Nombre);
                     datos.setearParametro("@RequiereDireccion", nueva.RequiereDireccion);
+                    datos.setearParametro("@CostoEntrega", nueva.CostoEntrega);
                     datos.ejecutarAccion();
 
                     return true;
@@ -144,7 +152,7 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("SELECT idFormaEntrega, Nombre, Estado, RequiereDireccion FROM FORMAENTREGA WHERE idFormaEntrega = @id");
+                datos.setearConsulta("SELECT idFormaEntrega, Nombre, Estado, RequiereDireccion, CostoEntrega FROM FORMAENTREGA WHERE idFormaEntrega = @id");
                 datos.setearParametro("@id", idFormaEntrega);
                 datos.ejecutarLectura();
 
@@ -155,6 +163,7 @@ namespace negocio
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Estado = (bool)datos.Lector["Estado"];
                     aux.RequiereDireccion = (bool)datos.Lector["RequiereDireccion"];
+                    aux.CostoEntrega = (decimal)datos.Lector["CostoEntrega"];
                 }
 
                 return aux;
@@ -188,11 +197,18 @@ namespace negocio
                     throw new ArgumentException("El nombre no puede superar los 50 caracteres.");
                 }
 
+                if (forma.CostoEntrega < 0)
+                {
+                    throw new ArgumentException(
+                        "El costo de entrega no puede ser negativo.");
+                }
+
                 if (!existeNombreEnOtroRegistro(forma.Nombre, forma.IdFormaEntrega))
                 {
-                    datos.setearConsulta("UPDATE FORMAENTREGA SET Nombre = @nombre, RequiereDireccion = @RequiereDireccion WHERE idFormaEntrega = @id");
+                    datos.setearConsulta("UPDATE FORMAENTREGA SET Nombre = @nombre, RequiereDireccion = @RequiereDireccion, CostoEntrega = @CostoEntrega WHERE idFormaEntrega = @id");
                     datos.setearParametro("@nombre", forma.Nombre);
                     datos.setearParametro("@RequiereDireccion", forma.RequiereDireccion);
+                    datos.setearParametro("@CostoEntrega", forma.CostoEntrega);
                     datos.setearParametro("@id", forma.IdFormaEntrega);
                     datos.ejecutarAccion();
 

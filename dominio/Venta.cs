@@ -22,6 +22,8 @@ namespace dominio
 
         public string CodigoSeguimiento { get; set; }
 
+        public decimal CostoEntrega { get; set; }
+
         public Venta()
         {
             Detalles = new List<DetalleVenta>();
