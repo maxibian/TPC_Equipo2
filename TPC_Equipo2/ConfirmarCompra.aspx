@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ConfirmarCompra.aspx.cs" Inherits="TPC_Equipo2.ConfirmarCompra" %>
+﻿<%@ page title="" language="C#" masterpagefile="~/Site.Master" autoeventwireup="true" codebehind="ConfirmarCompra.aspx.cs" inherits="TPC_Equipo2.ConfirmarCompra" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -33,10 +33,10 @@
 
                         <asp:GridView ID="gvResumen" runat="server" AutoGenerateColumns="false" GridLines="None" CssClass="table table-hover align-middle mb-0">
 
-                            <Columns>
+                            <columns>
 
                                 <asp:TemplateField HeaderText="Producto">
-                                    <ItemTemplate>
+                                    <itemtemplate>
 
                                         <div class="fw-semibold">
                                             <%# Eval("Producto.Nombre") %>
@@ -47,18 +47,18 @@
                                             · Unit.: $<%# Eval("PrecioUnitario", "{0:N2}") %>
                                         </div>
 
-                                    </ItemTemplate>
+                                    </itemtemplate>
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Importe" HeaderStyle-CssClass="text-end" ItemStyle-CssClass="text-end text-nowrap">
 
-                                    <ItemTemplate>
+                                    <itemtemplate>
                                         $<%# Eval("Subtotal", "{0:N2}") %>
-                                    </ItemTemplate>
+                                    </itemtemplate>
 
                                 </asp:TemplateField>
 
-                            </Columns>
+                            </columns>
 
                         </asp:GridView>
 
@@ -131,7 +131,7 @@
                         <div class="d-flex align-items-center gap-2 mb-2">
                             <span class="badge bg-primary rounded-pill">1</span>
                             <h6 class="fw-semibold mb-0">Método de pago
-                             </h6>
+                            </h6>
                         </div>
 
                         <p class="text-muted small mb-2">
@@ -139,7 +139,33 @@
    
                         </p>
 
-                        <asp:DropDownList ID="ddlFormaPago" runat="server" CssClass="form-select" />
+                        <asp:DropDownList ID="ddlFormaPago" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlFormaPago_SelectedIndexChanged" />
+
+                        <asp:Panel ID="pnlTarjeta" runat="server" Visible="false" CssClass="bg-light border rounded-3 p-3 mt-3">
+
+                            <h6 class="fw-semibold mb-2">Pago con tarjeta</h6>
+
+                            <p class="text-muted small mb-3">
+                                Elegí una de tus tarjetas e ingresá el PIN.
+   
+                            </p>
+
+                            <div class="mb-3">
+                                <label class="form-label">Tarjeta</label>
+                                <asp:DropDownList ID="ddlTarjeta" runat="server" CssClass="form-select" />
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label">PIN</label>
+                                <asp:TextBox ID="txtPin" runat="server" CssClass="form-control" TextMode="Password" MaxLength="3" placeholder="4 números" />
+                            </div>
+
+                            <asp:HyperLink runat="server" NavigateUrl="~/NuevaTarjeta.aspx" CssClass="small">
+                                ¿No tenés una tarjeta cargada? Agregá una acá
+   
+                            </asp:HyperLink>
+
+                        </asp:Panel>
 
                     </div>
 

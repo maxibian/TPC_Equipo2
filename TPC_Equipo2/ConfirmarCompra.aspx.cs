@@ -94,6 +94,7 @@ namespace TPC_Equipo2
             {
                 pnlDireccion.Visible = requiereDireccionSeleccionada();
                 pnlNuevaDireccion.Visible = pnlDireccion.Visible && ddlDireccion.SelectedValue == "nueva";
+                pnlTarjeta.Visible = requiereTarjetaSeleccionada();
             }
         }
 
@@ -148,7 +149,43 @@ namespace TPC_Equipo2
                 lblMensaje.Text = "La forma de entrega seleccionada ya no está disponible.";
                 return;
             }
+            
+            if (requiereTarjetaSeleccionada())
+            {
+               
+                if (!int.TryParse(ddlTarjeta.SelectedValue, out int idTarjeta))
+                {
+                    lblMensaje.Text = "Seleccioná una tarjeta para pagar.";
+                    return;
+                }
 
+                
+                List<Tarjeta> tarjetasCliente = new TarjetaNegocio().listarTarjetas(usuario.IdUsuario);
+                Tarjeta tarjetaElegida = null;
+
+                foreach (Tarjeta tarjeta in tarjetasCliente)
+                {
+                    if (tarjeta.IdTarjeta == idTarjeta)
+                    {
+                        tarjetaElegida = tarjeta;
+                        break;
+                    }
+                }
+
+                if (tarjetaElegida == null || tarjetaElegida.FechaVencimiento < DateTime.Today || tipoDeTarjeta(tarjetaElegida) != tipoTarjetaSeleccionado())
+                {
+                    lblMensaje.Text = "La tarjeta seleccionada no es válida o está vencida.";
+                    return;
+                }
+
+                
+                string pin = txtPin.Text.Trim();
+                if (pin.Length != 3 || !pin.All(char.IsDigit))
+                {
+                    lblMensaje.Text = "El PIN debe tener 3 números.";
+                    return;
+                }
+            }
             FormaPagoNegocio negocioPago = new FormaPagoNegocio();
 
             FormaPago formaPago = negocioPago.buscarPorId(idFormaPago);
@@ -423,6 +460,21 @@ namespace TPC_Equipo2
             }
         }
 
+        protected void ddlFormaPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtPin.Text = "";
+
+            if (requiereTarjetaSeleccionada())
+            {
+                cargarTarjetas();
+                pnlTarjeta.Visible = true;
+            }
+            else
+            {
+                pnlTarjeta.Visible = false;
+            }
+        }
+
         private void cargarDirecciones(int idCliente)
         {
             DireccionNegocio negocioDireccion = new DireccionNegocio();
@@ -455,6 +507,67 @@ namespace TPC_Equipo2
             FormaEntrega forma = negocioEntrega.buscarPorId(idFormaEntrega);
 
             return forma != null && forma.Estado && forma.RequiereDireccion;
+        }
+
+        private string tipoTarjetaSeleccionado()
+        {
+            if (ddlFormaPago.SelectedItem == null)
+                return "";
+
+            string nombre = ddlFormaPago.SelectedItem.Text.ToLower();
+
+            if (nombre.Contains("bito"))
+                return "debito";
+            if (nombre.Contains("dito"))
+                return "credito";
+
+            return "";
+        }
+
+        
+        private string tipoDeTarjeta(Tarjeta tarjeta)
+        {
+            string tipo = tarjeta.TipoTarjeta.NombreTipoTarjeta.ToLower();
+
+            if (tipo.Contains("bito"))
+                return "debito";
+            if (tipo.Contains("dito"))
+                return "credito";
+
+            return "";
+        }
+
+        private bool requiereTarjetaSeleccionada()
+        {
+            return tipoTarjetaSeleccionado() != "";
+        }
+
+        private void cargarTarjetas()
+        {
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (usuario == null)
+                return;
+
+            TarjetaNegocio negocio = new TarjetaNegocio();
+            List<Tarjeta> tarjetas = negocio.listarTarjetas(usuario.IdUsuario);
+
+            ddlTarjeta.Items.Clear();
+            ddlTarjeta.Items.Add(new ListItem("Seleccioná una tarjeta", ""));
+
+            foreach (Tarjeta tarjeta in tarjetas)
+            {
+                
+                if (tarjeta.FechaVencimiento < DateTime.Today)
+                    continue;
+                if (tipoDeTarjeta(tarjeta) != tipoTarjetaSeleccionado())
+                    continue;
+
+                string numero = tarjeta.NumeroTarjeta.Replace(" ", "");
+                string ultimos4 = numero.Length >= 4 ? numero.Substring(numero.Length - 4) : numero;
+
+                string texto = tarjeta.MarcaTarjeta.Nombre + " " + tarjeta.TipoTarjeta.NombreTipoTarjeta + " terminada en " + ultimos4;
+                ddlTarjeta.Items.Add(new ListItem(texto, tarjeta.IdTarjeta.ToString()));
+            }
         }
 
         protected void ddlDireccion_SelectedIndexChanged(object sender, EventArgs e)

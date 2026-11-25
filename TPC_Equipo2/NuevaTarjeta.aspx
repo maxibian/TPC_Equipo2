@@ -11,7 +11,7 @@
                 <asp:Label runat="server" Text="Número de tarjeta" AssociatedControlID="txtNumero" CssClass="form-label" />
                 <asp:TextBox ID="txtNumero" runat="server" CssClass="form-control" MaxLength="19" placeholder="Ej: 4111 1111 1111 1111" />
                 <asp:RegularExpressionValidator runat="server" ControlToValidate="txtNumero"
-                    ValidationExpression="^[0-9 ]{13,19}$" ErrorMessage="Ingresá solo números (podés separarlos con espacios)."
+                    ValidationExpression="^[0-9]{16}$" ErrorMessage="El número de tarjeta debe tener exactamente 16 números."
                     CssClass="text-danger small" Display="Dynamic" />
             </div>
 
