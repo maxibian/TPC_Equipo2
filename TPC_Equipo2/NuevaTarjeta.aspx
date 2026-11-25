@@ -18,6 +18,9 @@
             <div class="mb-3">
                 <asp:Label runat="server" Text="Nombre y apellido del titular" AssociatedControlID="txtTitular" CssClass="form-label" />
                 <asp:TextBox ID="txtTitular" runat="server" CssClass="form-control" MaxLength="100" />
+                <asp:RegularExpressionValidator runat="server" ControlToValidate="txtTitular"
+                    ValidationExpression="^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+$" ErrorMessage="El nombre solo puede tener letras y espacios."
+                    CssClass="text-danger small" Display="Dynamic" />
             </div>
 
             <div class="mb-3">

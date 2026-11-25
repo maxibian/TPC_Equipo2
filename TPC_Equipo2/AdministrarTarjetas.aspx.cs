@@ -70,7 +70,7 @@ namespace TPC_Equipo2
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("NuevaTarjeta.aspx", false);
         }
     }
 }
