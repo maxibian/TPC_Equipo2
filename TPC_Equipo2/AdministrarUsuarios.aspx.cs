@@ -43,7 +43,7 @@ namespace TPC_Equipo2
 
             if (negocio.isExist(email))
             {
-                lblRespuesta.Text = "Estas queriendo eliminar tu usuario!";
+                lblRespuesta.Text = "Estas queriendo dar de alta tu usuario!";
                 return;
             }
 

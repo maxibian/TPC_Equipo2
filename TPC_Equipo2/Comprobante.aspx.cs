@@ -54,8 +54,7 @@ namespace TPC_Equipo2
                 dgvComprobante.DataBind();
 
                 // Total de la venta
-                lblTotal.Text = venta.VentaTotal.ToString("C2",
-                    new System.Globalization.CultureInfo("es-AR"));
+                lblTotal.Text = venta.VentaTotal.ToString("C2");
 
 
             }
