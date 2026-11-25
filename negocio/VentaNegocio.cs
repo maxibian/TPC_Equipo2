@@ -18,7 +18,7 @@ namespace negocio
             List<Venta> lista = new List<Venta>();
             try
             {
-                datos.setearConsulta("SELECT V.IdVenta, V.IdCliente, C.Nombre AS NombreCliente, C.Apellido AS ApellidoCliente, V.Fecha, V.VentaTotal, V.IdFormaPago, FP.Nombre AS NombreFormaPago, V.IdFormaEntrega, FE.Nombre AS NombreFormaEntrega, V.IdDireccion, V.IdEstadoVenta, EV.Nombre AS NombreEstado, V.Observaciones, V.CodigoSeguimiento FROM VENTA V INNER JOIN CLIENTE C ON V.IdCliente = C.IdCliente INNER JOIN FORMAPAGO FP ON V.IdFormaPago = FP.IdFormaPago INNER JOIN FORMAENTREGA FE ON V.IdFormaEntrega = FE.IdFormaEntrega INNER JOIN ESTADOVENTA EV  ON V.IdEstadoVenta = EV.IdEstadoVenta ORDER BY V.Fecha DESC, V.IdVenta DESC");
+                datos.setearConsulta("SELECT V.IdVenta, V.IdCliente, C.Nombre AS NombreCliente, C.Apellido AS ApellidoCliente, V.Fecha, V.VentaTotal, V.CostoEntrega, V.IdFormaPago, FP.Nombre AS NombreFormaPago, V.IdFormaEntrega, FE.Nombre AS NombreFormaEntrega, V.IdDireccion, V.IdEstadoVenta, EV.Nombre AS NombreEstado, V.Observaciones, V.CodigoSeguimiento FROM VENTA V INNER JOIN CLIENTE C ON V.IdCliente = C.IdCliente INNER JOIN FORMAPAGO FP ON V.IdFormaPago = FP.IdFormaPago INNER JOIN FORMAENTREGA FE ON V.IdFormaEntrega = FE.IdFormaEntrega INNER JOIN ESTADOVENTA EV  ON V.IdEstadoVenta = EV.IdEstadoVenta ORDER BY V.Fecha DESC, V.IdVenta DESC");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -30,6 +30,7 @@ namespace negocio
                     aux.Cliente.Apellido = (string)datos.Lector["ApellidoCliente"];
                     aux.Fecha = (DateTime)datos.Lector["Fecha"];
                     aux.VentaTotal = (decimal)datos.Lector["VentaTotal"];
+                    aux.CostoEntrega = (decimal)datos.Lector["CostoEntrega"];
                     aux.FormaPago = new FormaPago();
                     aux.FormaPago.IdFormaPago = (int)datos.Lector["IdFormaPago"];
                     aux.FormaPago.Nombre = (string)datos.Lector["NombreFormaPago"];
@@ -78,7 +79,7 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("SELECT V.IdVenta, V.IdCliente, C.Nombre AS NombreCliente, C.Apellido AS ApellidoCliente, C.Email AS EmailCliente, V.Fecha, V.VentaTotal, V.IdFormaPago, FP.Nombre AS NombreFormaPago, V.IdFormaEntrega, FE.Nombre AS NombreFormaEntrega, V.IdDireccion, V.IdEstadoVenta, EV.Nombre AS NombreEstado, V.Observaciones, V.CodigoSeguimiento FROM VENTA V INNER JOIN CLIENTE C ON V.IdCliente = C.IdCliente INNER JOIN FORMAPAGO FP ON V.IdFormaPago = FP.IdFormaPago INNER JOIN FORMAENTREGA FE ON V.IdFormaEntrega = FE.IdFormaEntrega INNER JOIN ESTADOVENTA EV  ON V.IdEstadoVenta = EV.IdEstadoVenta WHERE V.IdVenta = @id");
+                datos.setearConsulta("SELECT V.IdVenta, V.IdCliente, C.Nombre AS NombreCliente, C.Apellido AS ApellidoCliente, C.Email AS EmailCliente, V.Fecha, V.VentaTotal, V.CostoEntrega, V.IdFormaPago, FP.Nombre AS NombreFormaPago, V.IdFormaEntrega, FE.Nombre AS NombreFormaEntrega, V.IdDireccion, V.IdEstadoVenta, EV.Nombre AS NombreEstado, V.Observaciones, V.CodigoSeguimiento FROM VENTA V INNER JOIN CLIENTE C ON V.IdCliente = C.IdCliente INNER JOIN FORMAPAGO FP ON V.IdFormaPago = FP.IdFormaPago INNER JOIN FORMAENTREGA FE ON V.IdFormaEntrega = FE.IdFormaEntrega INNER JOIN ESTADOVENTA EV  ON V.IdEstadoVenta = EV.IdEstadoVenta WHERE V.IdVenta = @id");
                 datos.setearParametro("@id", idVenta);
                 datos.ejecutarLectura();
 
@@ -94,6 +95,7 @@ namespace negocio
                     venta.Cliente.Email = (string)datos.Lector["EmailCliente"];
                     venta.Fecha = (DateTime)datos.Lector["Fecha"];
                     venta.VentaTotal = (decimal)datos.Lector["VentaTotal"];
+                    venta.CostoEntrega = (decimal)datos.Lector["CostoEntrega"];
                     venta.FormaPago = new FormaPago();
                     venta.FormaPago.IdFormaPago = (int)datos.Lector["IdFormaPago"];
                     venta.FormaPago.Nombre = (string)datos.Lector["NombreFormaPago"];
@@ -235,7 +237,7 @@ namespace negocio
             }
 
 
-            decimal total = 0;
+            decimal subtotalProductos = 0;
 
             foreach (DetalleVenta detalle in venta.Detalles)
             {
@@ -267,7 +269,7 @@ namespace negocio
                     }
 
                     detalle.PrecioUnitario = precioActual;
-                    total += precioActual * detalle.Cantidad;
+                    subtotalProductos += precioActual * detalle.Cantidad;
                 }
                 finally
                 {
@@ -275,11 +277,34 @@ namespace negocio
                 }
             }
 
-            venta.VentaTotal = total;
 
-            datos.setearConsulta("INSERT INTO VENTA(IdCliente, VentaTotal, IdFormaPago, IdFormaEntrega, IdDireccion, IdEstadoVenta, Observaciones) VALUES (@IdCliente, @VentaTotal, @IdFormaPago, @IdFormaEntrega, @IdDireccion, @IdEstadoVenta, @Observaciones);SELECT CAST(SCOPE_IDENTITY() AS INT)");
+            FormaEntregaNegocio negocioEntrega = new FormaEntregaNegocio();
+
+            FormaEntrega formaActual = negocioEntrega.buscarPorId(venta.FormaEntrega.IdFormaEntrega);
+
+            if (formaActual == null || !formaActual.Estado)
+            {
+                throw new InvalidOperationException(
+                    "La forma de entrega seleccionada ya no está disponible.");
+            }
+
+            decimal costoEntrega = formaActual.CostoEntrega;
+
+            decimal totalActual = subtotalProductos + costoEntrega;
+
+            if (venta.VentaTotal != totalActual)
+            {
+                throw new InvalidOperationException("El total de la compra cambió. Debés revisar el importe y confirmar nuevamente.");
+            }
+
+            venta.CostoEntrega = costoEntrega;
+            venta.VentaTotal = totalActual;
+
+
+            datos.setearConsulta("INSERT INTO VENTA(IdCliente, VentaTotal, CostoEntrega, IdFormaPago, IdFormaEntrega, IdDireccion, IdEstadoVenta, Observaciones) VALUES (@IdCliente, @VentaTotal, @CostoEntrega, @IdFormaPago, @IdFormaEntrega, @IdDireccion, @IdEstadoVenta, @Observaciones);SELECT CAST(SCOPE_IDENTITY() AS INT)");
             datos.setearParametro("@IdCliente", venta.Cliente.IdCliente);
             datos.setearParametro("@VentaTotal", venta.VentaTotal);
+            datos.setearParametro("@CostoEntrega", venta.CostoEntrega);
             datos.setearParametro("@IdFormaPago", venta.FormaPago.IdFormaPago);
             datos.setearParametro("@IdFormaEntrega", venta.FormaEntrega.IdFormaEntrega);
 

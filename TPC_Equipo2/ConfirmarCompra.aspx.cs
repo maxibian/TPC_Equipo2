@@ -159,6 +159,18 @@ namespace TPC_Equipo2
                 return;
             }
 
+            if (Session["TotalMostrado"] == null || Session["EntregaMostrada"] == null || (int)Session["EntregaMostrada"] != idFormaEntrega)
+            {
+                actualizarResumenCompra();
+
+                lblMensaje.Text = "Revisá el importe de la compra antes de confirmar.";
+
+                return;
+            }
+
+            decimal totalAceptado = (decimal)Session["TotalMostrado"];
+
+
             Venta venta = new Venta();
 
             venta.Cliente = new Cliente();
@@ -246,6 +258,27 @@ namespace TPC_Equipo2
                 return;
             }
 
+            decimal subtotalActual = 0;
+
+            foreach (DetalleVenta detalle in detallesCarrito)
+            {
+                subtotalActual += detalle.Subtotal;
+            }
+
+            decimal totalActual = subtotalActual + formaEntrega.CostoEntrega;
+
+            if (totalActual != totalAceptado)
+            {
+                actualizarResumenCompra();
+
+                lblMensaje.Text ="El importe de la compra cambió. Revisá el nuevo total y confirmá nuevamente.";
+
+                return;
+            }
+
+
+            venta.VentaTotal = totalAceptado;
+
             foreach (DetalleVenta detalle in detallesCarrito)
             {
                 venta.Detalles.Add(detalle);
@@ -310,6 +343,9 @@ namespace TPC_Equipo2
                 {
 
                 }
+
+                Session.Remove("TotalMostrado");
+                Session.Remove("EntregaMostrada");
 
                 Response.Redirect("~/CompraExitosa.aspx?id=" + venta.IdVenta, false);
                 return;
@@ -570,6 +606,9 @@ namespace TPC_Equipo2
 
             decimal costoEntrega = forma.CostoEntrega;
             decimal total = subtotal + costoEntrega;
+
+            Session["TotalMostrado"] = total;
+            Session["EntregaMostrada"] = idFormaEntrega;
 
             lblCostoEntrega.Text = costoEntrega == 0 ? "Gratis" : "$" + costoEntrega.ToString("N2");
 
