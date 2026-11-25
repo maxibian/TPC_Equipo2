@@ -565,6 +565,9 @@ namespace TPC_Equipo2
 
         private void actualizarResumenCompra()
         {
+            Session.Remove("TotalMostrado");
+            Session.Remove("EntregaMostrada");
+
             Usuario usuario = Session["usuario"] as Usuario;
 
             if (usuario == null) return;
@@ -577,6 +580,9 @@ namespace TPC_Equipo2
                 btnConfirmarCompra.Enabled = false;
                 return;
             }
+
+            gvResumen.DataSource = detalles;
+            gvResumen.DataBind();
 
             decimal subtotal = 0;
 
