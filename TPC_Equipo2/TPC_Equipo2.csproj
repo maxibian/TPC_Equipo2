@@ -144,6 +144,7 @@
     <Content Include="Login.aspx" />
     <Content Include="MiCuenta.aspx" />
     <Content Include="NuevaDireccion.aspx" />
+    <Content Include="NuevaTarjeta.aspx" />
     <Content Include="ProductoDetalle.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -415,6 +416,13 @@
     </Compile>
     <Compile Include="NuevaDireccion.aspx.designer.cs">
       <DependentUpon>NuevaDireccion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NuevaTarjeta.aspx.cs">
+      <DependentUpon>NuevaTarjeta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NuevaTarjeta.aspx.designer.cs">
+      <DependentUpon>NuevaTarjeta.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProductoDetalle.aspx.cs">
       <DependentUpon>ProductoDetalle.aspx</DependentUpon>
