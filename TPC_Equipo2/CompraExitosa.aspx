@@ -20,7 +20,7 @@
                 <p class="text-muted">
                     Recibimos tu pedido correctamente.
                 A continuación podés consultar sus datos.
-           
+            
                 </p>
 
             </div>
@@ -139,17 +139,35 @@
 
                     </div>
 
-                    <div class="border-top pt-3 mt-3 text-end">
+                    <div class="border-top pt-3 mt-3">
 
-                        <p class="text-muted small mb-1">
-                            Total del pedido
-                   
-                        </p>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Subtotal de productos:
+                            </span>
 
-                        <h3 class="fw-bold text-primary">$<asp:Label ID="lblTotal" runat="server" />
-                        </h3>
+                            <span>$<asp:Label ID="lblSubtotal" runat="server" />
+                            </span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Costo de entrega:
+                            </span>
+
+                            <span>$<asp:Label ID="lblCostoEntrega" runat="server" />
+                            </span>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center border-top pt-3 mt-3">
+
+                            <strong>Total del pedido:</strong>
+
+                            <h3 class="fw-bold text-primary mb-0">$<asp:Label ID="lblTotal" runat="server" />
+                            </h3>
+
+                        </div>
 
                     </div>
+
 
                 </div>
             </div>
