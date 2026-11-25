@@ -4,7 +4,7 @@
 
     <asp:Panel ID="pnlFormulario" runat="server" CssClass="container py-4">
         <div class="formulario-centrado">
-            <asp:Label ID="lblTitulo" runat="server" Text="Registro" CssClass="h4 d-block mb-4 text-center" />
+            <asp:Label ID="lblTitulo" runat="server" Text="Crea tu cuenta" CssClass="h4 d-block mb-4 text-center" />
 
             <asp:Label ID="lblDatosPersonales" runat="server" Text="Datos personales" CssClass="h4 d-block mb-4" />
 
