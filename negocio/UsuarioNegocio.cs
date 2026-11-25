@@ -235,5 +235,23 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void eliminarUsuarioYCliente(int idUsuario)
+        {
+            try
+            {
+                datos.setearConsulta("DELETE FROM CLIENTE WHERE IdUsuario = @IdUsuario; DELETE FROM USUARIO WHERE IdUsuario = @IdUsuario;");
+                datos.setearParametro("@IdUsuario", idUsuario);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
