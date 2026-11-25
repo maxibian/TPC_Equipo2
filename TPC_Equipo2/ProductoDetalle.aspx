@@ -19,8 +19,8 @@
                             <asp:Image
                                 ID="imgProducto"
                                 runat="server"
-                                CssClass="img-fluid rounded"
-                                Style="max-height: 350px; object-fit: contain;" />
+                                CssClass="img-fluid rounded productoDetalle"
+                                onerror="this.onerror=null; this.src='https://www.svgrepo.com/show/508699/landscape-placeholder.svg';"/>
 
                         </div>
 
